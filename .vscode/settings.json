@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "PokeFight\\lib\\jackson-databind-2.16.0.jar",
+        "PokeFight\\lib\\json-simple-1.1.1.jar"
+    ]
+}
