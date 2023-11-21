@@ -1,13 +1,18 @@
+/*
+ * DOCUMENT: pokemon.java
+ */
+
 // Class for store the pokemon parameters of all the pokemons 
-public class Pokemon {
+public class pokemon {
 
     // Private atribute for pokemone class
     private String name, type, img;
+    private String[] movements;
     private int health, atack, defense, speed;
 
     // General constructor of Pokemon
-    public Pokemon(String pokeName, String pokeType, String pokeImg, int pokeHealt, int pokeAtack, int pokeDefense,
-            int pokeSpeed) {
+    public pokemon(String pokeName, String pokeType, String pokeImg, int pokeHealt, int pokeAtack, int pokeDefense,
+            int pokeSpeed, String[] pokeMovements) {
         name = pokeName;
         type = pokeType;
         img = pokeImg;
@@ -15,13 +20,14 @@ public class Pokemon {
         atack = pokeAtack;
         defense = pokeDefense;
         speed = pokeSpeed;
+        movements = pokeMovements;
     }
 
     // toString for Pokemon Class
     @Override
     public String toString() {
         return "Pokemon [name=" + name + ", type=" + type + ", img=" + img + ", health=" + health + ", atack=" + atack
-                + ", defense=" + defense + ", speed=" + speed + "]";
+                + ", defense=" + defense + ", speed=" + speed + ", movements=" + movements + "]";
     }
 
     // GETTER FOR NAME
@@ -59,6 +65,11 @@ public class Pokemon {
         return speed;
     }
 
+    // GETTER FOR MOVEMENTS
+    public String[] getMovements() {
+        return movements;
+    }
+
     // SETTER FOR NAME
     public void setName(String name) {
         this.name = name;
@@ -92,5 +103,10 @@ public class Pokemon {
     // SETTER FOR SPEED
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    // SETTER FOR MOVEMENTS
+    public void setMovements(String[] movements) {
+        this.movements = movements;
     }
 }
