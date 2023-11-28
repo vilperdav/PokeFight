@@ -63,7 +63,9 @@ public class battle {
                                     // int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                     // int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                     // int defense = ((Long) pokemonDetails.get("defense")).intValue();
-
+                                    //boolean speed = (Boolean) pokemonDetails.get("speed");
+                                    //JSONArray movements = (JSONArray) pokemonDetails.get("movements");
+                                    
                                     // Puedes hacer más cosas con la información del Pokémon según tus necesidades
                                     System.out.println("Pokemon: " + pokemonName);
                                     System.out.println("Type: " + type);
