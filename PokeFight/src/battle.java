@@ -52,8 +52,9 @@ public class battle {
                 if (scanner.hasNextInt()) {
                     // Read the integer
                     pokemonForPlayer = scanner.nextInt();
+                    pokemonForPlayer = pokemonForPlayer - 1;
 
-                    if ((pokemonForPlayer > 0) && (pokemonForPlayer < listOfPokemons.size())) {
+                    if ((pokemonForPlayer >= 0) && (pokemonForPlayer < listOfPokemons.size())) {
                         pokeID = true;
                     } else {
                         System.out.println(
@@ -70,7 +71,6 @@ public class battle {
             }
 
             Random azar = new Random();
-
             int pokemonForAgent = azar.nextInt(9);
 
             System.out.println("[P1] - Player choose: " + listOfPokemons.get(pokemonForPlayer).getName() + "\n");
@@ -239,6 +239,55 @@ public class battle {
 
     private static int fight(pokemon p1, pokemon p2) {
         int winner = 0;
+
+        // Selection of the first movement
+        Random azar = new Random();
+
+        // True/1 -> Player; 0/False -> Agent
+        boolean firstMove = azar.nextBoolean();
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Estado Pokemon
+        System.out.println("[HP] - PLAYER - " + p1.getName() + ":" + p1.getHealth());
+        System.out.println("[HP] - AGENT - " + p2.getName() + ":" + p2.getHealth());
+
+        if (firstMove) {
+
+            boolean movementSelected = false;
+
+            while (!movementSelected) {
+
+                // Empieza atacando el jugador
+                System.out.println("[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]");
+
+                // Tackle for default
+                int atack = 0;
+
+                if (scanner.hasNextInt()) {
+                    // Read the integer
+                    atack = scanner.nextInt();
+                    atack = atack - 1;
+
+                    if ((atack >= 0) && (atack < p1.getMovements().size())) {
+                        movementSelected = true;
+                    } else {
+                        System.out.println(
+                                "[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size() + "]. \n");
+                    }
+
+                } else {
+                    System.out.println(
+                            "[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
+                    scanner.nextLine();
+                }
+
+            }
+
+        } else {
+            // Empieza atacando el Agente
+
+        }
 
         // TODO
 
