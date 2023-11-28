@@ -25,9 +25,30 @@ public class battle {
         String jsonPokemonDB = "db/pokemonDB.json";
         int numberOfPokemonCharged = pokemonCharger(jsonPokemonDB);
 
-        System.out.println("Se han cargado " + numberOfPokemonCharged + " pokemons. \n");
+        System.out.println("Se han cargado " + numberOfPokemonCharged + " pokemons.");
 
-        System.out.println(listOfPokemons.toString());
+        int i = 0;
+        // See all the pokemons charged
+        for (pokemon pokemonInList : listOfPokemons) {
+
+            System.out.println("[" + i + "] - " + pokemonInList.getName());
+            i++;
+
+        }
+
+        System.out.println("CHOOSE YOUR POKEMON!:");
+        Scanner reader = new Scanner(System.in);
+        int pokemonForPlayer = 0;
+        pokemonForPlayer = reader.nextInt();
+        reader.close();
+
+        Random azar = new Random();
+        int pokemonForAgent = azar.nextInt(9);
+
+        System.out.println("Player escogio a: " + listOfPokemons.get(pokemonForPlayer).getName());
+        System.out.println("RandomAgent escogio a: " + listOfPokemons.get(pokemonForAgent).getName());
+
+        // System.out.println(listOfPokemons.toString());
 
     }
 
