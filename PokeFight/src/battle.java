@@ -19,36 +19,132 @@ public class battle {
     // MAIN CLASS OF THE GAME
     public static void main(String[] args) {
 
-        System.out.println("Juego Iniciado - Estoy en MAINs. \n");
+        System.out.println("PokeFight - STARTING! \n");
 
         // CHARGE THE POKEMON JSON DB IN THE MAIN CODE
         String jsonPokemonDB = "db/pokemonDB.json";
         int numberOfPokemonCharged = pokemonCharger(jsonPokemonDB);
 
-        System.out.println("Se han cargado " + numberOfPokemonCharged + " pokemons.");
+        Scanner scanner = new Scanner(System.in);
+        boolean newFigth = true;
 
-        int i = 0;
-        // See all the pokemons charged
-        for (pokemon pokemonInList : listOfPokemons) {
+        while (newFigth) {
 
-            System.out.println("[" + i + "] - " + pokemonInList.getName());
-            i++;
+            System.out.println("[CHARGING] - We charge in the system " + numberOfPokemonCharged + " pokemons. \n");
+
+            boolean pokeID = false;
+            int pokemonForPlayer = 0;
+
+            while (!pokeID) {
+
+                int i = 0;
+                // See all the pokemons charged
+                for (pokemon pokemonInList : listOfPokemons) {
+                    i++;
+                    System.out.println("[" + i + "] - " + pokemonInList.getName());
+                }
+
+                // System.out.println(listOfPokemons.toString());
+                System.out.println("\n [CHOOSE] - CHOOSE YOUR POKEMON TO FIGHT!:");
+
+                // Limpiar el Scanner antes de usarlo nuevamente
+
+                if (scanner.hasNextInt()) {
+                    // Read the integer
+                    pokemonForPlayer = scanner.nextInt();
+
+                    if ((pokemonForPlayer > 0) && (pokemonForPlayer < listOfPokemons.size())) {
+                        pokeID = true;
+                    } else {
+                        System.out.println(
+                                "[ERROR] - Use an ID between the Bounds! [1-" + listOfPokemons.size() + "]. \n");
+                    }
+
+                } else {
+                    System.out.println(
+                            "[ERROR] - That Pokemon ID don't exists in the database. Try Again \n");
+                    scanner.nextLine();
+                    // System.exit(0);
+                }
+
+            }
+
+            Random azar = new Random();
+
+            int pokemonForAgent = azar.nextInt(9);
+
+            System.out.println("[P1] - Player choose: " + listOfPokemons.get(pokemonForPlayer).getName() + "\n");
+            System.out.println("[P2] - RandomAgent choose: " + listOfPokemons.get(pokemonForAgent).getName() + "\n");
+
+            int result = fight(listOfPokemons.get(pokemonForPlayer), listOfPokemons.get(pokemonForAgent));
+
+            System.out.println("#################################################################");
+            // Final results of the game
+            switch (result) {
+                // Player Wins
+                case 1:
+                    System.out.println("        [Winner] - Player Wins The Fight!");
+                    break;
+
+                // Agent Wins
+                case 2:
+                    System.out.println("        [Winner] - Agent Wins The Fight!");
+                    break;
+
+                // Error Wins
+                default:
+                    System.out.println("        [Winner] - Nobody Wins The Fight!");
+                    break;
+            }
+            System.out.println("################################################################# \n");
+
+            // Display the menu
+            System.out.println("[EXIT] - Do you want to fight again? (yes/no)");
+
+            boolean responded = false;
+
+            // Limpiar el Scanner antes de usarlo nuevamente
+            scanner.nextLine();
+
+            while (!responded) {
+
+                // Read user input
+                if (scanner.hasNextLine()) {
+                    String userInput = scanner.nextLine().toLowerCase(); // Convert to lowercase for case-insensitivity
+
+                    // Process user input
+                    if (userInput.equals("yes") || userInput.equals("y")) {
+                        System.out.println("You chose to continue. \n");
+                        // Responded question
+                        responded = true;
+
+                        // Cleaning all the pokemon Objects
+                        listOfPokemons.clear();
+
+                        // Chargin new pokemons stats in java Objects
+                        numberOfPokemonCharged = pokemonCharger(jsonPokemonDB);
+
+                    } else if (userInput.equals("no") || userInput.equals("n")) {
+                        System.out.println("You chose to exit. \n");
+                        // Responded question
+                        responded = true;
+                        // Exit the game
+                        newFigth = false;
+
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes/n' or 'no/n'. \n");
+                        // Handle invalid input
+                    }
+
+                } else {
+                    System.out.println("No input found. \n");
+                }
+
+            }
 
         }
-
-        System.out.println("CHOOSE YOUR POKEMON!:");
-        Scanner reader = new Scanner(System.in);
-        int pokemonForPlayer = 0;
-        pokemonForPlayer = reader.nextInt();
-        reader.close();
-
-        Random azar = new Random();
-        int pokemonForAgent = azar.nextInt(9);
-
-        System.out.println("Player escogio a: " + listOfPokemons.get(pokemonForPlayer).getName());
-        System.out.println("RandomAgent escogio a: " + listOfPokemons.get(pokemonForAgent).getName());
-
-        // System.out.println(listOfPokemons.toString());
+        scanner.close();
+        System.out.println("See you soon! \n");
 
     }
 
@@ -74,9 +170,11 @@ public class battle {
                         if (genKey instanceof String) {
                             String genName = (String) genKey;
                             // Generation Of The Pokemon
-                            System.out.println("**************************");
-                            System.out.println("****** Generation: " + genName + "******");
-                            System.out.println("**************************");
+                            /*
+                             * System.out.println("**************************");
+                             * System.out.println("****** Generation: " + genName + "******");
+                             * System.out.println("**************************");
+                             */
                             JSONObject genDetails = (JSONObject) gen.get(genName);
 
                             // Check if the Generation is Empty or not
@@ -85,7 +183,7 @@ public class battle {
                                     if (pokemonKey instanceof String) {
                                         String pokemonName = (String) pokemonKey;
 
-                                        System.out.println("------------------------");
+                                        // System.out.println("------------------------");
                                         JSONObject pokemonDetails = (JSONObject) genDetails.get(pokemonName);
 
                                         // Acess to the information of the pokemon
@@ -98,15 +196,17 @@ public class battle {
                                         JSONArray movements = (JSONArray) pokemonDetails.get("movements");
 
                                         // Puedes hacer más cosas con la información del Pokémon según tus necesidades
-                                        System.out.println("Pokemon: " + pokemonName);
-                                        System.out.println("IMG: " + img);
-                                        System.out.println("Type: " + type);
-                                        System.out.println("HP: " + hp);
-                                        System.out.println("Attack: " + attack);
-                                        System.out.println("Defense: " + defense);
-                                        System.out.println("Speed: " + speed);
-                                        System.out.println("Movements: " + movements + "");
-                                        System.out.println("------------------------");
+                                        /*
+                                         * System.out.println("Pokemon: " + pokemonName);
+                                         * System.out.println("IMG: " + img);
+                                         * System.out.println("Type: " + type);
+                                         * System.out.println("HP: " + hp);
+                                         * System.out.println("Attack: " + attack);
+                                         * System.out.println("Defense: " + defense);
+                                         * System.out.println("Speed: " + speed);
+                                         * System.out.println("Movements: " + movements + "");
+                                         * System.out.println("------------------------");
+                                         */
 
                                         listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, type, hp,
                                                 attack, defense, speed, movements));
@@ -118,10 +218,11 @@ public class battle {
 
                             } else {
 
-                                System.out.println("------------------------");
-                                System.out.println("-------- EMPTY ---------");
-                                System.out.println("------------------------");
-
+                                /*
+                                 * System.out.println("------------------------");
+                                 * System.out.println("-------- EMPTY ---------");
+                                 * System.out.println("------------------------");
+                                 */
                             }
 
                         }
@@ -134,5 +235,13 @@ public class battle {
         }
 
         return pokemonCarged;
+    }
+
+    private static int fight(pokemon p1, pokemon p2) {
+        int winner = 0;
+
+        // TODO
+
+        return winner;
     }
 }
