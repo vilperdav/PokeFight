@@ -52,7 +52,7 @@ public class battle {
                             String genName = (String) genKey;
                             // Generation Of The Pokemon
                             System.out.println("**************************");
-                            System.out.println("Generation: " + genName);
+                            System.out.println("****** Generation: " + genName + "******");
                             System.out.println("**************************");
                             JSONObject genDetails = (JSONObject) gen.get(genName);
 
@@ -90,6 +90,8 @@ public class battle {
 
                             } else {
 
+                                System.out.println("------------------------");
+                                System.out.println("-------- EMPTY ---------");
                                 System.out.println("------------------------");
 
                             }
