@@ -3,19 +3,22 @@
  */
 
 // Class for store the pokemon parameters of all the pokemons 
+
+import org.json.simple.JSONArray;
+
 public class pokemon {
 
     // Private atribute for pokemone class
     private String name, type, img;
-    private String[] movements;
+    private JSONArray movements;
     private int health, atack, defense, speed;
 
     // General constructor of Pokemon
-    public pokemon(String pokeName, String pokeType, String pokeImg, int pokeHealt, int pokeAtack, int pokeDefense,
-            int pokeSpeed, String[] pokeMovements) {
+    public pokemon(String pokeName, String pokeImg, String pokeType, int pokeHealt, int pokeAtack, int pokeDefense,
+            int pokeSpeed, JSONArray pokeMovements) {
         name = pokeName;
-        type = pokeType;
         img = pokeImg;
+        type = pokeType;
         health = pokeHealt;
         atack = pokeAtack;
         defense = pokeDefense;
@@ -66,7 +69,7 @@ public class pokemon {
     }
 
     // GETTER FOR MOVEMENTS
-    public String[] getMovements() {
+    public JSONArray getMovements() {
         return movements;
     }
 
@@ -106,7 +109,7 @@ public class pokemon {
     }
 
     // SETTER FOR MOVEMENTS
-    public void setMovements(String[] movements) {
+    public void setMovements(JSONArray movements) {
         this.movements = movements;
     }
 }

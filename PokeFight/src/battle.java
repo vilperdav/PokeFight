@@ -14,7 +14,7 @@ import org.json.simple.parser.ParseException;
 
 public class battle {
 
-    private ArrayList[] pokemon;
+    public static ArrayList<pokemon> listOfPokemons = new ArrayList<pokemon>();
 
     // MAIN CLASS OF THE GAME
     public static void main(String[] args) {
@@ -26,6 +26,8 @@ public class battle {
         int numberOfPokemonCharged = pokemonCharger(jsonPokemonDB);
 
         System.out.println("Se han cargado " + numberOfPokemonCharged + " pokemons. \n");
+
+        System.out.println(listOfPokemons.toString());
 
     }
 
@@ -67,6 +69,7 @@ public class battle {
 
                                         // Acess to the information of the pokemon
                                         String type = (String) pokemonDetails.get("type");
+                                        String img = "img/" + genName + "/" + pokemonName + ".png";
                                         int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                         int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                         int defense = ((Long) pokemonDetails.get("defense")).intValue();
@@ -75,6 +78,7 @@ public class battle {
 
                                         // Puedes hacer más cosas con la información del Pokémon según tus necesidades
                                         System.out.println("Pokemon: " + pokemonName);
+                                        System.out.println("IMG: " + img);
                                         System.out.println("Type: " + type);
                                         System.out.println("HP: " + hp);
                                         System.out.println("Attack: " + attack);
@@ -82,6 +86,9 @@ public class battle {
                                         System.out.println("Speed: " + speed);
                                         System.out.println("Movements: " + movements + "");
                                         System.out.println("------------------------");
+
+                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, type, hp,
+                                                attack, defense, speed, movements));
 
                                         // Incrementar la cantidad de Pokémon cargados
                                         pokemonCarged++;
