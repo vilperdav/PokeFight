@@ -61,15 +61,16 @@ public class battle {
                                 for (Object pokemonKey : genDetails.keySet()) {
                                     if (pokemonKey instanceof String) {
                                         String pokemonName = (String) pokemonKey;
+
+                                        System.out.println("------------------------");
                                         JSONObject pokemonDetails = (JSONObject) genDetails.get(pokemonName);
 
-<<<<<<< HEAD
-                                        // Acced to the information of the pokemon
+                                        // Acess to the information of the pokemon
                                         String type = (String) pokemonDetails.get("type");
                                         int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                         int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                         int defense = ((Long) pokemonDetails.get("defense")).intValue();
-                                        boolean speed = (Boolean) pokemonDetails.get("speed");
+                                        int speed = ((Long) pokemonDetails.get("speed")).intValue();
                                         JSONArray movements = (JSONArray) pokemonDetails.get("movements");
 
                                         // Puedes hacer más cosas con la información del Pokémon según tus necesidades
@@ -78,14 +79,18 @@ public class battle {
                                         System.out.println("HP: " + hp);
                                         System.out.println("Attack: " + attack);
                                         System.out.println("Defense: " + defense);
+                                        System.out.println("Speed: " + speed);
+                                        System.out.println("Movements: " + movements + "");
                                         System.out.println("------------------------");
-                                        
+
                                         // Incrementar la cantidad de Pokémon cargados
                                         pokemonCarged++;
                                     }
                                 }
 
                             } else {
+
+                                System.out.println("------------------------");
 
                             }
 
