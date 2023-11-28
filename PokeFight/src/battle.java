@@ -63,11 +63,14 @@ public class battle {
                                         String pokemonName = (String) pokemonKey;
                                         JSONObject pokemonDetails = (JSONObject) genDetails.get(pokemonName);
 
+<<<<<<< HEAD
                                         // Acced to the information of the pokemon
                                         String type = (String) pokemonDetails.get("type");
                                         int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                         int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                         int defense = ((Long) pokemonDetails.get("defense")).intValue();
+                                        boolean speed = (Boolean) pokemonDetails.get("speed");
+                                        JSONArray movements = (JSONArray) pokemonDetails.get("movements");
 
                                         // Puedes hacer más cosas con la información del Pokémon según tus necesidades
                                         System.out.println("Pokemon: " + pokemonName);
@@ -76,7 +79,7 @@ public class battle {
                                         System.out.println("Attack: " + attack);
                                         System.out.println("Defense: " + defense);
                                         System.out.println("------------------------");
-
+                                        
                                         // Incrementar la cantidad de Pokémon cargados
                                         pokemonCarged++;
                                     }
