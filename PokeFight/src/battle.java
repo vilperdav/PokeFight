@@ -45,11 +45,14 @@ public class battle {
                 // See all the pokemons charged
                 for (pokemon pokemonInList : listOfPokemons) {
                     i++;
-                    System.out.println("[" + i + "] - " + pokemonInList.getName());
+                    System.out.println(
+                            "[" + i + "] - " + pokemonInList.getName() + " => [HP]: " + pokemonInList.getHealth()
+                                    + " [PA]: " + pokemonInList.getAtack() + " [PD]: " + pokemonInList.getDefense());
+                    // + " [SP]: " + pokemonInList.getSpeed());
                 }
 
                 // System.out.println(listOfPokemons.toString());
-                System.out.println("\n [CHOOSE] - CHOOSE YOUR POKEMON TO FIGHT!:");
+                System.out.print("\n[CHOOSE] - CHOOSE YOUR POKEMON TO FIGHT!: ");
 
                 // Limpiar el Scanner antes de usarlo nuevamente
 
@@ -62,12 +65,12 @@ public class battle {
                         pokeID = true;
                     } else {
                         System.out.println(
-                                "[ERROR] - Use an ID between the Bounds! [1-" + listOfPokemons.size() + "]. \n");
+                                "\n[ERROR] - Use an ID between the Bounds! [1-" + listOfPokemons.size() + "]. \n");
                     }
 
                 } else {
                     System.out.println(
-                            "[ERROR] - That Pokemon ID don't exists in the database. Try Again \n");
+                            "\n[ERROR] - That Pokemon ID don't exists in the database. Try Again \n");
                     scanner.nextLine();
                     // System.exit(0);
                 }
@@ -255,6 +258,7 @@ public class battle {
         // True/1 -> Player; 0/False -> Agent
         boolean firstMove = azar.nextBoolean();
 
+        // LET THIS WARNING LIKE THIS DONT TOUCH IT
         Scanner scanner = new Scanner(System.in);
 
         // The Fight exits while the pokemons have hp points
@@ -270,7 +274,7 @@ public class battle {
             while (!movementSelected) {
 
                 // Empieza atacando el jugador
-                System.out.println("\n [CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]");
+                System.out.print("\n[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]: ");
 
                 // Tackle for default
                 int atack = 0;
@@ -294,12 +298,13 @@ public class battle {
 
                     } else {
                         System.out.println(
-                                "[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size() + "]. \n");
+                                "\n[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size()
+                                        + "]. \n");
                     }
 
                 } else {
                     System.out.println(
-                            "[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
+                            "\n[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
                     scanner.nextLine();
                 }
             }
@@ -318,22 +323,26 @@ public class battle {
         }
 
         if (p1.getHealth() > 0) {
-            System.out.println("[GO-OUT] - Agent Pokemon go out of the battle.");
+            System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the battle.");
+            System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
             return 1;
 
         } else {
-            System.out.println("[GO-OUT] - Player Pokemon go out of the battle.");
+            System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the battle.");
             return 2;
         }
 
     }
 
     // Function for reduce the HP points
-    private static int updateHP(pokemon p1, int attack) {
+    private static int updateHP(pokemon p1, int atack) {
 
-        p1.setHealth(p1.getHealth() - attack);
+        // 30% of defense reduction atack
+        double defenseFactor = 0.03;
+        int defense = (int) Math.round(p1.getDefense() * defenseFactor);
+        p1.setHealth(p1.getHealth() - atack + defense);
 
-        return p1.getHealth() - attack;
+        return p1.getHealth() - atack;
     }
 
     // Function for know if the atack its efective or not
