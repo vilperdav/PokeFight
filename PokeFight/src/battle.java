@@ -19,8 +19,6 @@ public class battle {
     // MAIN CLASS OF THE GAME
     public static void main(String[] args) {
 
-        System.out.println("PokeFight - STARTING! \n");
-
         // CHARGE THE POKEMON JSON DB IN THE MAIN CODE
         String jsonPokemonDB = "db/pokemonDB.json";
         int numberOfPokemonCharged = pokemonCharger(jsonPokemonDB);
@@ -29,6 +27,12 @@ public class battle {
         boolean newFigth = true;
 
         while (newFigth) {
+
+            try {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
 
             System.out.println("[CHARGING] - We charge in the system " + numberOfPokemonCharged + " pokemons. \n");
 
@@ -78,22 +82,22 @@ public class battle {
 
             int result = fight(listOfPokemons.get(pokemonForPlayer), listOfPokemons.get(pokemonForAgent));
 
-            System.out.println("#################################################################");
+            System.out.println("\n#################################################################");
             // Final results of the game
             switch (result) {
                 // Player Wins
                 case 1:
-                    System.out.println("        [Winner] - Player Wins The Fight!");
+                    System.out.println("\n        [Winner] - Player Wins The Fight! \n");
                     break;
 
                 // Agent Wins
                 case 2:
-                    System.out.println("        [Winner] - Agent Wins The Fight!");
+                    System.out.println("\n        [Winner] - Agent Wins The Fight!\n");
                     break;
 
                 // Error Wins
                 default:
-                    System.out.println("        [Winner] - Nobody Wins The Fight!");
+                    System.out.println("\n        [Winner] - Nobody Wins The Fight!\n");
                     break;
             }
             System.out.println("################################################################# \n");
@@ -238,7 +242,12 @@ public class battle {
     }
 
     private static int fight(pokemon p1, pokemon p2) {
-        int winner = 0;
+
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Selection of the first movement
         Random azar = new Random();
@@ -248,18 +257,20 @@ public class battle {
 
         Scanner scanner = new Scanner(System.in);
 
-        // Estado Pokemon
-        System.out.println("[HP] - PLAYER - " + p1.getName() + ":" + p1.getHealth());
-        System.out.println("[HP] - AGENT - " + p2.getName() + ":" + p2.getHealth());
+        // The Fight exits while the pokemons have hp points
+        while ((p1.getHealth()) > 0 && (p2.getHealth() > 0)) {
 
-        if (firstMove) {
+            // Status of the Pokemon
+            System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+            System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
 
+            // For now always starts the Player
             boolean movementSelected = false;
 
             while (!movementSelected) {
 
                 // Empieza atacando el jugador
-                System.out.println("[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]");
+                System.out.println("\n [CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]");
 
                 // Tackle for default
                 int atack = 0;
@@ -270,7 +281,17 @@ public class battle {
                     atack = atack - 1;
 
                     if ((atack >= 0) && (atack < p1.getMovements().size())) {
+
                         movementSelected = true;
+                        System.out.println("\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
+                        // Obtengo el multiplicador del ataque
+                        double atackEfective = atackDamage(p1.getType(), p2.getType(),
+                                p1.getMovements().get(atack).toString());
+                        // Actualizo la vida del contrincante
+                        int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
+                        updateHP(p2, totalDamage);
+                        System.out.println("[ATACK] - Player made " + totalDamage + " points of damage.");
+
                     } else {
                         System.out.println(
                                 "[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size() + "]. \n");
@@ -281,16 +302,74 @@ public class battle {
                             "[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
                     scanner.nextLine();
                 }
-
             }
 
-        } else {
-            // Empieza atacando el Agente
+            // 0 - Tackle, 1 - Attack of the Pokemon
+            int agentAtack = azar.nextInt(2);
+            System.out.println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
+            // Obtengo el multiplicador del ataque
+            double atackEfective = atackDamage(p2.getType(), p1.getType(),
+                    p2.getMovements().get(agentAtack).toString());
+            // Actualizo la vida del contrincante
+            int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
+            updateHP(p1, totalDamage);
+            System.out.println("[ATACK] - Agent made " + totalDamage + " points of damage.");
 
         }
 
-        // TODO
+        if (p1.getHealth() > 0) {
+            System.out.println("[GO-OUT] - Agent Pokemon go out of the battle.");
+            return 1;
 
-        return winner;
+        } else {
+            System.out.println("[GO-OUT] - Player Pokemon go out of the battle.");
+            return 2;
+        }
+
+    }
+
+    // Function for reduce the HP points
+    private static int updateHP(pokemon p1, int attack) {
+
+        p1.setHealth(p1.getHealth() - attack);
+
+        return p1.getHealth() - attack;
+    }
+
+    // Function for know if the atack its efective or not
+    private static double atackDamage(String type1, String type2, String attack) {
+
+        // Fire >>> Plant
+        // Plant >>> Water
+        // Water >>> Fire
+
+        // Tackle always do x1
+        if (attack.equals("Tackle")) {
+            return 0.1;
+            // Same type of Pokemon and diferent atack from tackle
+        } else if (type1.equals(type2)) {
+            return 0.05;
+            // Fire vs Water
+        } else if (type1.equals("fire") && type2.equals("water")) {
+            return 0.05;
+            // Fire vs Plant
+        } else if (type1.equals("fire") && type2.equals("plant")) {
+            return 0.2;
+            // Water vs Fire
+        } else if (type1.equals("water") && type2.equals("fire")) {
+            return 0.2;
+            // Water vs Plant
+        } else if (type1.equals("water") && type2.equals("plant")) {
+            return 0.05;
+            // Plant vs Water
+        } else if (type1.equals("plant") && type2.equals("water")) {
+            return 0.2;
+            // Plant vs Fire
+        } else if (type1.equals("plant") && type2.equals("fire")) {
+            return 0.05;
+            // In other case the attack dont do damage
+        } else {
+            return 0;
+        }
     }
 }
