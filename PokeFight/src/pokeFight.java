@@ -52,8 +52,7 @@ public class pokeFight {
                     System.out.println(
                             "[" + i + "] - " + pokemonInList.getName() + " => [HP]: " + pokemonInList.getHealth()
                                     + " [PA]: " + pokemonInList.getAtack() + " [PD]: "
-                                    + pokemonInList.getDefense());
-                    // + " [SP]: " + pokemonInList.getSpeed());
+                                    + pokemonInList.getDefense() + " [SP]: " + pokemonInList.getSpeed());
                 }
 
                 System.out.print("\n[SELECTED] => [ ");
@@ -175,6 +174,7 @@ public class pokeFight {
 
             Random azar = new Random();
             for (int i = 0; i < currentMode; i++) {
+                // Random Pokemon Betwen 0-8
                 agentPokemons.add(listOfPokemons.get(azar.nextInt(9)));
             }
 

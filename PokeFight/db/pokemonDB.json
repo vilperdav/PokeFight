@@ -7,7 +7,7 @@
                     "hp": 45,
                     "attack": 49,
                     "defense": 49,
-                    "speed": 1,
+                    "speed": 45,
                     "movements": [
                         "Tackle",
                         "Vine Whip"
@@ -18,7 +18,7 @@
                     "hp": 44,
                     "attack": 48,
                     "defense": 65,
-                    "speed": 1,
+                    "speed": 43,
                     "movements": [
                         "Tackle",
                         "Water Gun"
@@ -29,7 +29,7 @@
                     "hp": 39,
                     "attack": 52,
                     "defense": 43,
-                    "speed": 1,
+                    "speed": 65,
                     "movements": [
                         "Tackle",
                         "Flamethrower"
@@ -43,7 +43,7 @@
                     "hp": 40,
                     "attack": 45,
                     "defense": 35,
-                    "speed": 1,
+                    "speed": 70,
                     "movements": [
                         "Tackle",
                         "Energiball"
@@ -54,7 +54,7 @@
                     "hp": 45,
                     "attack": 60,
                     "defense": 40,
-                    "speed": 1,
+                    "speed": 45,
                     "movements": [
                         "Tackle",
                         "Embers"
@@ -65,7 +65,7 @@
                     "hp": 50,
                     "attack": 70,
                     "defense": 50,
-                    "speed": 1,
+                    "speed": 40,
                     "movements": [
                         "Tackle",
                         "Hydropump"
@@ -78,7 +78,7 @@
                     "hp": 55,
                     "attack": 68,
                     "defense": 64,
-                    "speed": 1,
+                    "speed": 31,
                     "movements": [
                         "Tackle",
                         "Sharp Blade"
@@ -89,7 +89,7 @@
                     "hp": 53,
                     "attack": 51,
                     "defense": 53,
-                    "speed": 1,
+                    "speed": 40,
                     "movements": [
                         "Tackle",
                         "Bubble Ray"
@@ -100,7 +100,7 @@
                     "hp": 44,
                     "attack": 58,
                     "defense": 44,
-                    "speed": 1,
+                    "speed": 61,
                     "movements": [
                         "Tackle",
                         "Fire Wheel"

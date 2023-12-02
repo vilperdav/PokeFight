@@ -10,86 +10,180 @@ public class battle {
 
     public static int fight1vs1(pokemon p1, pokemon p2) {
 
+        // p1 -> Player Pokemon
+        // p2 -> Agen Pokemon
+
         // Clean the Screen
         cleanScreen.clean("W");
-
-        // Selection of the first movement
-        Random azar = new Random();
-
-        // True/1 -> Player; 0/False -> Agent
-        boolean firstMove = azar.nextBoolean();
 
         // LET THIS WARNING LIKE THIS DONT TOUCH IT
         Scanner scanner = new Scanner(System.in);
 
-        // The Fight exits while the pokemons have hp points
-        while ((p1.getHealth()) > 0 && (p2.getHealth() > 0)) {
+        // Switch depending on what pokemon its Faster than other
+        switch (chooseFirstMove(p1, p2)) {
 
-            // Status of the Pokemon
-            System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
-            System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+            // The Player Pokemon is Faster
+            case 0:
 
-            // For now always starts the Player
-            boolean movementSelected = false;
+                System.out.println(
+                        "\n[START-FIGHT] - Player starts first - SPEED: " + p1.getSpeed() + " > " + p2.getSpeed());
 
-            while (!movementSelected) {
+                // The Fight exits while the pokemons have hp points
+                while ((p1.getHealth()) > 0 && (p2.getHealth() > 0)) {
 
-                // Empieza atacando el jugador
-                System.out.print("\n[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]: ");
+                    // Status of the Pokemon
+                    System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                    System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
 
-                // Tackle for default
-                int atack = 0;
+                    // For now always starts the Player
+                    boolean movementSelected = false;
 
-                if (scanner.hasNextInt()) {
-                    // Read the integer
-                    atack = scanner.nextInt();
-                    atack = atack - 1;
+                    while (!movementSelected) {
 
-                    if ((atack >= 0) && (atack < p1.getMovements().size())) {
+                        // Empieza atacando el jugador
+                        System.out.print("\n[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]: ");
 
-                        movementSelected = true;
-                        System.out.println("\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
-                        // Obtengo el multiplicador del ataque
-                        double atackEfective = atackDamage(p1.getType(), p2.getType(),
-                                p1.getMovements().get(atack).toString());
-                        // Actualizo la vida del contrincante
-                        int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-                        updateHP(p2, totalDamage);
-                        System.out.println("[ATACK] - Player made " + totalDamage + " points of damage.");
+                        // Tackle for default
+                        int atack = 0;
 
-                    } else {
-                        System.out.println(
-                                "\n[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size()
-                                        + "]. \n");
+                        if (scanner.hasNextInt()) {
+                            // Read the integer
+                            atack = scanner.nextInt();
+                            atack = atack - 1;
+
+                            if ((atack >= 0) && (atack < p1.getMovements().size())) {
+
+                                movementSelected = true;
+                                System.out.println(
+                                        "\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
+                                // Obtengo el multiplicador del ataque
+                                double atackEfective = atackDamage(p1.getType(), p2.getType(),
+                                        p1.getMovements().get(atack).toString());
+                                // Actualizo la vida del contrincante
+                                int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
+                                updateHP(p2, totalDamage);
+                                System.out.println("[ATACK] - Player made " + totalDamage + " points of damage.");
+
+                            } else {
+                                System.out.println(
+                                        "\n[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size()
+                                                + "]. \n");
+                            }
+
+                        } else {
+                            System.out.println(
+                                    "\n[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
+                            scanner.nextLine();
+                        }
                     }
 
-                } else {
-                    System.out.println(
-                            "\n[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
-                    scanner.nextLine();
+                    // 0 - Tackle, 1 - Attack of the Pokemon
+                    Random azar = new Random();
+                    int agentAtack = azar.nextInt(2);
+                    System.out
+                            .println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
+
+                    // Obtengo el multiplicador del ataque
+                    double atackEfective = atackDamage(p2.getType(), p1.getType(),
+                            p2.getMovements().get(agentAtack).toString());
+
+                    // Actualizo la vida del contrincante
+                    int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
+                    updateHP(p1, totalDamage);
+                    System.out.println("[ATACK] - Agent made " + totalDamage + " points of damage.");
+
                 }
-            }
 
-            // 0 - Tackle, 1 - Attack of the Pokemon
-            int agentAtack = azar.nextInt(2);
-            System.out.println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
-            // Obtengo el multiplicador del ataque
-            double atackEfective = atackDamage(p2.getType(), p1.getType(),
-                    p2.getMovements().get(agentAtack).toString());
-            // Actualizo la vida del contrincante
-            int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-            updateHP(p1, totalDamage);
-            System.out.println("[ATACK] - Agent made " + totalDamage + " points of damage.");
+                break;
 
+            // The Agent Pokemon is Faster
+            case 1:
+
+                System.out.println(
+                        "\n[START-FIGHT] - Agent starts first - SPEED: " + p2.getSpeed() + " > " + p1.getSpeed());
+
+                // The Fight exits while the pokemons have hp points
+                while ((p1.getHealth()) > 0 && (p2.getHealth() > 0)) {
+
+                    // Status of the Pokemon
+                    System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                    System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+
+                    // 0 - Tackle, 1 - Attack of the Pokemon
+                    Random azar = new Random();
+                    int agentAtack = azar.nextInt(2);
+
+                    // Obtengo el multiplicador del ataque
+                    double atackEfective = atackDamage(p2.getType(), p1.getType(),
+                            p2.getMovements().get(agentAtack).toString());
+
+                    // Actualizo la vida del contrincante
+                    int totalDamageAgent = (int) Math.round(p2.getAtack() * atackEfective);
+                    updateHP(p1, totalDamageAgent);
+
+                    // Tackle for default
+                    int atack = 0;
+                    int totalDamagePlayer = 0;
+                    boolean movementSelected = false;
+
+                    while (!movementSelected) {
+
+                        // Empieza atacando el jugador
+                        System.out.print("\n[CHOOSE ATACK] = " + p1.getMovements() + " - [1-2]: ");
+
+                        if (scanner.hasNextInt()) {
+                            // Read the integer
+                            atack = scanner.nextInt();
+                            atack = atack - 1;
+
+                            if ((atack >= 0) && (atack < p1.getMovements().size())) {
+
+                                movementSelected = true;
+
+                                // Obtengo el multiplicador del ataque
+                                atackEfective = atackDamage(p1.getType(), p2.getType(),
+                                        p1.getMovements().get(atack).toString());
+                                // Actualizo la vida del contrincante
+                                totalDamagePlayer = (int) Math.round(p2.getAtack() * atackEfective);
+                                updateHP(p2, totalDamagePlayer);
+
+                            } else {
+                                System.out.println(
+                                        "\n[ERROR] - Use an ATACK between the Bounds! [1-" + p1.getMovements().size()
+                                                + "]. \n");
+                            }
+
+                        } else {
+                            System.out.println(
+                                    "\n[ERROR] - That Pokemon ATACK don't exists in the database. Try Again \n");
+                            scanner.nextLine();
+                        }
+                    }
+
+                    System.out
+                            .println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
+                    System.out.println("[ATACK] - Agent made " + totalDamageAgent + " points of damage.");
+                    System.out.println(
+                            "\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
+                    System.out.println("[ATACK] - Player made " + totalDamagePlayer + " points of damage.");
+                }
+
+                break;
+
+            default:
+                break;
         }
 
+        // Choose Winner based on the life of the pokemon
         if (p1.getHealth() > 0) {
             System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the battle.");
             System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
             return 1;
 
         } else {
+
             System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the battle.");
+            System.out.println("\n[REWARD] - Better luck next time :).");
             return 2;
         }
 
@@ -109,6 +203,28 @@ public class battle {
         System.out.println("\n TODOOOOOOO");
 
         return 0;
+    }
+
+    private static int chooseFirstMove(pokemon p1, pokemon p2) {
+
+        // Choose First Player to Play based on Speed Parameter
+
+        // p1 > p2
+        if (p1.getSpeed() > p2.getSpeed()) {
+            return 0;
+
+            // p2 > p1
+        } else if (p2.getSpeed() > p1.getSpeed()) {
+            return 1;
+
+            // p1 == p2
+        } else {
+
+            // Selection of the first movement random
+            // Betwen 0-1
+            Random azar = new Random();
+            return azar.nextInt(2);
+        }
     }
 
     // Function for reduce the HP points
