@@ -64,8 +64,8 @@ public class battle {
                                         p1.getMovements().get(atack).toString());
                                 // Actualizo la vida del contrincante
                                 int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-                                updateHP(p2, totalDamage);
-                                System.out.println("[ATACK] - Player made " + totalDamage + " points of damage.");
+                                int realDamagePlayer = updateHP(p2, totalDamage);
+                                System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage.");
 
                             } else {
                                 System.out.println(
@@ -92,8 +92,8 @@ public class battle {
 
                     // Actualizo la vida del contrincante
                     int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-                    updateHP(p1, totalDamage);
-                    System.out.println("[ATACK] - Agent made " + totalDamage + " points of damage.");
+                    int realDamageAgent = updateHP(p1, totalDamage);
+                    System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage.");
 
                 }
 
@@ -122,11 +122,11 @@ public class battle {
 
                     // Actualizo la vida del contrincante
                     int totalDamageAgent = (int) Math.round(p2.getAtack() * atackEfective);
-                    updateHP(p1, totalDamageAgent);
+                    int realDamageAgent = updateHP(p1, totalDamageAgent);
 
                     // Tackle for default
                     int atack = 0;
-                    int totalDamagePlayer = 0;
+                    int realDamagePlayer = 0;
                     boolean movementSelected = false;
 
                     while (!movementSelected) {
@@ -147,8 +147,8 @@ public class battle {
                                 atackEfective = atackDamage(p1.getType(), p2.getType(),
                                         p1.getMovements().get(atack).toString());
                                 // Actualizo la vida del contrincante
-                                totalDamagePlayer = (int) Math.round(p2.getAtack() * atackEfective);
-                                updateHP(p2, totalDamagePlayer);
+                                int totalDamagePlayer = (int) Math.round(p2.getAtack() * atackEfective);
+                                realDamagePlayer = updateHP(p2, totalDamagePlayer);
 
                             } else {
                                 System.out.println(
@@ -165,10 +165,10 @@ public class battle {
 
                     System.out
                             .println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
-                    System.out.println("[ATACK] - Agent made " + totalDamageAgent + " points of damage.");
+                    System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage.");
                     System.out.println(
                             "\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
-                    System.out.println("[ATACK] - Player made " + totalDamagePlayer + " points of damage.");
+                    System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage.");
                 }
 
                 break;
@@ -289,7 +289,14 @@ public class battle {
         int defense = (int) Math.round(p1.getDefense() * defenseFactor);
         p1.setHealth(p1.getHealth() - atack + defense);
 
-        return p1.getHealth() - atack;
+        if ((atack - defense) == 0) {
+            return 0;
+
+        } else {
+
+            return atack - defense;
+        }
+
     }
 
     // Function for know if the atack its efective or not
