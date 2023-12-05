@@ -39,7 +39,7 @@ public class pokeFight {
             while (!selectedAction) {
 
                 // Clean the Screen
-                utils.clean("W");
+                utils.clean();
 
                 System.out.println("[CHARGING] - We charge in the system " + numberOfPokemonCharged + " pokemons. \n");
 
@@ -101,7 +101,7 @@ public class pokeFight {
                         }
 
                         // Clean the Screen
-                        utils.clean("W");
+                        utils.clean();
 
                         // Select a Pokemon
                     } else if ((pokemonForPlayer > 0) && (pokemonForPlayer <= listOfPokemons.size())) {
@@ -180,7 +180,7 @@ public class pokeFight {
             }
 
             // Clean the Screen
-            utils.clean("W");
+            utils.clean();
 
             // See all pokemons selected
             System.out.print("\n[P1] - Player Pokemons => [ ");
@@ -239,7 +239,6 @@ public class pokeFight {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return 1;

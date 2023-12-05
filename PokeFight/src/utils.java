@@ -2,10 +2,15 @@ import java.io.IOException;
 
 public class utils {
 
-    public static void clean(String so) {
+    // Function for clean the Shell in Linux and Windows
+    public static void clean() {
+
+        // Obtein SO name
+        String so = System.getProperty("os.name");
+        // Return: Windows 10
 
         // Clean for windows
-        if (so.equals("W")) {
+        if (so.contains("Windows")) {
 
             // Clean the Shell
             try {
@@ -16,8 +21,13 @@ public class utils {
 
         } else {
 
-            // TODO - CLEAN IN LINUX IF NECESSARY
-
-        }
+            // Clean the Shell in Linux SO
+            try {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+                ;
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        
     }
 }

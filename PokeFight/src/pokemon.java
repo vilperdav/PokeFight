@@ -3,9 +3,6 @@
  */
 
 // Class for store the pokemon parameters of all the pokemons 
-
-import java.util.List;
-
 import org.json.simple.JSONArray;
 
 public class pokemon {
