@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class cleanScreen {
+public class utils {
 
     public static void clean(String so) {
 

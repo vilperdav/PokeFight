@@ -39,7 +39,7 @@ public class pokeFight {
             while (!selectedAction) {
 
                 // Clean the Screen
-                cleanScreen.clean("W");
+                utils.clean("W");
 
                 System.out.println("[CHARGING] - We charge in the system " + numberOfPokemonCharged + " pokemons. \n");
 
@@ -101,7 +101,7 @@ public class pokeFight {
                         }
 
                         // Clean the Screen
-                        cleanScreen.clean("W");
+                        utils.clean("W");
 
                         // Select a Pokemon
                     } else if ((pokemonForPlayer > 0) && (pokemonForPlayer <= listOfPokemons.size())) {
@@ -166,6 +166,7 @@ public class pokeFight {
                 } else {
                     System.out.println(
                             "\n[ERROR] - That Pokemon ID don't exists in the database. Try Again \n");
+                    // Clean Scanner
                     scanner.nextLine();
                     // System.exit(0);
                 }
@@ -179,7 +180,7 @@ public class pokeFight {
             }
 
             // Clean the Screen
-            cleanScreen.clean("W");
+            utils.clean("W");
 
             // See all pokemons selected
             System.out.print("\n[P1] - Player Pokemons => [ ");

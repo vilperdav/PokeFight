@@ -14,7 +14,7 @@ public class battle {
         // p2 -> Agen Pokemon
 
         // Clean the Screen
-        cleanScreen.clean("W");
+        utils.clean("W");
 
         // LET THIS WARNING LIKE THIS DONT TOUCH IT
         Scanner scanner = new Scanner(System.in);
@@ -56,12 +56,14 @@ public class battle {
                                 movementSelected = true;
                                 System.out.println(
                                         "\n[ATACK] - You Select '" + p1.getMovements().get(atack).toString() + "'");
+
                                 // Obtengo el multiplicador del ataque
-                                double atackEfective = atackDamage(p1.getType(), p2.getType(),
+                                double atackEfective = atackEfective(p1.getType(), p2.getType(),
                                         p1.getMovements().get(atack).toString());
+
                                 // Actualizo la vida del contrincante
-                                int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-                                int realDamagePlayer = updateHP(p2, totalDamage);
+                                int realDamagePlayer = updateHP(p2, (int) Math.round(p1.getAtack() * atackEfective));
+
                                 System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage.");
 
                             } else {
@@ -84,12 +86,13 @@ public class battle {
                             .println("\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAtack).toString() + "'");
 
                     // Obtengo el multiplicador del ataque
-                    double atackEfective = atackDamage(p2.getType(), p1.getType(),
+                    double atackEfective = atackEfective(p2.getType(), p1.getType(),
                             p2.getMovements().get(agentAtack).toString());
 
                     // Actualizo la vida del contrincante
-                    int totalDamage = (int) Math.round(p2.getAtack() * atackEfective);
-                    int realDamageAgent = updateHP(p1, totalDamage);
+                    int realDamageAgent = updateHP(p1, (int) Math.round(p2.getAtack() * atackEfective));
+
+                    // Actualizo la vida del contrincante
                     System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage.");
 
                 }
@@ -114,12 +117,11 @@ public class battle {
                     int agentAtack = azar.nextInt(2);
 
                     // Obtengo el multiplicador del ataque
-                    double atackEfective = atackDamage(p2.getType(), p1.getType(),
+                    double atackEfective = atackEfective(p2.getType(), p1.getType(),
                             p2.getMovements().get(agentAtack).toString());
 
                     // Actualizo la vida del contrincante
-                    int totalDamageAgent = (int) Math.round(p2.getAtack() * atackEfective);
-                    int realDamageAgent = updateHP(p1, totalDamageAgent);
+                    int realDamageAgent = updateHP(p1, (int) Math.round(p2.getAtack() * atackEfective));
 
                     // Tackle for default
                     int atack = 0;
@@ -141,11 +143,11 @@ public class battle {
                                 movementSelected = true;
 
                                 // Obtengo el multiplicador del ataque
-                                atackEfective = atackDamage(p1.getType(), p2.getType(),
+                                atackEfective = atackEfective(p1.getType(), p2.getType(),
                                         p1.getMovements().get(atack).toString());
+
                                 // Actualizo la vida del contrincante
-                                int totalDamagePlayer = (int) Math.round(p2.getAtack() * atackEfective);
-                                realDamagePlayer = updateHP(p2, totalDamagePlayer);
+                                realDamagePlayer = updateHP(p2, (int) Math.round(p1.getAtack() * atackEfective));
 
                             } else {
                                 System.out.println(
@@ -246,7 +248,7 @@ public class battle {
     }
 
     // Function for know if the atack its efective or not
-    private static double atackDamage(String type1, String type2, String attack) {
+    private static double atackEfective(String type1, String type2, String attack) {
 
         // Fire >>> Plant
         // Plant >>> Water
