@@ -372,6 +372,7 @@ public class pokeFight {
                                         // Acess to the information of the pokemon
                                         String type = (String) pokemonDetails.get("type");
                                         String img = "img/" + genName + "/" + pokemonName + ".png";
+                                        String imgS = "img/" + genName + "/" + pokemonName + "_s" + ".png";
                                         int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                         int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                         int defense = ((Long) pokemonDetails.get("defense")).intValue();
@@ -382,6 +383,7 @@ public class pokeFight {
                                         /*
                                          * System.out.println("Pokemon: " + pokemonName);
                                          * System.out.println("IMG: " + img);
+                                         * System.out.println("IMG_S: " + imgS);
                                          * System.out.println("Type: " + type);
                                          * System.out.println("HP: " + hp);
                                          * System.out.println("Attack: " + attack);
@@ -391,7 +393,7 @@ public class pokeFight {
                                          * System.out.println("------------------------");
                                          */
 
-                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, type, hp,
+                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, imgS, type, hp,
                                                 attack, defense, speed, movements));
 
                                         // Incrementar la cantidad de Pokémon cargados

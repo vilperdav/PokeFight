@@ -8,15 +8,17 @@ import org.json.simple.JSONArray;
 public class pokemon {
 
     // Private atribute for pokemone class
-    private String name, type, img;
+    private String name, type, img, imgS;
     private JSONArray movements;
     private int health, atack, defense, speed;
 
     // General constructor of Pokemon
-    public pokemon(String pokeName, String pokeImg, String pokeType, int pokeHealt, int pokeAtack, int pokeDefense,
+    public pokemon(String pokeName, String pokeImg, String pokeImgS, String pokeType, int pokeHealt, int pokeAtack,
+            int pokeDefense,
             int pokeSpeed, JSONArray pokeMovements) {
         name = pokeName;
         img = pokeImg;
+        imgS = pokeImgS;
         type = pokeType;
         health = pokeHealt;
         atack = pokeAtack;
@@ -25,11 +27,12 @@ public class pokemon {
         movements = pokeMovements;
     }
 
-    // toString for Pokemon Class
+    // TO STRING METHOD
     @Override
     public String toString() {
-        return "Pokemon [name=" + name + ", type=" + type + ", img=" + img + ", health=" + health + ", atack=" + atack
-                + ", defense=" + defense + ", speed=" + speed + ", movements=" + movements + "]";
+        return "pokemon [name=" + name + ", type=" + type + ", img=" + img + ", imgS=" + imgS + ", movements="
+                + movements + ", health=" + health + ", atack=" + atack + ", defense=" + defense + ", speed=" + speed
+                + "]";
     }
 
     // GETTER FOR NAME
@@ -45,6 +48,11 @@ public class pokemon {
     // GETTER FOR IMAGES
     public String getImg() {
         return img;
+    }
+
+    // GETTER FOR IMAGE SHYNI
+    public String getImgS() {
+        return imgS;
     }
 
     // GETTER FOR HEALTH
@@ -87,6 +95,11 @@ public class pokemon {
         this.img = img;
     }
 
+    // SETTER FOR IMAGES SHYNIS
+    public void setImgS(String imgS) {
+        this.imgS = imgS;
+    }
+
     // SETTER FOR HEALTH
     public void setHealth(int health) {
         this.health = health;
@@ -112,5 +125,4 @@ public class pokemon {
         this.movements = movements;
     }
 
-   
 }
