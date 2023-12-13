@@ -554,7 +554,7 @@ public class battle {
 
             // Empieza atacando el jugador
             System.out.print("\n[CHOOSE ATACK or ACTION] = [ 1.-" + p1.getMovements().get(0) + " ] - [ 2.- "
-                    + p1.getMovements().get(1) + "] - [ 3.- Change Pokemon ] - [ 4.- Surrender ]");
+                    + p1.getMovements().get(1) + "] - [ 3.- Change Pokemon ] - [ 4.- Surrender ]: ");
 
             // Tackle for default
             int playerAction = 0;
@@ -574,13 +574,9 @@ public class battle {
                         scanner.nextLine();
 
                         // 3 VS 3 or 6 VS 6
-                    } else if (battleType == 3) {
+                    } else {
 
-                        // TODO - CHANGE POKEMON 3 vs 3
-
-                    } else if (battleType == 6) {
-
-                        // TODO - CHANGE POKEMON 6 vs 6
+                        // TODO
 
                     }
 

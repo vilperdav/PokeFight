@@ -226,16 +226,10 @@ public class pokeFight {
                 // fight1vs1
                 result = battle.fight1vs1(playerPokemons.get(0), agentPokemons.get(0));
 
-                // Mode 3vs3
-            } else if (currentMode == 3) {
+                // Mode 3vs3 or 6vs6
+            } else {
 
-                // fight3vs3
-                result = battle.fightNvsN(playerPokemons, agentPokemons);
-
-                // Mode 6vs6
-            } else if (currentMode == 6) {
-
-                // fight6vs6
+                // fight 3vs3 or 6vs6
                 result = battle.fightNvsN(playerPokemons, agentPokemons);
 
             }
