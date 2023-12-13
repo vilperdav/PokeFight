@@ -190,20 +190,304 @@ public class battle {
 
     }
 
-    public static int fight3vs3(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
+    public static int fightNvsN(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
 
-        // TODO
-        System.out.println("\n TODOOOOOOO");
+        // We choose the first two pokemons of the players
+        int playerMarks = 0;
+        int agentMarks = 0;
+        pokemon p1 = playerPokemons.get(0);
+        pokemon p2 = agentPokemons.get(0);
 
-        return 0;
-    }
+        // Switch depending on what pokemon its Faster than other
+        switch (chooseFirstMove(p1, p2)) {
 
-    public static int fight6vs6(ArrayList<pokemon> playerPokemons2, ArrayList<pokemon> agentPokemons2) {
+            // The Player Pokemon is Faster
+            case 0:
 
-        // TODO
-        System.out.println("\n TODOOOOOOO");
+                System.out.println(
+                        "\n[START-FIGHT] - Player starts first - SPEED: " + p1.getSpeed() + " > " + p2.getSpeed());
 
-        return 0;
+                // This means, while we have pokemons with life in our bag
+                while (playerPokemons.size() > 0 && agentPokemons.size() > 0) {
+
+                    // The Fight exits while the pokemons have hp points
+                    while (p1.getHealth() > 0 && p2.getHealth() > 0) {
+
+                        // Status of the Pokemon
+                        System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                        System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+
+                        // If the p1 has more than 0 points of life it chooses its atack
+                        if (p1.getHealth() > 0) {
+
+                            // We ask the player for its action
+                            int playerAction = askPlayerForAction(p1, 1);
+
+                            // It chooses surrender
+                            if (playerAction == 4) {
+
+                                System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
+                                System.out.println("\n[REWARD] - Better luck next time :).");
+                                return 2;
+
+                            }
+
+                            // Say what atack chooses the player
+                            System.out.println(
+                                    "\n[ATACK] - Player Select '" + p1.getMovements().get(playerAction).toString()
+                                            + "'");
+
+                            // Obtains the attackEfectivity of the Atack
+                            double playerAtackEfective = atackEfective(p1.getType(), p2.getType(),
+                                    p1.getMovements().get(playerAction).toString());
+
+                            // Obtains the realDamage of the atack
+                            int realDamagePlayer = updateHP(p2, (int) Math.round(p1.getAtack() * playerAtackEfective));
+
+                            // Say the damage done in the pokemon
+                            System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage.");
+
+                        }
+
+                        // If the p2 has more than 0 points of life it chooses its atack
+                        if (p2.getHealth() > 0) {
+
+                            // Agent Select its action
+                            // 0 - Tackle, 1 - Attack of the Pokemon
+                            Random azar = new Random();
+                            int agentAction = azar.nextInt(2);
+
+                            // Say what atack chooses the agent
+                            System.out.println(
+                                    "\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAction).toString() + "'");
+
+                            // Obtains the attackEfectivity of the Atack
+                            double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
+                                    p2.getMovements().get(agentAction).toString());
+
+                            // Updates the current life of the pokemons
+                            int realDamageAgent = updateHP(p1, (int) Math.round(p2.getAtack() * agentAtackEfective));
+
+                            // Says what it the damage made in the pokemons
+                            System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage.");
+
+                        }
+
+                    }
+
+                    // One of the pokemons has 0 hp soo we delete if from the array
+
+                    // The agent pokemon has 0 hp or less
+                    if (p1.getHealth() > 0) {
+
+                        playerMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Agent Pokemon " + agentPokemons.get(0).getName()
+                                        + " go out of the battle.");
+                        agentPokemons.remove(agentPokemons.get(0));
+
+                        // We obtain a new pokemon
+                        if (!agentPokemons.isEmpty()) {
+                            p2 = agentPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Agent Pokemon chooses " + agentPokemons.get(0).getName()
+                                            + " as the new pokemon.");
+                        }
+
+                        // The player pokemon has 0 hp
+                    } else {
+
+                        agentMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Player Pokemon " + playerPokemons.get(0).getName()
+                                        + " go out of the battle.");
+                        playerPokemons.remove(playerPokemons.get(0));
+
+                        // We obtain a new pokemon
+                        if (!playerPokemons.isEmpty()) {
+                            p1 = playerPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Player Pokemon chooses " + playerPokemons.get(0).getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // See all pokemons currently in game
+                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
+                    for (pokemon pokemonInList : playerPokemons) {
+                        System.out.print(pokemonInList.getName() + ", ");
+                    }
+                    System.out.print("]\n");
+
+                    // See all pokemons selected
+                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
+                    for (pokemon pokemonInList : agentPokemons) {
+                        System.out.print(pokemonInList.getName() + ", ");
+                    }
+                    System.out.print("]\n");
+
+                }
+
+                break;
+
+            // The Agent Pokemon is Faster
+            case 1:
+
+                System.out.println(
+                        "\n[START-FIGHT] - Agent starts first - SPEED: " + p2.getSpeed() + " > " + p1.getSpeed());
+
+                // This means, while we have pokemons with life in our bag
+                while (playerPokemons.size() > 0 && agentPokemons.size() > 0) {
+
+                    // The Fight exits while the pokemons have hp points
+                    while (p1.getHealth() > 0 && p2.getHealth() > 0) {
+
+                        // Status of the Pokemon
+                        System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                        System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+
+                        // If the p2 has more than 0 points of life it chooses its atack
+                        if (p2.getHealth() > 0) {
+
+                            // Agent Select its action
+                            // 0 - Tackle, 1 - Attack of the Pokemon
+                            Random azar = new Random();
+                            int agentAction = azar.nextInt(2);
+
+                            // Say what atack chooses the agent
+                            System.out.println(
+                                    "\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAction).toString() + "'");
+
+                            // Obtains the attackEfectivity of the Atack
+                            double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
+                                    p2.getMovements().get(agentAction).toString());
+
+                            // Updates the current life of the pokemons
+                            int realDamageAgent = updateHP(p1, (int) Math.round(p2.getAtack() * agentAtackEfective));
+
+                            // Says what it the damage made in the pokemons
+                            System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage.");
+
+                        }
+
+                        // If the p1 has more than 0 points of life it chooses its atack
+                        if (p1.getHealth() > 0) {
+
+                            // We ask the player for its action
+                            int playerAction = askPlayerForAction(p1, 1);
+
+                            // It chooses surrender
+                            if (playerAction == 4) {
+
+                                System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
+                                System.out.println("\n[REWARD] - Better luck next time :).");
+                                return 2;
+
+                            }
+
+                            // Say what atack chooses the player
+                            System.out.println(
+                                    "\n[ATACK] - Player Select '" + p1.getMovements().get(playerAction).toString()
+                                            + "'");
+
+                            // Obtains the attackEfectivity of the Atack
+                            double playerAtackEfective = atackEfective(p1.getType(), p2.getType(),
+                                    p1.getMovements().get(playerAction).toString());
+
+                            // Obtains the realDamage of the atack
+                            int realDamagePlayer = updateHP(p2, (int) Math.round(p1.getAtack() * playerAtackEfective));
+
+                            // Say the damage done in the pokemon
+                            System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage.");
+
+                        }
+
+                    }
+
+                    // One of the pokemons has 0 hp soo we delete if from the array
+
+                    // The agent pokemon has 0 hp or less
+                    if (p1.getHealth() > 0) {
+
+                        playerMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Agent Pokemon " + agentPokemons.get(0).getName()
+                                        + " go out of the battle.");
+                        agentPokemons.remove(agentPokemons.get(0));
+
+                        // We obtain a new pokemon
+                        if (!agentPokemons.isEmpty()) {
+                            p2 = agentPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Agent Pokemon chooses " + agentPokemons.get(0).getName()
+                                            + " as the new pokemon.");
+                        }
+
+                        // The player pokemon has 0 hp
+                    } else {
+
+                        agentMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Player Pokemon " + playerPokemons.get(0).getName()
+                                        + " go out of the battle.");
+                        playerPokemons.remove(playerPokemons.get(0));
+
+                        // We obtain a new pokemon
+                        if (!playerPokemons.isEmpty()) {
+                            p1 = playerPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Player Pokemon chooses " + playerPokemons.get(0).getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // See all pokemons currently in game
+                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
+                    for (pokemon pokemonInList : playerPokemons) {
+                        System.out.print(pokemonInList.getName() + ", ");
+                    }
+                    System.out.print("]\n");
+
+                    // See all pokemons selected
+                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
+                    for (pokemon pokemonInList : agentPokemons) {
+                        System.out.print(pokemonInList.getName() + ", ");
+                    }
+                    System.out.print("]\n");
+
+                }
+
+                break;
+
+            default:
+                break;
+
+        }
+
+        // Choose the winner based on the marks of the pokemon defeated
+        if (playerMarks > agentMarks) {
+
+            System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the battle.");
+            System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
+            return 1;
+
+        } else {
+
+            System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the battle.");
+            System.out.println("\n[REWARD] - Better luck next time :).");
+            return 2;
+        }
+
     }
 
     /*
@@ -269,9 +553,8 @@ public class battle {
         while (!ActionSelected) {
 
             // Empieza atacando el jugador
-            System.out.println("\n[CHOOSE ATACK] = [ 1.-" + p1.getMovements().get(0) + " ] - [ 2.- "
-                    + p1.getMovements().get(1) + "]");
-            System.out.print("\n[CHOOSE AN ACTION] = [ 3.- Change Pokemon ] - [ 4.- Surrender ] ");
+            System.out.print("\n[CHOOSE ATACK or ACTION] = [ 1.-" + p1.getMovements().get(0) + " ] - [ 2.- "
+                    + p1.getMovements().get(1) + "] - [ 3.- Change Pokemon ] - [ 4.- Surrender ]");
 
             // Tackle for default
             int playerAction = 0;

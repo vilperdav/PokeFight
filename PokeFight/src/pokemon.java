@@ -3,9 +3,11 @@
  */
 
 // Class for store the pokemon parameters of all the pokemons 
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 
-public class pokemon {
+public class pokemon implements Cloneable {
 
     // Private atribute for pokemone class
     private String name, type, img, imgS;
@@ -25,6 +27,25 @@ public class pokemon {
         defense = pokeDefense;
         speed = pokeSpeed;
         movements = pokeMovements;
+    }
+
+    // OVERRIDE THE ORIGINAL METHOD OF CLONING
+    @Override
+    public pokemon clone() throws CloneNotSupportedException {
+        pokemon clonedPokemon = (pokemon) super.clone();
+
+        // We clone all the atributes of the pokemon
+        clonedPokemon.name = this.name;
+        clonedPokemon.img = this.img;
+        clonedPokemon.imgS = this.imgS;
+        clonedPokemon.type = this.type;
+        clonedPokemon.health = this.health;
+        clonedPokemon.atack = this.atack;
+        clonedPokemon.defense = this.defense;
+        clonedPokemon.speed = this.speed;
+        clonedPokemon.movements = this.movements;
+
+        return clonedPokemon;
     }
 
     // TO STRING METHOD

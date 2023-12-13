@@ -106,6 +106,9 @@ public class pokeFight {
                         // Select a Pokemon
                     } else if ((pokemonForPlayer > 0) && (pokemonForPlayer <= listOfPokemons.size())) {
 
+                        // Select the pokemon to clone
+                        pokemon poke = listOfPokemons.get(pokemonForPlayer - 1);
+
                         // Selector for current mode
                         switch (currentMode) {
 
@@ -113,7 +116,11 @@ public class pokeFight {
                             case 1:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
 
                                 // Only if we choose 1 pokemons exit the while
                                 if (playerPokemons.size() == 1) {
@@ -127,7 +134,11 @@ public class pokeFight {
                             case 3:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
 
                                 // Only if we choose 3 pokemons exit the while
                                 if (playerPokemons.size() == 3) {
@@ -142,8 +153,11 @@ public class pokeFight {
                             case 6:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
-
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
                                 // Only if we choose 6 pokemons exit the while
                                 if (playerPokemons.size() == 6) {
                                     selectedAction = true;
@@ -176,7 +190,12 @@ public class pokeFight {
             Random azar = new Random();
             for (int i = 0; i < currentMode; i++) {
                 // Random Pokemon Betwen 0-8
-                agentPokemons.add(listOfPokemons.get(azar.nextInt(9)));
+                pokemon poke = listOfPokemons.get(azar.nextInt(9));
+                try {
+                    agentPokemons.add(poke.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
 
             // Clean the Screen
@@ -211,13 +230,13 @@ public class pokeFight {
             } else if (currentMode == 3) {
 
                 // fight3vs3
-                result = battle.fight3vs3(playerPokemons, agentPokemons);
+                result = battle.fightNvsN(playerPokemons, agentPokemons);
 
                 // Mode 6vs6
             } else if (currentMode == 6) {
 
                 // fight6vs6
-                result = battle.fight6vs6(playerPokemons, agentPokemons);
+                result = battle.fightNvsN(playerPokemons, agentPokemons);
 
             }
 
