@@ -218,21 +218,8 @@ public class pokeFight {
             // Wait for the battle
             wait(3000);
 
-            int result = 0;
-
-            // Mode 1vs1
-            if (currentMode == 1) {
-
-                // fight1vs1
-                result = battle.fight1vs1(playerPokemons.get(0), agentPokemons.get(0));
-
-                // Mode 3vs3 or 6vs6
-            } else {
-
-                // fight 3vs3 or 6vs6
-                result = battle.fightNvsN(playerPokemons, agentPokemons);
-
-            }
+            // Calling the battle function depending on the currentMode
+            int result = battle.fightNvsN(playerPokemons, agentPokemons, currentMode);
 
             // Printing the Winner in Comand Line
             printWinner(result);
