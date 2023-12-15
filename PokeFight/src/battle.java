@@ -200,17 +200,80 @@ public class battle {
                         if (!(nextPokemonPlayer == null)) {
                             // We change the current pokemon of the player
                             p1 = nextPokemonPlayer;
+                            nextPokemonPlayer = null;
 
                         } else if (!(nextPokemonAgent == null)) {
                             // We change the current pokemon of the agent
                             p2 = nextPokemonAgent;
+                            nextPokemonAgent = null;
 
                         }
 
                     }
 
                     // One of the pokemons has 0 hp soo we delete if from the array
-                    updateMarksAndNextPokemons(p1, p2, playerPokemons, agentPokemons);
+                    // updateMarksAndNextPokemons(p1, p2, playerPokemons, agentPokemons);
+
+                    // The agent pokemon has 0 hp or less
+                    if (p2.getHealth() < 0) {
+
+                        int pokePos = agentPokemons.indexOf(p2);
+                        playerMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Agent Pokemon " + p2.getName()
+                                        + " go out of the battle.");
+                        agentPokemons.remove(pokePos);
+
+                        // We obtain a new pokemon
+                        if (!agentPokemons.isEmpty()) {
+                            p2 = null;
+                            p2 = agentPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // The player pokemon has 0 hp
+                    if (p1.getHealth() < 0) {
+
+                        int pokePos = playerPokemons.indexOf(p1);
+                        agentMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Player Pokemon " + p1.getName()
+                                        + " go out of the battle.");
+                        playerPokemons.remove(pokePos);
+
+                        // We obtain a new pokemon
+                        if (!playerPokemons.isEmpty()) {
+                            p1 = null;
+                            p1 = playerPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // See all pokemons currently in game
+                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
+                    for (pokemon pokemonInList : playerPokemons) {
+                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+                    }
+                    System.out.print("]\n");
+
+                    // See all pokemons selected
+                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
+                    for (pokemon pokemonInList : agentPokemons) {
+                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+                    }
+                    System.out.print("]\n");
+
                 }
 
                 break;
@@ -390,19 +453,87 @@ public class battle {
                         if (!(nextPokemonPlayer == null)) {
                             // We change the current pokemon of the player
                             p1 = nextPokemonPlayer;
+                            nextPokemonPlayer = null;
+
+                            // TODO - Caso en el que se cambia un pokemon al que le golpean y su vida baja a
+                            // cero
 
                         } else if (!(nextPokemonAgent == null)) {
                             // We change the current pokemon of the agent
                             p2 = nextPokemonAgent;
+                            nextPokemonAgent = null;
+
+                            // TODO - Caso en el que se cambia un pokemon al que le golpean y su vida baja a
+                            // cero
 
                         }
 
                     }
 
                     // One of the pokemons has 0 hp soo we delete if from the array
-                    updateMarksAndNextPokemons(p1, p2, playerPokemons, agentPokemons);
-                }
+                    // updateMarksAndNextPokemons(p1, p2, playerPokemons, agentPokemons);
 
+                    // The agent pokemon has 0 hp or less
+                    if (p2.getHealth() < 0) {
+
+                        int pokePos = agentPokemons.indexOf(p2);
+                        playerMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Agent Pokemon " + p2.getName()
+                                        + " go out of the battle.");
+                        agentPokemons.remove(pokePos);
+
+                        // We obtain a new pokemon
+                        if (!agentPokemons.isEmpty()) {
+                            p2 = null;
+                            p2 = agentPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // The player pokemon has 0 hp
+                    if (p1.getHealth() < 0) {
+
+                        int pokePos = playerPokemons.indexOf(p1);
+                        agentMarks++;
+
+                        // We delete the tired pokemon from the array
+                        System.out.println(
+                                "\n[GO-OUT] - Player Pokemon " + p1.getName()
+                                        + " go out of the battle.");
+                        playerPokemons.remove(pokePos);
+
+                        // We obtain a new pokemon
+                        if (!playerPokemons.isEmpty()) {
+                            p1 = null;
+                            p1 = playerPokemons.get(0);
+                            System.out.println(
+                                    "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
+                                            + " as the new pokemon.");
+                        }
+
+                    }
+
+                    // See all pokemons currently in game
+                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
+                    for (pokemon pokemonInList : playerPokemons) {
+                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+                    }
+                    System.out.print("]\n");
+
+                    // See all pokemons selected
+                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
+                    for (pokemon pokemonInList : agentPokemons) {
+                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+                    }
+                    System.out.print("]\n");
+
+                }
                 break;
 
             default:
@@ -485,40 +616,46 @@ public class battle {
             ArrayList<pokemon> agentPokemons) {
 
         // The agent pokemon has 0 hp or less
-        if (p1.getHealth() > 0) {
+        if (p2.getHealth() < 0) {
 
+            int pokePos = agentPokemons.indexOf(p2);
             playerMarks++;
 
             // We delete the tired pokemon from the array
             System.out.println(
-                    "\n[GO-OUT] - Agent Pokemon " + agentPokemons.get(0).getName()
+                    "\n[GO-OUT] - Agent Pokemon " + p2.getName()
                             + " go out of the battle.");
-            agentPokemons.remove(agentPokemons.get(0));
+            agentPokemons.remove(pokePos);
 
             // We obtain a new pokemon
             if (!agentPokemons.isEmpty()) {
+                p2 = null;
                 p2 = agentPokemons.get(0);
                 System.out.println(
-                        "\n[GO-INT] - Agent Pokemon chooses " + agentPokemons.get(0).getName()
+                        "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
                                 + " as the new pokemon.");
             }
 
-            // The player pokemon has 0 hp
-        } else {
+        }
 
+        // The player pokemon has 0 hp
+        if (p1.getHealth() < 0) {
+
+            int pokePos = playerPokemons.indexOf(p1);
             agentMarks++;
 
             // We delete the tired pokemon from the array
             System.out.println(
-                    "\n[GO-OUT] - Player Pokemon " + playerPokemons.get(0).getName()
+                    "\n[GO-OUT] - Player Pokemon " + p1.getName()
                             + " go out of the battle.");
-            playerPokemons.remove(playerPokemons.get(0));
+            playerPokemons.remove(pokePos);
 
             // We obtain a new pokemon
             if (!playerPokemons.isEmpty()) {
+                p1 = null;
                 p1 = playerPokemons.get(0);
                 System.out.println(
-                        "\n[GO-INT] - Player Pokemon chooses " + playerPokemons.get(0).getName()
+                        "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
                                 + " as the new pokemon.");
             }
 
@@ -527,14 +664,14 @@ public class battle {
         // See all pokemons currently in game
         System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
         for (pokemon pokemonInList : playerPokemons) {
-            System.out.print(pokemonInList.getName() + ", ");
+            System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
         }
         System.out.print("]\n");
 
         // See all pokemons selected
         System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
         for (pokemon pokemonInList : agentPokemons) {
-            System.out.print(pokemonInList.getName() + ", ");
+            System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
         }
         System.out.print("]\n");
 
@@ -557,7 +694,7 @@ public class battle {
             int i = 0;
             for (pokemon pokemonInList : pokemonList) {
                 i++;
-                System.out.print(i + ".- " + pokemonInList.getName() + ", ");
+                System.out.print(i + ".- " + pokemonInList.getName() + " PV: " + pokemonInList.getHealth() + ", ");
             }
             System.out.print("]: ");
 

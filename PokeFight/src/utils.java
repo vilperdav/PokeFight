@@ -31,4 +31,14 @@ public class utils {
 
         }
     }
+
+    // Function for make simple waits on code
+    public static int wait(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
 }

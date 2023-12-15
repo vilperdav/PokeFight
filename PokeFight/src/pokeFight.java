@@ -216,7 +216,7 @@ public class pokeFight {
             System.out.print("]\n");
 
             // Wait for the battle
-            wait(3000);
+            utils.wait(3000);
 
             // Calling the battle function depending on the currentMode
             int result = battle.fightNvsN(playerPokemons, agentPokemons, currentMode);
@@ -232,16 +232,6 @@ public class pokeFight {
         scanner.close();
         System.out.println("See you soon! \n");
 
-    }
-
-    // Function for make simple waits on code
-    private static int wait(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return 1;
     }
 
     // Function for printing the winner
