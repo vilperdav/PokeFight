@@ -8,8 +8,7 @@ import java.util.*;
 
 public class battle {
 
-    static int MAX = 1000;
-    static int MIN = -1000;
+  
 
     public static int fight1vs1(pokemon p1, pokemon p2) {
 

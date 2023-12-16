@@ -10,6 +10,10 @@ public class PokeAgent {
         private pokemon[] opponentPokemons;
     private int currentPlayerPokemonIndex;
     private int currentOpponentPokemonIndex;
+    private battle batallaPoke;
+    private int AgentMove;
+    static int MAX = 1000;
+    static int MIN = -1000;
 
 	
 
@@ -18,6 +22,8 @@ public class PokeAgent {
         this.opponentPokemons = opponentPokemons;
         this.currentPlayerPokemonIndex = 0;
         this.currentOpponentPokemonIndex = 0;
+        this.AgentMove=0;
+
     }
 
 
@@ -172,11 +178,24 @@ public class PokeAgent {
         } else {
             // Aplica el movimiento del Pokémon
             // Necesitarás implementar la lógica del juego aquí, como reducir la salud del Pokémon del oponente
-            
+            AgentMove = getBestMove(action.getPokemon());
+            //applyMove(action.getPokemon(), bestMove);
+
+
         }
 
         return newState;
     }
+
+    private int getBestMove(pokemon pokemon) {
+
+        if (pokemon.getAtack()> pokemon.getAtack()) {
+            return pokemon.getMovements().get(0).getAtack();
+        } else {
+            return pokemon.getMovements().get(1).getAtack();
+        }
+
+
 
     // Este método debería comprobar si el juego ha terminado
     public boolean isGameOver() {
