@@ -94,6 +94,14 @@ public class battle {
 
                         }
 
+                        // At the end of the turn we change the pokemon if its necesary
+                        if (!(nextPokemonPlayer == null)) {
+                            // We change the current pokemon of the player
+                            p1 = nextPokemonPlayer;
+                            nextPokemonPlayer = null;
+
+                        }
+
                         // If the p2 has more than 0 points of life it chooses its atack
                         if (p2.getHealth() > 0) {
 
@@ -197,12 +205,7 @@ public class battle {
                         }
 
                         // At the end of the turn we change the pokemon if its necesary
-                        if (!(nextPokemonPlayer == null)) {
-                            // We change the current pokemon of the player
-                            p1 = nextPokemonPlayer;
-                            nextPokemonPlayer = null;
-
-                        } else if (!(nextPokemonAgent == null)) {
+                        if (!(nextPokemonAgent == null)) {
                             // We change the current pokemon of the agent
                             p2 = nextPokemonAgent;
                             nextPokemonAgent = null;
@@ -400,6 +403,14 @@ public class battle {
 
                         }
 
+                        // At the end of the turn we change the pokemon if its necesary
+                        if (!(nextPokemonAgent == null)) {
+                            // We change the current pokemon of the agent
+                            p2 = nextPokemonAgent;
+                            nextPokemonAgent = null;
+
+                        }
+
                         // If the p1 has more than 0 points of life it chooses its atack
                         if (p1.getHealth() > 0) {
 
@@ -454,14 +465,6 @@ public class battle {
                             // We change the current pokemon of the player
                             p1 = nextPokemonPlayer;
                             nextPokemonPlayer = null;
-
-                            // TODO - Caso en el que se cambia un pokemon al que le golpean y su vida baja a
-                            // cero
-
-                        } else if (!(nextPokemonAgent == null)) {
-                            // We change the current pokemon of the agent
-                            p2 = nextPokemonAgent;
-                            nextPokemonAgent = null;
 
                             // TODO - Caso en el que se cambia un pokemon al que le golpean y su vida baja a
                             // cero
