@@ -49,17 +49,6 @@
                         "Energiball"
                     ]
                 },
-                "Torchic": {
-                    "type": "fire",
-                    "hp": 45,
-                    "attack": 60,
-                    "defense": 40,
-                    "speed": 45,
-                    "movements": [
-                        "Tackle",
-                        "Embers"
-                    ]
-                },
                 "Mudkip": {
                     "type": "water",
                     "hp": 50,
@@ -69,6 +58,17 @@
                     "movements": [
                         "Tackle",
                         "Hydropump"
+                    ]
+                },
+                "Torchic": {
+                    "type": "fire",
+                    "hp": 45,
+                    "attack": 60,
+                    "defense": 40,
+                    "speed": 45,
+                    "movements": [
+                        "Tackle",
+                        "Embers"
                     ]
                 }
             },

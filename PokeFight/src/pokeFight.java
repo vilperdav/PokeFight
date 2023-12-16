@@ -49,6 +49,15 @@ public class pokeFight {
                 // See all the pokemons charged
                 for (pokemon pokemonInList : listOfPokemons) {
                     i++;
+                    // Say the generation of the pokemons
+                    if (i == 1) {
+                        System.out.println("        [4a Generation Pokemons]\n");
+                    } else if (i == 4) {
+                        System.out.println("\n        [2a Generation Pokemons]\n");
+                    } else if (i == 7) {
+                        System.out.println("\n        [1a Generation Pokemons]\n");
+                    }
+                    // Say the pokemons in t DB
                     System.out.println(
                             "[" + i + "] - " + pokemonInList.getName() + " => [HP]: " + pokemonInList.getHealth()
                                     + " [PA]: " + pokemonInList.getAtack() + " [PD]: "

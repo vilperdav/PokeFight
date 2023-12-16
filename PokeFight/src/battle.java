@@ -100,6 +100,10 @@ public class battle {
                             p1 = nextPokemonPlayer;
                             nextPokemonPlayer = null;
 
+                            // Status of the Pokemon
+                            System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                            System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+
                         }
 
                         // If the p2 has more than 0 points of life it chooses its atack
@@ -263,19 +267,8 @@ public class battle {
 
                     }
 
-                    // See all pokemons currently in game
-                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
-                    for (pokemon pokemonInList : playerPokemons) {
-                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
-                    }
-                    System.out.print("]\n");
-
-                    // See all pokemons selected
-                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
-                    for (pokemon pokemonInList : agentPokemons) {
-                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
-                    }
-                    System.out.print("]\n");
+                    // Print the current pokemons in the game
+                    printPokemonsInGame(playerPokemons, agentPokemons);
 
                 }
 
@@ -409,6 +402,10 @@ public class battle {
                             p2 = nextPokemonAgent;
                             nextPokemonAgent = null;
 
+                            // Status of the Pokemon
+                            System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
+                            System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+
                         }
 
                         // If the p1 has more than 0 points of life it chooses its atack
@@ -522,19 +519,8 @@ public class battle {
 
                     }
 
-                    // See all pokemons currently in game
-                    System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
-                    for (pokemon pokemonInList : playerPokemons) {
-                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
-                    }
-                    System.out.print("]\n");
-
-                    // See all pokemons selected
-                    System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
-                    for (pokemon pokemonInList : agentPokemons) {
-                        System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
-                    }
-                    System.out.print("]\n");
+                    // Print the current pokemons in the game
+                    printPokemonsInGame(playerPokemons, agentPokemons);
 
                 }
                 break;
@@ -615,66 +601,89 @@ public class battle {
      * }
      */
 
-    private static void updateMarksAndNextPokemons(pokemon p1, pokemon p2, ArrayList<pokemon> playerPokemons,
-            ArrayList<pokemon> agentPokemons) {
+    /*
+     * private static void updateMarksAndNextPokemons(pokemon p1, pokemon p2,
+     * ArrayList<pokemon> playerPokemons,
+     * ArrayList<pokemon> agentPokemons) {
+     * 
+     * // The agent pokemon has 0 hp or less
+     * if (p2.getHealth() < 0) {
+     * 
+     * int pokePos = agentPokemons.indexOf(p2);
+     * playerMarks++;
+     * 
+     * // We delete the tired pokemon from the array
+     * System.out.println(
+     * "\n[GO-OUT] - Agent Pokemon " + p2.getName()
+     * + " go out of the battle.");
+     * agentPokemons.remove(pokePos);
+     * 
+     * // We obtain a new pokemon
+     * if (!agentPokemons.isEmpty()) {
+     * p2 = null;
+     * p2 = agentPokemons.get(0);
+     * System.out.println(
+     * "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
+     * + " as the new pokemon.");
+     * }
+     * 
+     * }
+     * 
+     * // The player pokemon has 0 hp
+     * if (p1.getHealth() < 0) {
+     * 
+     * int pokePos = playerPokemons.indexOf(p1);
+     * agentMarks++;
+     * 
+     * // We delete the tired pokemon from the array
+     * System.out.println(
+     * "\n[GO-OUT] - Player Pokemon " + p1.getName()
+     * + " go out of the battle.");
+     * playerPokemons.remove(pokePos);
+     * 
+     * // We obtain a new pokemon
+     * if (!playerPokemons.isEmpty()) {
+     * p1 = null;
+     * p1 = playerPokemons.get(0);
+     * System.out.println(
+     * "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
+     * + " as the new pokemon.");
+     * }
+     * 
+     * }
+     * 
+     * // See all pokemons currently in game
+     * System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
+     * for (pokemon pokemonInList : playerPokemons) {
+     * System.out.print(pokemonInList.getName() + " PV:" +
+     * (pokemonInList.getHealth()) + ", ");
+     * }
+     * System.out.print("]\n");
+     * 
+     * // See all pokemons selected
+     * System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
+     * for (pokemon pokemonInList : agentPokemons) {
+     * System.out.print(pokemonInList.getName() + " PV:" +
+     * (pokemonInList.getHealth()) + ", ");
+     * }
+     * System.out.print("]\n");
+     * 
+     * }
+     */
 
-        // The agent pokemon has 0 hp or less
-        if (p2.getHealth() < 0) {
-
-            int pokePos = agentPokemons.indexOf(p2);
-            playerMarks++;
-
-            // We delete the tired pokemon from the array
-            System.out.println(
-                    "\n[GO-OUT] - Agent Pokemon " + p2.getName()
-                            + " go out of the battle.");
-            agentPokemons.remove(pokePos);
-
-            // We obtain a new pokemon
-            if (!agentPokemons.isEmpty()) {
-                p2 = null;
-                p2 = agentPokemons.get(0);
-                System.out.println(
-                        "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
-                                + " as the new pokemon.");
-            }
-
-        }
-
-        // The player pokemon has 0 hp
-        if (p1.getHealth() < 0) {
-
-            int pokePos = playerPokemons.indexOf(p1);
-            agentMarks++;
-
-            // We delete the tired pokemon from the array
-            System.out.println(
-                    "\n[GO-OUT] - Player Pokemon " + p1.getName()
-                            + " go out of the battle.");
-            playerPokemons.remove(pokePos);
-
-            // We obtain a new pokemon
-            if (!playerPokemons.isEmpty()) {
-                p1 = null;
-                p1 = playerPokemons.get(0);
-                System.out.println(
-                        "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
-                                + " as the new pokemon.");
-            }
-
-        }
+    private static void printPokemonsInGame(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
 
         // See all pokemons currently in game
         System.out.print("\n[P1-POKEMONS] - Player Pokemons => [ ");
         for (pokemon pokemonInList : playerPokemons) {
-            System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+            System.out.print(pokemonInList.getName() + " [HP]: " + (pokemonInList.getHealth()) + ", ");
         }
         System.out.print("]\n");
 
         // See all pokemons selected
         System.out.print("\n[P2-POKEMONS] - Agent Pokemons => [ ");
         for (pokemon pokemonInList : agentPokemons) {
-            System.out.print(pokemonInList.getName() + " PV:" + (pokemonInList.getHealth()) + ", ");
+            System.out.print(pokemonInList.getName() + "  [HP]: " + (pokemonInList.getHealth()) + ", ");
         }
         System.out.print("]\n");
 
@@ -697,7 +706,7 @@ public class battle {
             int i = 0;
             for (pokemon pokemonInList : pokemonList) {
                 i++;
-                System.out.print(i + ".- " + pokemonInList.getName() + " PV: " + pokemonInList.getHealth() + ", ");
+                System.out.print(i + ".- " + pokemonInList.getName() + " [HP]: " + pokemonInList.getHealth() + ", ");
             }
             System.out.print("]: ");
 
