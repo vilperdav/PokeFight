@@ -39,7 +39,7 @@ public class pokeFight {
             while (!selectedAction) {
 
                 // Clean the Screen
-                cleanScreen.clean("W");
+                utils.clean();
 
                 System.out.println("[CHARGING] - We charge in the system " + numberOfPokemonCharged + " pokemons. \n");
 
@@ -49,6 +49,15 @@ public class pokeFight {
                 // See all the pokemons charged
                 for (pokemon pokemonInList : listOfPokemons) {
                     i++;
+                    // Say the generation of the pokemons
+                    if (i == 1) {
+                        System.out.println("        [4a Generation Pokemons]\n");
+                    } else if (i == 4) {
+                        System.out.println("\n        [2a Generation Pokemons]\n");
+                    } else if (i == 7) {
+                        System.out.println("\n        [1a Generation Pokemons]\n");
+                    }
+                    // Say the pokemons in t DB
                     System.out.println(
                             "[" + i + "] - " + pokemonInList.getName() + " => [HP]: " + pokemonInList.getHealth()
                                     + " [PA]: " + pokemonInList.getAtack() + " [PD]: "
@@ -101,10 +110,13 @@ public class pokeFight {
                         }
 
                         // Clean the Screen
-                        cleanScreen.clean("W");
+                        utils.clean();
 
                         // Select a Pokemon
                     } else if ((pokemonForPlayer > 0) && (pokemonForPlayer <= listOfPokemons.size())) {
+
+                        // Select the pokemon to clone
+                        pokemon poke = listOfPokemons.get(pokemonForPlayer - 1);
 
                         // Selector for current mode
                         switch (currentMode) {
@@ -113,7 +125,11 @@ public class pokeFight {
                             case 1:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
 
                                 // Only if we choose 1 pokemons exit the while
                                 if (playerPokemons.size() == 1) {
@@ -127,7 +143,11 @@ public class pokeFight {
                             case 3:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
 
                                 // Only if we choose 3 pokemons exit the while
                                 if (playerPokemons.size() == 3) {
@@ -142,8 +162,11 @@ public class pokeFight {
                             case 6:
 
                                 // Add the pokemon to the list of chosed
-                                playerPokemons.add(listOfPokemons.get(pokemonForPlayer - 1));
-
+                                try {
+                                    playerPokemons.add(poke.clone());
+                                } catch (CloneNotSupportedException e) {
+                                    e.printStackTrace();
+                                }
                                 // Only if we choose 6 pokemons exit the while
                                 if (playerPokemons.size() == 6) {
                                     selectedAction = true;
@@ -166,6 +189,7 @@ public class pokeFight {
                 } else {
                     System.out.println(
                             "\n[ERROR] - That Pokemon ID don't exists in the database. Try Again \n");
+                    // Clean Scanner
                     scanner.nextLine();
                     // System.exit(0);
                 }
@@ -175,11 +199,16 @@ public class pokeFight {
             Random azar = new Random();
             for (int i = 0; i < currentMode; i++) {
                 // Random Pokemon Betwen 0-8
-                agentPokemons.add(listOfPokemons.get(azar.nextInt(9)));
+                pokemon poke = listOfPokemons.get(azar.nextInt(9));
+                try {
+                    agentPokemons.add(poke.clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
             }
 
             // Clean the Screen
-            cleanScreen.clean("W");
+            utils.clean();
 
             // See all pokemons selected
             System.out.print("\n[P1] - Player Pokemons => [ ");
@@ -196,29 +225,10 @@ public class pokeFight {
             System.out.print("]\n");
 
             // Wait for the battle
-            wait(3000);
+            utils.wait(3000);
 
-            int result = 0;
-
-            // Mode 1vs1
-            if (currentMode == 1) {
-
-                // fight1vs1
-                result = battle.fight1vs1(playerPokemons.get(0), agentPokemons.get(0));
-
-                // Mode 3vs3
-            } else if (currentMode == 3) {
-
-                // fight3vs3
-                result = battle.fight3vs3(playerPokemons, agentPokemons);
-
-                // Mode 6vs6
-            } else if (currentMode == 6) {
-
-                // fight6vs6
-                result = battle.fight6vs6(playerPokemons, agentPokemons);
-
-            }
+            // Calling the battle function depending on the currentMode
+            int result = battle.fightNvsN(playerPokemons, agentPokemons, currentMode);
 
             // Printing the Winner in Comand Line
             printWinner(result);
@@ -231,17 +241,6 @@ public class pokeFight {
         scanner.close();
         System.out.println("See you soon! \n");
 
-    }
-
-    // Function for make simple waits on code
-    private static int wait(int time) {
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return 1;
     }
 
     // Function for printing the winner
@@ -372,6 +371,7 @@ public class pokeFight {
                                         // Acess to the information of the pokemon
                                         String type = (String) pokemonDetails.get("type");
                                         String img = "img/" + genName + "/" + pokemonName + ".png";
+                                        String imgS = "img/" + genName + "/" + pokemonName + "_s" + ".png";
                                         int hp = ((Long) pokemonDetails.get("hp")).intValue();
                                         int attack = ((Long) pokemonDetails.get("attack")).intValue();
                                         int defense = ((Long) pokemonDetails.get("defense")).intValue();
@@ -382,6 +382,7 @@ public class pokeFight {
                                         /*
                                          * System.out.println("Pokemon: " + pokemonName);
                                          * System.out.println("IMG: " + img);
+                                         * System.out.println("IMG_S: " + imgS);
                                          * System.out.println("Type: " + type);
                                          * System.out.println("HP: " + hp);
                                          * System.out.println("Attack: " + attack);
@@ -391,7 +392,7 @@ public class pokeFight {
                                          * System.out.println("------------------------");
                                          */
 
-                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, type, hp,
+                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, imgS, type, hp,
                                                 attack, defense, speed, movements));
 
                                         // Incrementar la cantidad de Pokémon cargados
