@@ -12,15 +12,22 @@ public class battle {
 
     static int playerMarks = 0;
     static int agentMarks = 0;
+    static PokeAgent a=new PokeAgent();
+    private static PokeAgent.GameState ia=a.new GameState(null, null);
+    private static PokeAgent.Action move=a.new Action();
+    static int MAX = 500;
+    static int MIN = -500;
 
     public static int fightNvsN(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons, int battleType) {
 
         // We choose the first two pokemons of the players
+        ia.setPlayerPokemons(agentPokemons);
+        ia.setOpponentPokemons(playerPokemons);
         playerMarks = 0;
         agentMarks = 0;
         pokemon p1 = playerPokemons.get(0);
         pokemon p2 = agentPokemons.get(0);
-
+       //gameState= new PokeAgent().GameState(ArrayList<pokemon> playerPokemons,ArrayList<pokemon> agentPokemons);
         // Switch depending on what pokemon its Faster than other
         switch (chooseFirstMove(p1, p2)) {
 
@@ -111,7 +118,12 @@ public class battle {
                             // *****************************************
                             // RANDOM AGENT CODE
                             // *****************************************
-
+                            move.setScore(ia.evaluate(ia));
+                            try{
+                            move=ia.minimax(1, ia, true, MIN, MAX);
+                            }catch(CloneNotSupportedException e){
+                                System.out.println("error");
+                            }
                             // Agent Select its action
                             Random azar = new Random();
                             int agentAction = 0;
@@ -127,59 +139,17 @@ public class battle {
                             }
 
                             // Agent wants to change the pokemon
-                            if (agentAction == 2) {
+                            if (move.isSwitch()) {
 
                                 int nextPokemon = 0;
-
-                                // Depending on the pokemons alive the agent selects a random number
-                                switch (agentPokemons.size()) {
-
-                                    case 1:
-                                        // Pokemons 0
-                                        nextPokemon = 0;
-                                        break;
-
-                                    case 2:
-                                        // Pokemons 0,1
-                                        nextPokemon = azar.nextInt(2);
-                                        break;
-
-                                    case 3:
-
-                                        // Pokemons 0,1,2
-                                        nextPokemon = azar.nextInt(3);
-                                        break;
-
-                                    case 4:
-
-                                        // Pokemons 0,1,2,3
-                                        nextPokemon = azar.nextInt(4);
-                                        break;
-
-                                    case 5:
-
-                                        // Pokemons 0,1,2,3,4
-                                        nextPokemon = azar.nextInt(5);
-                                        break;
-
-                                    case 6:
-
-                                        // Pokemons 0,1,2,3,4,5
-                                        nextPokemon = azar.nextInt(6);
-                                        break;
-
-                                    default:
-
-                                        nextPokemon = 0;
-                                        break;
-                                }
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
                                 // *****************************************
 
                                 // Agent wants to change its pokemon
-                                nextPokemonAgent = agentPokemons.get(nextPokemon);
+                               nextPokemonAgent = agentPokemons.get(ia.getCurrentPlayerPokemonIndex());
+                               
                                 System.out.println("\n[CHANGE] - Agent wants to change the pokemon -> "
                                         + p2.getName() + " -> " + nextPokemonAgent.getName() + ".");
 
@@ -188,12 +158,12 @@ public class battle {
 
                                 // Say what atack chooses the agent
                                 System.out.println(
-                                        "\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAction).toString()
+                                        "\n[ATACK] - Agent Select '" + move.getagentMove()
                                                 + "'");
 
                                 // Obtains the attackEfectivity of the Atack
                                 double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
-                                        p2.getMovements().get(agentAction).toString());
+                                        move.getagentMove());
 
                                 // Updates the current life of the pokemons
                                 int realDamageAgent = updateHP(p1,
@@ -231,11 +201,13 @@ public class battle {
                                 "\n[GO-OUT] - Agent Pokemon " + p2.getName()
                                         + " go out of the battle.");
                         agentPokemons.remove(pokePos);
+                        ia.setPlayerPokemons(agentPokemons);
 
                         // We obtain a new pokemon
                         if (!agentPokemons.isEmpty()) {
                             p2 = null;
                             p2 = agentPokemons.get(0);
+                            //TODO CAMBIAR POKEMON, NO SE SI ALEATORIO O QUE ELIJA
                             System.out.println(
                                     "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
                                             + " as the new pokemon.");
@@ -303,7 +275,7 @@ public class battle {
                             // Agent Select its action
                             Random azar = new Random();
                             int agentAction = 0;
-
+                             
                             if (battleType == 1) {
                                 // 0 - Tackle, 1 - Attack of the Pokemon
                                 agentAction = azar.nextInt(2);
@@ -315,52 +287,11 @@ public class battle {
                             }
 
                             // Agent wants to change the pokemon
-                            if (agentAction == 2) {
+                            if (move.isSwitch()) {
 
                                 int nextPokemon = 0;
-
+                                nextPokemon=ia.getCurrentPlayerPokemonIndex();
                                 // Depending on the pokemons alive the agent selects a random number
-                                switch (agentPokemons.size()) {
-
-                                    case 1:
-                                        // Pokemons 0
-                                        nextPokemon = 0;
-                                        break;
-
-                                    case 2:
-                                        // Pokemons 0,1
-                                        nextPokemon = azar.nextInt(2);
-                                        break;
-
-                                    case 3:
-
-                                        // Pokemons 0,1,2
-                                        nextPokemon = azar.nextInt(3);
-                                        break;
-
-                                    case 4:
-
-                                        // Pokemons 0,1,2,3
-                                        nextPokemon = azar.nextInt(4);
-                                        break;
-
-                                    case 5:
-
-                                        // Pokemons 0,1,2,3,4
-                                        nextPokemon = azar.nextInt(5);
-                                        break;
-
-                                    case 6:
-
-                                        // Pokemons 0,1,2,3,4,5
-                                        nextPokemon = azar.nextInt(6);
-                                        break;
-
-                                    default:
-
-                                        nextPokemon = 0;
-                                        break;
-                                }
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
@@ -368,20 +299,26 @@ public class battle {
 
                                 // Agent wants to change its pokemon
                                 nextPokemonAgent = agentPokemons.get(nextPokemon);
+                                
                                 System.out.println("\n[CHANGE] - Agent wants to change the pokemon -> "
                                         + p2.getName() + " -> " + nextPokemonAgent.getName() + ".");
 
                             } else {
                                 // Losses turn but he can change the pokemon
-
+                                move.setScore(ia.evaluate(ia));
+                            try{
+                            move=ia.minimax(1, ia, true, MIN, MAX);
+                            }catch(CloneNotSupportedException e){
+                                System.out.println("error");
+                            }
                                 // Say what atack chooses the agent
                                 System.out.println(
-                                        "\n[ATACK] - Agent Select '" + p2.getMovements().get(agentAction).toString()
+                                        "\n[ATACK] - Agent Select '" + move.getagentMove()
                                                 + "'");
 
                                 // Obtains the attackEfectivity of the Atack
                                 double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
-                                        p2.getMovements().get(agentAction).toString());
+                                        move.getagentMove());
 
                                 // Updates the current life of the pokemons
                                 int realDamageAgent = updateHP(p1,
@@ -867,7 +804,7 @@ public class battle {
     }
 
     // Function for know if the atack its efective or not
-    private static double atackEfective(String type1, String type2, String attack) {
+    public static double atackEfective(String type1, String type2, String attack) {
 
         // Fire >>> Plant
         // Plant >>> Water

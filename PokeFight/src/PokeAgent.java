@@ -6,23 +6,21 @@ import java.util.List;
 public class PokeAgent {
 	
 	public class GameState{
-		private pokemon[] playerPokemons;
-        private pokemon[] opponentPokemons;
+		private ArrayList<pokemon> playerPokemons;
+        private ArrayList<pokemon> opponentPokemons;
+        private battle batalla;
     private int currentPlayerPokemonIndex;
     private int currentOpponentPokemonIndex;
-    private battle batallaPoke;
-    private int AgentMove;
-    static int MAX = 1000;
-    static int MIN = -1000;
+    static int MAX = 500;
+    static int MIN = -500;
 
 	
 
-    public GameState(pokemon[] playerPokemons, pokemon[] opponentPokemons) {
+    public GameState(ArrayList<pokemon> agentPokemons, ArrayList<pokemon> playerPokemons) {
         this.playerPokemons = playerPokemons;
         this.opponentPokemons = opponentPokemons;
         this.currentPlayerPokemonIndex = 0;
         this.currentOpponentPokemonIndex = 0;
-        this.AgentMove=0;
 
     }
 
@@ -35,87 +33,93 @@ public class PokeAgent {
             // Asume que tienes un método getHealth() en tu clase Pokemon
             for (pokemon pokemon : state.getPlayerPokemons()) {
                 score += pokemon.getHealth();
+                score += pokemon.getAtack();
+                score += pokemon.getDefense();
+                score +=battle.atackEfective(opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(0).toString());
+                score +=battle.atackEfective(opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(1).toString());
+               
             }
             for (pokemon pokemon : state.getOpponentPokemons()) {
                 score -= pokemon.getHealth();
+                score -= pokemon.getAtack();
+                score -= pokemon.getDefense(); 
+                score -= battle.atackEfective(opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(0).toString());
+                score -= battle.atackEfective(opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(1).toString());
             }
-        
             return score;
         }
     
         // Función Minimax con poda alfa-beta. Devuelve la acción óptima
-        Action minimax(int depth, GameState state, Boolean isMax, int alpha, int beta) throws CloneNotSupportedException {
-            // Si el juego ha terminado, devuelve la evaluación del estado del juego
-            if (state.isGameOver())
-                return new Action(null,false);
-    
-            // Genera todas las posibles acciones en el estado actual del juego
-            List<Action> actions = state.getActions();
-    
-            // Si este nodo maximizador
-            if (isMax) {
-                int bestScore = Integer.MIN_VALUE;
-                Action bestAction = null;
-    
-                // Recorre todas las posibles acciones
-                for (Action action : actions) {
-                    // Realiza la acción y obtiene el nuevo estado del juego
-                    GameState newState = state.doAction(action);
-    
-                    // Llama a minimax recursivamente y elige la acción con la puntuación máxima
-                    Action currentAction = minimax(depth + 1, newState, !isMax, alpha, beta);
-                    int val = currentAction.getScore();
-                    if (val > bestScore) {
-                        bestScore = val;
-                        bestAction = action;
-                    }
-                    alpha = Math.max(alpha, bestScore);
-    
-                    // Poda alfa-beta
-                    if (beta <= alpha)
-                        break;
-                }
-    
-                bestAction.setScore(bestScore);
-                return bestAction;
+       Action minimax(int depth, GameState state, boolean isMax, int alpha, int beta) throws CloneNotSupportedException {
+    if (state.isGameOver())
+        return new Action(null, false); // Supongo que Action tiene un constructor con un pokemon y un score
+
+    List<Action> actions = state.getActions();
+        System.out.println(playerPokemons);
+
+    if (isMax) {
+        int bestScore = Integer.MIN_VALUE;
+        Action bestAction = null;
+
+        for (Action action : actions) {
+            GameState newState = state.doAction(action);
+             if(depth==15){
+             try{
+            Action currentAction = minimax(depth + 1, newState, !isMax, alpha, beta);
+        }catch (Exception e){}}
+            //int val = currentAction.getScore();
+            int val=1;
+            if (val > bestScore) {
+                bestScore = val;
+                bestAction = action;
             }
-    
-            // Si este nodo minimizador
-            else {
-                int bestScore = Integer.MAX_VALUE;
-                Action bestAction = null;
-    
-                // Recorre todas las posibles acciones
-                for (Action action : actions) {
-                    // Realiza la acción y obtiene el nuevo estado del juego
-                    GameState newState = state.doAction(action);
-    
-                    // Llama a minimax recursivamente y elige la acción con la puntuación mínima
-                    Action currentAction = minimax(depth + 1, newState, !isMax, alpha, beta);
-                    int val = currentAction.getScore();
-                    if (val < bestScore) {
-                        bestScore = val;
-                        bestAction = action;
-                    }
-                    beta = Math.min(beta, bestScore);
-    
-                    // Poda alfa-beta
-                    if (beta <= alpha)
-                        break;
-                }
-    
-                bestAction.setScore(bestScore);
-                return bestAction;
-            }
+
+            alpha = Math.max(alpha, bestScore);
+
+            if (beta <= alpha)
+                break;
         }
-    
+
+        if (bestAction != null)
+            bestAction.setScore(bestScore);
+
+        return bestAction;
+    } else {
+        int bestScore = Integer.MAX_VALUE;
+        Action bestAction = null;
+
+        for (Action action : actions) {
+            GameState newState = state.doAction(action);
+            if(depth==15){
+             try{
+            Action currentAction = minimax(depth + 1, newState, !isMax, alpha, beta);
+        }catch (Exception e){}}
+            //int val = currentAction.getScore();
+            int val=1;
+            if (val < bestScore) {
+                bestScore = val;
+                bestAction = action;
+            }
+
+            beta = Math.min(beta, bestScore);
+
+            if (beta <= alpha)
+                break;
+        }
+
+        if (bestAction != null)
+            bestAction.setScore(bestScore);
+
+        return bestAction;
+    }
+}
     
     // Getters
-    public pokemon[] getPlayerPokemons() {
+    public  ArrayList<pokemon> getPlayerPokemons() {
         return this.playerPokemons;
     }
 
-    public pokemon[] getOpponentPokemons() {
+    public  ArrayList<pokemon> getOpponentPokemons() {
         return this.opponentPokemons;
     }
 
@@ -128,11 +132,11 @@ public class PokeAgent {
     }
 
     // Setters
-    public void setPlayerPokemons(pokemon[] playerPokemons) {
+    public void setPlayerPokemons( ArrayList<pokemon> playerPokemons) {
         this.playerPokemons = playerPokemons;
     }
 
-    public void setOpponentPokemons(pokemon[] opponentPokemons) {
+    public void setOpponentPokemons( ArrayList<pokemon> opponentPokemons) {
         this.opponentPokemons = opponentPokemons;
     }
 
@@ -143,19 +147,20 @@ public class PokeAgent {
     public void setCurrentOpponentPokemonIndex(int currentOpponentPokemonIndex) {
         this.currentOpponentPokemonIndex = currentOpponentPokemonIndex;
     }
+    
+    
 
     // Este método debería generar todas las posibles acciones en el estado actual del juego
     public List<Action> getActions() {
         List<Action> actions = new ArrayList<Action>();
-
-        //Para cada movimiento del Pokémon actual del jugador
-           actions.add(new Action(playerPokemons[currentPlayerPokemonIndex], false));
         
+        //Para cada movimiento del Pokémon actual del jugador
+           actions.add(new Action(playerPokemons.get(currentOpponentPokemonIndex), false));
 
         // Para cada Pokémon en el equipo del jugador
         for (pokemon pokemon : playerPokemons) {
             // No puedes cambiar al Pokémon que ya está en la batalla
-            if (pokemon != playerPokemons[currentPlayerPokemonIndex]) {
+            if (pokemon != playerPokemons.get(currentOpponentPokemonIndex)) {
                 actions.add(new Action(pokemon, true));
             }
         }
@@ -165,35 +170,36 @@ public class PokeAgent {
 
     // Este método debería realizar una acción y devolver el nuevo estado del juego
     public GameState doAction(Action action) throws CloneNotSupportedException {
-        GameState newState = (GameState) this.clone(); // Asume que tienes un método para clonar el estado del juego
-
+        GameState newState = clone(); // Asume que tienes un método para clonar el estado del juego
         if (action.isSwitch()) {
             // Encuentra el índice del Pokémon al que se está cambiando
-            for (int i = 0; i < newState.playerPokemons.length; i++) {
-                if (newState.playerPokemons[i] == action.getPokemon()) {
+            for (int i = 0; i < newState.playerPokemons.size(); i++) {
+                if (newState.playerPokemons.get(i) == action.getPokemon()) {
                     newState.currentPlayerPokemonIndex = i;
                     break;
                 }
             }
         } else {
             // Aplica el movimiento del Pokémon
-            // Necesitarás implementar la lógica del juego aquí, como reducir la salud del Pokémon del oponente
-            AgentMove = getBestMove(action.getPokemon());
-            //applyMove(action.getPokemon(), bestMove);
-
+           getBestMove(action);
 
         }
 
         return newState;
     }
 
-    private int getBestMove(pokemon pokemon) {
+    private void getBestMove(Action accion) {
 
-        if (pokemon.getAtack()> pokemon.getAtack()) {
-            return pokemon.getMovements().get(0).getAtack();
-        } else {
-            return pokemon.getMovements().get(1).getAtack();
+
+       if (battle.atackEfective(playerPokemons.get(getCurrentOpponentPokemonIndex()).getType(),opponentPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(0).toString())
+        >battle.atackEfective(playerPokemons.get(getCurrentOpponentPokemonIndex()).getType(),opponentPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(1).toString())){ 
+            accion.setagentMove(accion.pokemon.getMovements().get(0).toString());
+            
+        }else {
+            accion.setagentMove(accion.pokemon.getMovements().get(1).toString());
+           
         }
+    }
 
 
 
@@ -212,22 +218,42 @@ public class PokeAgent {
         }
         return true;
     }
+
+    @Override
+    public GameState clone() throws CloneNotSupportedException {
+        
+        GameState clonedState= new GameState(null, null);
+        // Clonar las listas de Pokémon (asumiendo que los objetos pokemon también son clonables)
+        clonedState.playerPokemons = new ArrayList<>(this.playerPokemons.size());
+        for (pokemon p : this.playerPokemons) {
+            clonedState.playerPokemons.add(p.clone()); // Clonar cada objeto pokemon si es clonable
+        }
+
+        clonedState.opponentPokemons = new ArrayList<>(this.opponentPokemons.size());
+        for (pokemon p : this.opponentPokemons) {
+            clonedState.opponentPokemons.add(p.clone()); // Clonar cada objeto pokemon si es clonable
+        }
+
+        // Clonar los demás atributos simples
+        clonedState.currentPlayerPokemonIndex = this.currentPlayerPokemonIndex;
+        clonedState.currentOpponentPokemonIndex = this.currentOpponentPokemonIndex;
+     
+
+        return clonedState;
+    }
+
+    
 }
 
 public class Action {
    
     private pokemon pokemon;
     private boolean isSwitch;
-
+    private int score;
+    private String agentMove;
     public Action(){}
 
-    public void setScore(int bestScore) {
-    }
-
-    public int getScore() {
-        return 0;
-    }
-
+    
     public Action(pokemon pokemon, boolean isSwitch) {
         this.pokemon = pokemon;
         this.isSwitch = isSwitch;
@@ -238,10 +264,16 @@ public class Action {
         return this.pokemon;
     }
 
+    public int getScore() {
+        
+        return this.score;
+    }
 
     public boolean isSwitch() {
         return this.isSwitch;
     }
+
+   
 
     // Setters
     public void setPokemon(pokemon pokemon) {
@@ -250,6 +282,17 @@ public class Action {
 
     public void setSwitch(boolean isSwitch) {
         this.isSwitch = isSwitch;
+    }
+
+    public void setScore(int bestScore) {
+    }
+    
+    public String getagentMove(){
+        return agentMove;
+    }
+
+    public void setagentMove(String agentMove){
+        this.agentMove=agentMove;
     }
 }
 
