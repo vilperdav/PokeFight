@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SelectPokemon extends AppCompatActivity {
+public class activity_SelectPokemon extends AppCompatActivity {
     private Integer[] images = {
 
             R.drawable.charmander,

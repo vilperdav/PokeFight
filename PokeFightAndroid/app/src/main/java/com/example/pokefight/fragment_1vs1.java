@@ -27,10 +27,10 @@ import org.json.simple.parser.ParseException;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OneVsOne#newInstance} factory method to
+ * Use the {@link fragment_1vs1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OneVsOne extends Fragment {
+public class fragment_1vs1 extends Fragment {
 
     public static ArrayList<pokemon> listOfPokemons = new ArrayList<pokemon>();
     public static ArrayList<pokemon> agentPokemons = new ArrayList<pokemon>();
@@ -47,7 +47,7 @@ public class OneVsOne extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OneVsOne() {
+    public fragment_1vs1() {
         // Required empty public constructor
     }
 
@@ -57,13 +57,13 @@ public class OneVsOne extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OneVsOne.
+     * @return A new instance of fragment fragment_1vs1.
      */
 
 
     // TODO: Rename and change types and number of parameters
-    public static OneVsOne newInstance(String param1, String param2) {
-        OneVsOne fragment = new OneVsOne();
+    public static fragment_1vs1 newInstance(String param1, String param2) {
+        fragment_1vs1 fragment = new fragment_1vs1();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -258,7 +258,7 @@ public class OneVsOne extends Fragment {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SelectPokemon.class);
+                Intent intent = new Intent(getActivity(), activity_SelectPokemon.class);
                 intent.putExtra("buttonId", v.getId());
                 mStartForResult.launch(intent);
             }

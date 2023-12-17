@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPass {
+public class activity_Main extends AppCompatActivity implements fragment_1vs1.OnDataPass {
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPa
                 return;
             }
 
-            OneVsOne fragmentoDeInicio = new OneVsOne();
+            fragment_1vs1 fragmentoDeInicio = new fragment_1vs1();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragmentoDeInicio).commit();
         }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPa
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), battle.class);
+                Intent intent = new Intent(getApplicationContext(), activity_Fight.class);
 
                 // Agregar el array al Intent
                 intent.putExtra("agentPokemonsKey", agentPokemonsPased);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPa
         imageButtonMedals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,Medals.class);
+                Intent intent = new Intent(activity_Main.this, activity_Medals.class);
                 startActivity(intent);
             }
         });
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPa
         helpImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,helpInfo.class);
+                Intent intent = new Intent(activity_Main.this, activity_Info.class);
                 startActivity(intent);
             }
         });

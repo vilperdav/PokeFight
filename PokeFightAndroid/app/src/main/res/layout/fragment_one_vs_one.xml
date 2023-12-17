@@ -5,7 +5,7 @@
     android:layout_width="411dp"
     android:layout_height="496dp"
     android:id="@+id/ModeFragment"
-    tools:context=".OneVsOne">
+    tools:context=".fragment_1vs1">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -13,7 +13,7 @@
         android:layout_width="411dp"
         android:layout_height="496dp"
         android:background="#313435"
-        tools:context=".OneVsOne"
+        tools:context=".fragment_1vs1"
         tools:ignore="ExtraText">
 
         <TextView
@@ -23,7 +23,7 @@
             android:fontFamily="casual"
             android:text="YOUR TEAM"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/White"
             android:textSize="10pt"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
             android:fontFamily="casual"
             android:text="IA TEAM"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/White"
             android:textSize="10pt"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class helpInfo extends AppCompatActivity {
+public class activity_Info extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,8 +1,14 @@
 package com.example.pokefight;
 
+import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.*;
 
-public class battle extends AppCompatActivity {
+public class activity_Fight extends AppCompatActivity {
 
     static int MAX = 1000;
     static int MIN = -1000;
@@ -26,6 +32,7 @@ public class battle extends AppCompatActivity {
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -43,24 +50,41 @@ public class battle extends AppCompatActivity {
         System.out.println(agentPokemonsPased + "\n");
         System.out.println(playerPokemonsPased + "\n");
 
-        Button specialAttackButton = findViewById(R.id.button10);
-        Button changePokemonButton = findViewById(R.id.button11);
-        Button exitGameButton = findViewById(R.id.button8);
-        Button tackleButton = findViewById(R.id.button6);
+        Button specialAttackButton = findViewById(R.id.specialAttackButton);
+        Button changePokemonButton = findViewById(R.id.changePokemonButton);
+        Button exitGameButton = findViewById(R.id.surrenderButton);
+        Button tackleButton = findViewById(R.id.tackleButton);
 
         // Texto de vida
-        playerHpTextView = findViewById(R.id.textView4);
-        agentHpTextView = findViewById(R.id.textView7);
+        playerHpTextView = findViewById(R.id.textPlayerHealth);
+        agentHpTextView = findViewById(R.id.textAgentHealth);
 
         this.playerHpTextView.setText("HP: " + playerPokemonsPased.get(0).getHealth());
         this.agentHpTextView.setText("HP: " + agentPokemonsPased.get(0).getHealth());
 
+        // Cambio el color de fondo y texto del ataque especial
+        String pokeType = playerPokemonsPased.get(0).getType();
+        String pokeSpecialAttack = (String) playerPokemonsPased.get(0).getMovements().get(1);
+        specialAttackButton.setText(pokeSpecialAttack.toUpperCase());
+        specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Black));
+
+        // Cambia el color del boton de ataque especial dependiendo del tipo de ataque
+        if (pokeType.equals("fire")) {
+            //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Red));
+            specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightRed));
+        } else if (pokeType.equals("water")) {
+            //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Blue));
+            specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightBlue));
+        } else if (pokeType.equals("plant")) {
+            //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Green));
+            specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGreen));
+        }
 
         // TODO - Esto es valido solo para 1 VS 1, si se cambia el pokemon habria que actualizarlo
 
         // Imagen de los pokemon
-        pokemonPlayerImg = findViewById(R.id.imageView);
-        pokemonAgentImg = findViewById(R.id.imageView2);
+        pokemonPlayerImg = findViewById(R.id.imagePlayerPokemon);
+        pokemonAgentImg = findViewById(R.id.imageAgentPokemon);
 
         this.pokemonPlayerImg.setImageResource(getResources().getIdentifier(playerPokemonsPased.get(0).getName().toLowerCase(), "drawable", getPackageName()));
         this.pokemonAgentImg.setImageResource(getResources().getIdentifier(agentPokemonsPased.get(0).getName().toLowerCase(), "drawable", getPackageName()));
@@ -131,10 +155,10 @@ public class battle extends AppCompatActivity {
                     // It chooses surrender
                     if (playerDecision == 4) {
 
-                        System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
+                        System.out.println("\n[SURRENDER] - PLAYER lose and go out of the activity_Fight.");
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
-                        Intent intent = new Intent(battle.this, loserScreen.class);
+                        Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
                         startActivity(intent);
 
                         return 2;
@@ -208,7 +232,7 @@ public class battle extends AppCompatActivity {
                     // We delete the tired pokemon from the array
                     System.out.println(
                             "\n[GO-OUT] - Agent Pokemon " + p2.getName()
-                                    + " go out of the battle.");
+                                    + " go out of the activity_Fight.");
                     agentPokemons.remove(pokePos);
 
                     // We obtain a new pokemon
@@ -231,7 +255,7 @@ public class battle extends AppCompatActivity {
                     // We delete the tired pokemon from the array
                     System.out.println(
                             "\n[GO-OUT] - Player Pokemon " + p1.getName()
-                                    + " go out of the battle.");
+                                    + " go out of the activity_Fight.");
                     playerPokemons.remove(pokePos);
 
                     // We obtain a new pokemon
@@ -303,10 +327,10 @@ public class battle extends AppCompatActivity {
                     // It chooses surrender
                     if (playerDecision == 4) {
 
-                        System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
+                        System.out.println("\n[SURRENDER] - PLAYER lose and go out of the activity_Fight.");
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
-                        Intent intent = new Intent(battle.this, loserScreen.class);
+                        Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
                         startActivity(intent);
 
                         return 2;
@@ -340,7 +364,7 @@ public class battle extends AppCompatActivity {
                     // We delete the tired pokemon from the array
                     System.out.println(
                             "\n[GO-OUT] - Agent Pokemon " + p2.getName()
-                                    + " go out of the battle.");
+                                    + " go out of the activity_Fight.");
                     agentPokemons.remove(pokePos);
 
                     // We obtain a new pokemon
@@ -363,7 +387,7 @@ public class battle extends AppCompatActivity {
                     // We delete the tired pokemon from the array
                     System.out.println(
                             "\n[GO-OUT] - Player Pokemon " + p1.getName()
-                                    + " go out of the battle.");
+                                    + " go out of the activity_Fight.");
                     playerPokemons.remove(pokePos);
 
                     // We obtain a new pokemon
@@ -392,10 +416,10 @@ public class battle extends AppCompatActivity {
             // Choose the winner based on the marks of the pokemon defeated
             if (playerMarks > agentMarks) {
 
-                System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the battle.");
+                System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the activity_Fight.");
                 System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
 
-                Intent intent = new Intent(battle.this, winnerScreen.class);
+                Intent intent = new Intent(activity_Fight.this, activity_Win.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -410,10 +434,10 @@ public class battle extends AppCompatActivity {
 
             } else {
 
-                System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the battle.");
+                System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the activity_Fight.");
                 System.out.println("\n[REWARD] - Better luck next time :).");
 
-                Intent intent = new Intent(battle.this, loserScreen.class);
+                Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

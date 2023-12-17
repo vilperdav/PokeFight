@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class loserScreen extends AppCompatActivity {
+public class activity_Lose extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class loserScreen extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(loserScreen.this, MainActivity.class);
+                Intent intent = new Intent(activity_Lose.this, activity_Main.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

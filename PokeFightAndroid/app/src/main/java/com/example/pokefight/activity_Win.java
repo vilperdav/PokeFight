@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class winnerScreen extends AppCompatActivity {
+public class activity_Win extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class winnerScreen extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(winnerScreen.this, MainActivity.class);
+                Intent intent = new Intent(activity_Win.this, activity_Main.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -37,7 +37,7 @@ public class winnerScreen extends AppCompatActivity {
         btnGoToCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(winnerScreen.this, Medals.class);
+                Intent intent = new Intent(activity_Win.this, activity_Medals.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

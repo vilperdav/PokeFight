@@ -13,22 +13,22 @@
         android:theme="@style/Theme.PokeFight"
         tools:targetApi="31">
         <activity
-            android:name=".SelectPokemon"
+            android:name=".activity_SelectPokemon"
             android:exported="false" />
         <activity
-            android:name=".Medals"
+            android:name=".activity_Medals"
             android:exported="false" />
         <activity
-            android:name=".helpInfo"
+            android:name=".activity_Info"
             android:exported="false" />
         <activity
-            android:name=".winnerScreen"
+            android:name=".activity_Win"
             android:exported="false" />
         <activity
-            android:name=".loserScreen"
+            android:name=".activity_Lose"
             android:exported="false" />
         <activity
-            android:name=".Fight_Activity"
+            android:name=".activity_Fight"
             android:exported="false"
             android:label="@string/title_activity_fight"
             android:theme="@style/Theme.PokeFight" />
@@ -38,7 +38,7 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.PokeFight" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity_Main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

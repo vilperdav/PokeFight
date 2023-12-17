@@ -66,7 +66,7 @@ public class SixVsSix extends Fragment {
         botonCambiarFragmento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OneVsOne fragmento = new OneVsOne();
+                fragment_1vs1 fragmento = new fragment_1vs1();
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fragmento)
                         .commit();

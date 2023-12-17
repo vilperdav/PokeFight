@@ -1,20 +1,8 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Fondo del botón (rojo) -->
-    <item android:id="@android:id/background">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/Red" />
-        </shape>
-    </item>
-
-    <!-- Borde negro del botón -->
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/Black" />
-            <stroke
-                android:width="2dp"
-                android:color="#000000" />
-        </shape>
-    </item>
-
-</layer-list>
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/Black" />
+    <stroke
+        android:width="2dp"
+        android:backgroundTint="@color/Red" />
+    <corners android:radius="8dp" /> <!-- Ajusta el radio según sea necesario -->
+</shape>
