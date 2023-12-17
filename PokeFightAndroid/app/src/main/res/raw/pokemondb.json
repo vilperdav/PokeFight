@@ -1,0 +1,112 @@
+{
+    "Pokemon": [
+        {
+            "1Gen": {
+                "Bulbasaur": {
+                    "type": "plant",
+                    "hp": 45,
+                    "attack": 49,
+                    "defense": 49,
+                    "speed": 45,
+                    "movements": [
+                        "Tackle",
+                        "Vine Whip"
+                    ]
+                },
+                "Squirtle": {
+                    "type": "water",
+                    "hp": 44,
+                    "attack": 48,
+                    "defense": 65,
+                    "speed": 43,
+                    "movements": [
+                        "Tackle",
+                        "Water Gun"
+                    ]
+                },
+                "Charmander": {
+                    "type": "fire",
+                    "hp": 39,
+                    "attack": 52,
+                    "defense": 43,
+                    "speed": 65,
+                    "movements": [
+                        "Tackle",
+                        "Flamethrower"
+                    ]
+                }
+            },
+            "2Gen": {},
+            "3Gen": {
+                "Treecko": {
+                    "type": "plant",
+                    "hp": 40,
+                    "attack": 45,
+                    "defense": 35,
+                    "speed": 70,
+                    "movements": [
+                        "Tackle",
+                        "Energiball"
+                    ]
+                },
+                "Mudkip": {
+                    "type": "water",
+                    "hp": 50,
+                    "attack": 70,
+                    "defense": 50,
+                    "speed": 40,
+                    "movements": [
+                        "Tackle",
+                        "Hydropump"
+                    ]
+                },
+                "Torchic": {
+                    "type": "fire",
+                    "hp": 45,
+                    "attack": 60,
+                    "defense": 40,
+                    "speed": 45,
+                    "movements": [
+                        "Tackle",
+                        "Embers"
+                    ]
+                }
+            },
+            "4Gen": {
+                "Turtwig": {
+                    "type": "plant",
+                    "hp": 55,
+                    "attack": 68,
+                    "defense": 64,
+                    "speed": 31,
+                    "movements": [
+                        "Tackle",
+                        "Sharp Blade"
+                    ]
+                },
+                "Piplup": {
+                    "type": "water",
+                    "hp": 53,
+                    "attack": 51,
+                    "defense": 53,
+                    "speed": 40,
+                    "movements": [
+                        "Tackle",
+                        "Bubble Ray"
+                    ]
+                },
+                "Chimchar": {
+                    "type": "fire",
+                    "hp": 44,
+                    "attack": 58,
+                    "defense": 44,
+                    "speed": 61,
+                    "movements": [
+                        "Tackle",
+                        "Fire Wheel"
+                    ]
+                }
+            }
+        }
+    ]
+}
