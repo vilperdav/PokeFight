@@ -119,27 +119,12 @@ public class battle {
                             // RANDOM AGENT CODE
                             // *****************************************
                             move.setScore(ia.evaluate(ia));
-                            try{
+                            
                             move=ia.minimax(1, ia, true, MIN, MAX);
-                            }catch(CloneNotSupportedException e){
-                                System.out.println("error");
-                            }
                             // Agent Select its action
-                            Random azar = new Random();
-                            int agentAction = 0;
-
-                            if (battleType == 1) {
-                                // 0 - Tackle, 1 - Attack of the Pokemon
-                                agentAction = azar.nextInt(2);
-
-                            } else {
-                                // 0 - Tackle, 1 - Attack of the Pokemon or 2 Change the pokemon
-                                agentAction = azar.nextInt(3);
-
-                            }
 
                             // Agent wants to change the pokemon
-                            if (move.isSwitch()) {
+                            if (move.isSwitch() || ia.evaluate(ia)<-25) {
 
                                 int nextPokemon = 0;
 
@@ -273,22 +258,14 @@ public class battle {
                             // *****************************************
 
                             // Agent Select its action
-                            Random azar = new Random();
-                            int agentAction = 0;
-                             
-                            if (battleType == 1) {
-                                // 0 - Tackle, 1 - Attack of the Pokemon
-                                agentAction = azar.nextInt(2);
 
-                            } else {
-                                // 0 - Tackle, 1 - Attack of the Pokemon or 2 Change the pokemon
-                                agentAction = azar.nextInt(3);
-
-                            }
-
+                             move.setScore(ia.evaluate(ia));
+                          
+                            move=ia.minimax(1, ia, true, MIN, MAX);
+                           
                             // Agent wants to change the pokemon
-                            if (move.isSwitch()) {
-
+                            if (move.isSwitch() || ia.evaluate(ia)<-25) {
+                                System.out.println("chachi");
                                 int nextPokemon = 0;
                                 nextPokemon=ia.getCurrentPlayerPokemonIndex();
                                 // Depending on the pokemons alive the agent selects a random number
@@ -305,12 +282,7 @@ public class battle {
 
                             } else {
                                 // Losses turn but he can change the pokemon
-                                move.setScore(ia.evaluate(ia));
-                            try{
-                            move=ia.minimax(1, ia, true, MIN, MAX);
-                            }catch(CloneNotSupportedException e){
-                                System.out.println("error");
-                            }
+                               
                                 // Say what atack chooses the agent
                                 System.out.println(
                                         "\n[ATACK] - Agent Select '" + move.getagentMove()
@@ -809,7 +781,6 @@ public class battle {
         // Fire >>> Plant
         // Plant >>> Water
         // Water >>> Fire
-
         // Tackle always do x1
         if (attack.equals("Tackle")) {
             return 0.1;
