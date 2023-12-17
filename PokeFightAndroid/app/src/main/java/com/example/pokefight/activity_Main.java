@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements OneVsOne.OnDataPa
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), Fight_Activity.class);
+                Intent intent = new Intent(getApplicationContext(), battle.class);
 
                 // Agregar el array al Intent
                 intent.putExtra("agentPokemonsKey", agentPokemonsPased);

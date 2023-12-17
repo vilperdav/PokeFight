@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.*;
 
-public class Fight_Activity extends AppCompatActivity {
+public class battle extends AppCompatActivity {
 
     static int MAX = 1000;
     static int MIN = -1000;
@@ -134,7 +134,7 @@ public class Fight_Activity extends AppCompatActivity {
                         System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
-                        Intent intent = new Intent(Fight_Activity.this, loserScreen.class);
+                        Intent intent = new Intent(battle.this, loserScreen.class);
                         startActivity(intent);
 
                         return 2;
@@ -306,7 +306,7 @@ public class Fight_Activity extends AppCompatActivity {
                         System.out.println("\n[SURRENDER] - PLAYER lose and go out of the battle.");
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
-                        Intent intent = new Intent(Fight_Activity.this, loserScreen.class);
+                        Intent intent = new Intent(battle.this, loserScreen.class);
                         startActivity(intent);
 
                         return 2;
@@ -395,7 +395,7 @@ public class Fight_Activity extends AppCompatActivity {
                 System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the battle.");
                 System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
 
-                Intent intent = new Intent(Fight_Activity.this, winnerScreen.class);
+                Intent intent = new Intent(battle.this, winnerScreen.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -413,7 +413,7 @@ public class Fight_Activity extends AppCompatActivity {
                 System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the battle.");
                 System.out.println("\n[REWARD] - Better luck next time :).");
 
-                Intent intent = new Intent(Fight_Activity.this, loserScreen.class);
+                Intent intent = new Intent(battle.this, loserScreen.class);
 
                 // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
