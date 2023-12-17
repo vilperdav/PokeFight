@@ -40,7 +40,7 @@ public class PokeAgent implements Cloneable {
                 score +=battle.atackEfective(opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(1).toString());
             
             pokemon= state.getOpponentPokemons().get(currentOpponentPokemonIndex);
-             System.out.println(pokemon.getName());
+            
                 score -= pokemon.getHealth();
                 score -= pokemon.getAtack();
                 score -= pokemon.getDefense(); 
@@ -168,6 +168,7 @@ public class PokeAgent implements Cloneable {
                     
                     String currentPlayerPokemonType = newState.getPlayerPokemons().get(i).getType().trim();
                     int typeEffectiveness = compareTo(currentPlayerPokemonType,opponentType);
+                    
                     if (typeEffectiveness > bestTypeEffectiveness) {
                         bestTypeEffectiveness = typeEffectiveness;
                         bestPokemonIndex = i;
@@ -177,7 +178,7 @@ public class PokeAgent implements Cloneable {
         
                 // Cambia al Pokémon más efectivo encontrado
                 if (bestPokemonIndex != -1) {
-              
+                   
                     newState.setCurrentPlayerPokemonIndex(bestPokemonIndex);
                 }
         } else {

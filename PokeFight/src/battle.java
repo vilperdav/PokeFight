@@ -25,8 +25,8 @@ public class battle {
         ia.setOpponentPokemons(playerPokemons);
         playerMarks = 0;
         agentMarks = 0;
-        pokemon p1 = playerPokemons.get(0);
-        pokemon p2 = agentPokemons.get(0);
+        pokemon p1 = ia.getOpponentPokemons().get(0);
+        pokemon p2 = ia.getPlayerPokemons().get(0);
        //gameState= new PokeAgent().GameState(ArrayList<pokemon> playerPokemons,ArrayList<pokemon> agentPokemons);
         // Switch depending on what pokemon its Faster than other
         switch (chooseFirstMove(p1, p2)) {
@@ -70,8 +70,8 @@ public class battle {
                             if (playerAction == 3) {
 
                                 // Try to change the pokemon
-                                nextPokemonPlayer = selectAPokemonToChange(playerPokemons);
-
+                                nextPokemonPlayer = selectAPokemonToChange(ia.getOpponentPokemons());
+                                
                                 // Says that we want to change the pokemon
                                 System.out.println("\n[CHANGE] - Player wants to change the pokemon -> "
                                         + p1.getName() + " -> " + nextPokemonPlayer.getName() + ".");
@@ -85,7 +85,7 @@ public class battle {
                                                 + "'");
 
                                 // Obtains the attackEfectivity of the Atack
-                                double playerAtackEfective = atackEfective(p1.getType(), p2.getType(),
+                                double playerAtackEfective = atackEfective(p1.getType(),ia.getPlayerPokemons().get(ia.getCurrentPlayerPokemonIndex()).getType(),
                                         p1.getMovements().get(playerAction).toString());
 
                                 // Obtains the realDamage of the atack
@@ -104,6 +104,19 @@ public class battle {
                         if (!(nextPokemonPlayer == null)) {
                             // We change the current pokemon of the player
                             p1 = nextPokemonPlayer;
+
+                            for(int i=0;i<ia.getOpponentPokemons().size();i++){
+                                if(p1.getName()==ia.getOpponentPokemons().get(i).getName()){
+                                   
+                                    pokemon pokecampo=ia.getOpponentPokemons().get(0);
+
+                                    pokemon newpoke=ia.getOpponentPokemons().get(i);
+                                   
+                                    ia.getOpponentPokemons().set(0, newpoke);
+                                    ia.getOpponentPokemons().set(i, pokecampo);
+                                }
+                            }
+                            
                             nextPokemonPlayer = null;
 
                             // Status of the Pokemon
@@ -124,16 +137,23 @@ public class battle {
                             // Agent Select its action
 
                             // Agent wants to change the pokemon
-                            if (move.isSwitch() || ia.evaluate(ia)<-25) {
+                            if (move.isSwitch() || ia.evaluate(ia)<0) {
 
-                                int nextPokemon = 0;
+                                int nextPokemon = ia.getCurrentPlayerPokemonIndex()+1;
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
                                 // *****************************************
 
                                 // Agent wants to change its pokemon
-                               nextPokemonAgent = agentPokemons.get(ia.getCurrentPlayerPokemonIndex());
+                               
+
+                                 pokemon pokecampo=ia.getPlayerPokemons().get(0);
+
+                                    nextPokemonAgent=ia.getPlayerPokemons().get(nextPokemon);
+                                   
+                                    ia.getPlayerPokemons().set(0, nextPokemonAgent);
+                                    ia.getPlayerPokemons().set(nextPokemon, pokecampo);
                                
                                 System.out.println("\n[CHANGE] - Agent wants to change the pokemon -> "
                                         + p2.getName() + " -> " + nextPokemonAgent.getName() + ".");
@@ -166,6 +186,7 @@ public class battle {
                         if (!(nextPokemonAgent == null)) {
                             // We change the current pokemon of the agent
                             p2 = nextPokemonAgent;
+
                             nextPokemonAgent = null;
 
                         }
@@ -178,20 +199,20 @@ public class battle {
                     // The agent pokemon has 0 hp or less
                     if (p2.getHealth() < 0) {
 
-                        int pokePos = agentPokemons.indexOf(p2);
+                        int pokePos = ia.getPlayerPokemons().indexOf(p2);
                         playerMarks++;
 
                         // We delete the tired pokemon from the array
                         System.out.println(
                                 "\n[GO-OUT] - Agent Pokemon " + p2.getName()
                                         + " go out of the battle.");
-                        agentPokemons.remove(pokePos);
-                        ia.setPlayerPokemons(agentPokemons);
+                        ia.getPlayerPokemons().remove(pokePos);
+                        
 
                         // We obtain a new pokemon
                         if (!agentPokemons.isEmpty()) {
                             p2 = null;
-                            p2 = agentPokemons.get(0);
+                            p2 = ia.getPlayerPokemons().get(0);
                             //TODO CAMBIAR POKEMON, NO SE SI ALEATORIO O QUE ELIJA
                             System.out.println(
                                     "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
@@ -203,19 +224,19 @@ public class battle {
                     // The player pokemon has 0 hp
                     if (p1.getHealth() < 0) {
 
-                        int pokePos = playerPokemons.indexOf(p1);
+                        int pokePos = ia.getOpponentPokemons().indexOf(p1);
                         agentMarks++;
 
                         // We delete the tired pokemon from the array
                         System.out.println(
                                 "\n[GO-OUT] - Player Pokemon " + p1.getName()
                                         + " go out of the battle.");
-                        playerPokemons.remove(pokePos);
+                        ia.getOpponentPokemons().remove(pokePos);
 
                         // We obtain a new pokemon
-                        if (!playerPokemons.isEmpty()) {
+                        if (!ia.getOpponentPokemons().isEmpty()) {
                             p1 = null;
-                            p1 = playerPokemons.get(0);
+                            p1 = ia.getOpponentPokemons().get(0);
                             System.out.println(
                                     "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
                                             + " as the new pokemon.");
@@ -224,7 +245,7 @@ public class battle {
                     }
 
                     // Print the current pokemons in the game
-                    printPokemonsInGame(playerPokemons, agentPokemons);
+                    printPokemonsInGame(ia.getOpponentPokemons(), ia.getPlayerPokemons());
 
                 }
 
@@ -237,7 +258,7 @@ public class battle {
                         "\n[START-FIGHT] - Agent starts first - SPEED: " + p2.getSpeed() + " > " + p1.getSpeed());
 
                 // This means, while we have pokemons with life in our bag
-                while (playerPokemons.size() > 0 && agentPokemons.size() > 0) {
+                while (ia.getOpponentPokemons().size() > 0 && ia.getPlayerPokemons().size() > 0) {
 
                     // The Fight exits while the pokemons have hp points
                     while (p1.getHealth() > 0 && p2.getHealth() > 0) {
@@ -264,10 +285,10 @@ public class battle {
                             move=ia.minimax(1, ia, true, MIN, MAX);
                            
                             // Agent wants to change the pokemon
-                            if (move.isSwitch() || ia.evaluate(ia)<-25) {
-                                System.out.println("chachi");
+                            if (move.isSwitch() || ia.evaluate(ia)<-35) {
+                                
                                 int nextPokemon = 0;
-                                nextPokemon=ia.getCurrentPlayerPokemonIndex();
+                                nextPokemon=ia.getCurrentPlayerPokemonIndex() +1;
                                 // Depending on the pokemons alive the agent selects a random number
 
                                 // *****************************************
@@ -275,8 +296,14 @@ public class battle {
                                 // *****************************************
 
                                 // Agent wants to change its pokemon
-                                nextPokemonAgent = agentPokemons.get(nextPokemon);
-                                
+                                pokemon pokecampo=ia.getPlayerPokemons().get(0);
+
+                                pokemon newpoke=ia.getOpponentPokemons().get(nextPokemon);
+
+                                    ia.getPlayerPokemons().set(0, newpoke);
+                                    ia.getPlayerPokemons().set(nextPokemon, pokecampo);
+                                nextPokemonAgent = ia.getPlayerPokemons().get(0);
+                                System.out.println(nextPokemon);
                                 System.out.println("\n[CHANGE] - Agent wants to change the pokemon -> "
                                         + p2.getName() + " -> " + nextPokemonAgent.getName() + ".");
 
@@ -312,7 +339,7 @@ public class battle {
 
                             // Status of the Pokemon
                             System.out.println("\n[HP] - PLAYER - " + p1.getName() + ": " + p1.getHealth() + " hp");
-                            System.out.println("[HP] - AGENT - " + p2.getName() + ": " + p2.getHealth() + " hp");
+                            System.out.println("[HP] - AGENT - " +p2.getName() + ": " + p2.getHealth() + " hp");
 
                         }
 
@@ -320,7 +347,7 @@ public class battle {
                         if (p1.getHealth() > 0) {
 
                             // We ask the player for its action
-                            int playerAction = askPlayerForAction(p1, playerPokemons, battleType);
+                            int playerAction = askPlayerForAction(p1, ia.getOpponentPokemons(), battleType);
 
                             // It chooses surrender
                             if (playerAction == 4) {
@@ -335,7 +362,7 @@ public class battle {
                             if (playerAction == 3) {
 
                                 // Try to change the pokemon
-                                nextPokemonPlayer = selectAPokemonToChange(playerPokemons);
+                                nextPokemonPlayer = selectAPokemonToChange(ia.getOpponentPokemons());
 
                                 // Says that we want to change the pokemon
                                 System.out.println("\n[CHANGE] - Player wants to change the pokemon -> "
@@ -369,6 +396,18 @@ public class battle {
                         if (!(nextPokemonPlayer == null)) {
                             // We change the current pokemon of the player
                             p1 = nextPokemonPlayer;
+                             for(int i=0;i<ia.getOpponentPokemons().size();i++){
+                                if(p1.getName()==ia.getOpponentPokemons().get(i).getName()){
+                                   
+                                    pokemon pokecampo=ia.getOpponentPokemons().get(0);
+
+                                    pokemon newpoke=ia.getOpponentPokemons().get(i);
+                                   
+                                    ia.getOpponentPokemons().set(0, newpoke);
+                                    ia.getOpponentPokemons().set(i, pokecampo);
+                                }
+                            }
+                            
                             nextPokemonPlayer = null;
 
                             // TODO - Caso en el que se cambia un pokemon al que le golpean y su vida baja a
@@ -384,19 +423,19 @@ public class battle {
                     // The agent pokemon has 0 hp or less
                     if (p2.getHealth() < 0) {
 
-                        int pokePos = agentPokemons.indexOf(p2);
+                        int pokePos = ia.getPlayerPokemons().indexOf(p2);
                         playerMarks++;
 
                         // We delete the tired pokemon from the array
                         System.out.println(
                                 "\n[GO-OUT] - Agent Pokemon " + p2.getName()
                                         + " go out of the battle.");
-                        agentPokemons.remove(pokePos);
+                        ia.getPlayerPokemons().remove(pokePos);
 
                         // We obtain a new pokemon
-                        if (!agentPokemons.isEmpty()) {
+                        if (!ia.getPlayerPokemons().isEmpty()) {
                             p2 = null;
-                            p2 = agentPokemons.get(0);
+                            p2 = ia.getPlayerPokemons().get(0);
                             System.out.println(
                                     "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
                                             + " as the new pokemon.");
@@ -407,19 +446,19 @@ public class battle {
                     // The player pokemon has 0 hp
                     if (p1.getHealth() < 0) {
 
-                        int pokePos = playerPokemons.indexOf(p1);
+                        int pokePos = ia.getOpponentPokemons().indexOf(p1);
                         agentMarks++;
 
                         // We delete the tired pokemon from the array
                         System.out.println(
                                 "\n[GO-OUT] - Player Pokemon " + p1.getName()
                                         + " go out of the battle.");
-                        playerPokemons.remove(pokePos);
+                        ia.getOpponentPokemons().remove(pokePos);
 
                         // We obtain a new pokemon
-                        if (!playerPokemons.isEmpty()) {
+                        if (!ia.getOpponentPokemons().isEmpty()) {
                             p1 = null;
-                            p1 = playerPokemons.get(0);
+                            p1 = ia.getOpponentPokemons().get(0);
                             System.out.println(
                                     "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
                                             + " as the new pokemon.");
@@ -428,7 +467,7 @@ public class battle {
                     }
 
                     // Print the current pokemons in the game
-                    printPokemonsInGame(playerPokemons, agentPokemons);
+                    printPokemonsInGame(ia.getOpponentPokemons(), ia.getPlayerPokemons());
 
                 }
                 break;
