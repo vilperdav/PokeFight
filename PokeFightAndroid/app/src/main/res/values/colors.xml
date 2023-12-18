@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Black">#FF000000</color> <!-- Negro -->
+    <color name="White">#FFFFFFFF</color> <!-- Blanco -->
+    <color name="Red">#FFFF0000</color> <!-- Rojo -->
+    <color name="Green">#FF00FF00</color> <!-- Verde -->
+    <color name="Blue">#FF0000FF</color> <!-- Azul -->
+    <color name="Yellow">#FFFFFF00</color> <!-- Amarillo -->
+    <color name="Cyan">#FF00FFFF</color> <!-- Cian -->
+    <color name="Magenta">#FFFF00FF</color> <!-- Magenta -->
+    <color name="Gray">#FF808080</color> <!-- Gris -->
+    <color name="DarkGray">#FFA9A9A9</color> <!-- Gris oscuro -->
+    <color name="LightGray">#FFD3D3D3</color> <!-- Gris claro -->
+    <color name="LightBlack">#FF808080</color> <!-- Gris claro -->
+    <color name="LightWhite">#FFF5F5F5</color> <!-- Blanco claro -->
+    <color name="LightRed">#FFFFCDD2</color> <!-- Rojo claro -->
+    <color name="LightGreen">#FFC8E6C9</color> <!-- Verde claro -->
+    <color name="LightBlue">#FFBBDEFB</color> <!-- Azul claro -->
+    <color name="LightYellow">#FFFFF59D</color> <!-- Amarillo claro -->
+    <color name="LightCyan">#FFB2EBF2</color> <!-- Cian claro -->
+    <color name="LightMagenta">#FFF8BBD0</color> <!-- Magenta claro -->
+    <color name="LightDarkGray">#FFB0B0B0</color> <!-- Gris oscuro claro -->
+</resources>

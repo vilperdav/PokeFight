@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PokeFight</string>
+    <string name="todo">TODO</string>
+    <string name="INFO">TODO</string>
+    <string name="TABLE" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_fight">Fight_Activity</string>
+</resources>
