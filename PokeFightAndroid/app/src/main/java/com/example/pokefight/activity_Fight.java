@@ -224,7 +224,7 @@ public class activity_Fight extends AppCompatActivity {
                 // One of the pokemons has 0 hp soo we delete if from the array
 
                 // The agent pokemon has 0 hp or less
-                if (p2.getHealth() < 0) {
+                if (p2.getHealth() <= 0) {
 
                     int pokePos = agentPokemons.indexOf(p2);
                     playerMarks++;
@@ -247,7 +247,7 @@ public class activity_Fight extends AppCompatActivity {
                 }
 
                 // The player pokemon has 0 hp
-                if (p1.getHealth() < 0) {
+                if (p1.getHealth() <= 0) {
 
                     int pokePos = playerPokemons.indexOf(p1);
                     agentMarks++;
@@ -356,7 +356,7 @@ public class activity_Fight extends AppCompatActivity {
                 // One of the pokemons has 0 hp soo we delete if from the array
 
                 // The agent pokemon has 0 hp or less
-                if (p2.getHealth() < 0) {
+                if (p2.getHealth() <= 0) {
 
                     int pokePos = agentPokemons.indexOf(p2);
                     playerMarks++;
@@ -379,7 +379,7 @@ public class activity_Fight extends AppCompatActivity {
                 }
 
                 // The player pokemon has 0 hp
-                if (p1.getHealth() < 0) {
+                if (p1.getHealth() <= 0) {
 
                     int pokePos = playerPokemons.indexOf(p1);
                     agentMarks++;
@@ -411,7 +411,7 @@ public class activity_Fight extends AppCompatActivity {
 
         // TODO - Esto solo vale si el juego es 1 vs 1, en otros casos habria que retocarlo
 
-        if (p1.getHealth() < 0 || p2.getHealth() < 0) {
+        if (p1.getHealth() <= 0 || p2.getHealth() <= 0) {
 
             // Choose the winner based on the marks of the pokemon defeated
             if (playerMarks > agentMarks) {

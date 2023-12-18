@@ -10,61 +10,57 @@
 
     <Button
         android:id="@+id/tackleButton"
-        android:layout_width="195dp"
-        android:layout_height="92dp"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/LightGray"
         android:gravity="center"
         android:text="TACKLE"
         android:textColor="@color/Black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintBottom_toTopOf="@+id/changePokemonButton"
+        app:layout_constraintEnd_toStartOf="@+id/specialAttackButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/specialAttackButton"
-        android:layout_width="195dp"
-        android:layout_height="92dp"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
         android:backgroundTint="@color/LightYellow"
         android:gravity="center"
         android:text="SPECIAL ATTACK"
         android:textColor="@color/Black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/surrenderButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tackleButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/changePokemonButton"
-        android:layout_width="195dp"
+        android:layout_width="0dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/LightYellow"
         android:gravity="center"
         android:text="CHANGE POKEMON"
         android:textColor="@color/Red"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintEnd_toStartOf="@+id/surrenderButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
 
     <Button
         android:id="@+id/surrenderButton"
-        android:layout_width="195dp"
+        android:layout_width="0dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/LightRed"
         android:gravity="center"
         android:text="SURRENDER :("
         android:textColor="@color/Red"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/changePokemonButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.967"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 

@@ -13,64 +13,58 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class activity_SelectPokemon extends AppCompatActivity {
-    private Integer[] images = {
-
-            R.drawable.charmander,
-            R.drawable.squirtle,
-            R.drawable.treecko,
-            R.drawable.torchic,
-            R.drawable.mudkip,
-            R.drawable.turtwig,
-            R.drawable.chimchar,
-            R.drawable.piplup,
-            // ... más imágenes ...
-    };
-
+    ArrayList<pokemon> pokemonsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_pokemon);
-
+        pokemonsList = (ArrayList<pokemon>) getIntent().getSerializableExtra("pokemonList");
         GridView gridView = (GridView) findViewById(R.id.my_grid_view);
-        gridView.setAdapter(new ImageAdapter(this, images));
+        gridView.setAdapter(new ImageAdapter(this, pokemonsList));
+
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("selectedImage", images[position]);
-                // Obtén el buttonId del Intent que inició esta actividad.
+                // Guarda el nombre del Pokémon en el Intent.
+                pokemon selectedPokemon = pokemonsList.get(position);
+                returnIntent.putExtra("selectedPokemon", selectedPokemon);
                 int buttonId = getIntent().getIntExtra("buttonId", -1);
-
-                // Pónlo en el Intent de retorno.
                 returnIntent.putExtra("buttonId", buttonId);
-
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });
+
     }
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
         private Integer[] mImageIds;
-
-        public ImageAdapter(Context c, Integer[] imageIds) {
+        private ArrayList<pokemon> pokemonList;
+        public ImageAdapter(Context c, ArrayList<pokemon> pokemonsList) {
             mContext = c;
-            mImageIds = imageIds;
+            this.pokemonList=pokemonsList;
         }
 
+        @Override
         public int getCount() {
-            return mImageIds.length;
+            return pokemonsList.size();
         }
 
+        @Override
         public Object getItem(int position) {
-            return null;
+            return pokemonsList.get(position);
         }
 
+        @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -84,7 +78,7 @@ public class activity_SelectPokemon extends AppCompatActivity {
                 imageView = (ImageView) convertView;
             }
 
-            imageView.setImageResource(mImageIds[position]);
+            imageView.setImageResource(getResources().getIdentifier(pokemonsList.get(position).getName().toLowerCase(), "drawable", getPackageName()));
             return imageView;
         }
     }

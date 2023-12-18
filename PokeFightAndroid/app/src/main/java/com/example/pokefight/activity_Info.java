@@ -50,15 +50,9 @@ public class activity_Info extends AppCompatActivity {
 
     }
 
-    private void openBrowser(String url) {
-
-        // Crear un Intent con la acción ACTION_VIEW y la URL como datos
+    public void openBrowser(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
-        // Verificar si hay aplicaciones que pueden manejar el Intent
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            // Iniciar la actividad con el Intent
-            startActivity(intent);
-        }
+        startActivity(intent);
     }
+
 }

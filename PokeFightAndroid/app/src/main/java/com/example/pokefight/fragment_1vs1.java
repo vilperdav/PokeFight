@@ -247,12 +247,19 @@ public class fragment_1vs1 extends Fragment {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
                             // Maneja tus datos aquí
-                            int imageRes = data.getIntExtra("selectedImage", R.drawable.charmander);
+                            pokemon pokemonSelected = (pokemon) data.getSerializableExtra("selectedPokemon");
                             int buttonId = data.getIntExtra("buttonId", -1);
                             ImageButton imageButton = (ImageButton) getView().findViewById(buttonId);
-                            imageButton.setImageResource(imageRes);
+
+                            // Obtiene el identificador de recurso de la imagen
+                            int resID = getResources().getIdentifier(pokemonSelected.getName().toLowerCase(), "drawable", getActivity().getPackageName());
+
+                            // Establece la imagen del ImageButton
+                            imageButton.setImageResource(resID);
+                            playerPokemons.set(0, pokemonSelected);
                         }
                     }
+
                 });
 
         View.OnClickListener clickListener = new View.OnClickListener() {
@@ -260,6 +267,8 @@ public class fragment_1vs1 extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), activity_SelectPokemon.class);
                 intent.putExtra("buttonId", v.getId());
+                intent.putExtra("pokemonList",listOfPokemons);
+
                 mStartForResult.launch(intent);
             }
         };
