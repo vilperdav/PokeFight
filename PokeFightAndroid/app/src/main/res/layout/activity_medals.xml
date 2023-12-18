@@ -14,17 +14,6 @@
         tools:layout_editor_absoluteY="340dp" />
 
     <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="377dp"
-        android:layout_height="259dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.867"
-        app:srcCompat="@drawable/medallero" />
-
-    <ImageView
         android:id="@+id/imageView7"
         android:layout_width="377dp"
         android:layout_height="259dp"
@@ -49,17 +38,45 @@
         app:srcCompat="@drawable/kanto_gym_badges_27s_go_" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/medals1Gen"
         android:layout_width="173dp"
         android:layout_height="70dp"
         android:text="1st Gen"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/White"
         android:textSize="50dp"
+        android:textStyle="bold"
+        android:fontFamily="casual"
         app:layout_constraintBottom_toTopOf="@+id/imageView7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/medals4Gen"
+        android:layout_width="193dp"
+        android:layout_height="73dp"
+        android:fontFamily="casual"
+        android:text="4st Gen"
+        android:textColor="@color/White"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.997" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="377dp"
+        android:layout_height="259dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985"
+        app:srcCompat="@drawable/medallero" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -69,22 +86,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838"
+        app:layout_constraintVertical_bias="0.943"
         app:srcCompat="@drawable/_thgenmedals" />
-
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="173dp"
-        android:layout_height="70dp"
-        android:text="4th Generation"
-        android:textColor="#FFFFFF"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/ReturnButton"

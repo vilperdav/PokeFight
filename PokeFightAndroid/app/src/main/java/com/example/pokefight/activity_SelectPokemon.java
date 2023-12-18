@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,10 +24,9 @@ public class activity_SelectPokemon extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_pokemon);
         pokemonsList = (ArrayList<pokemon>) getIntent().getSerializableExtra("pokemonList");
-        GridView gridView = (GridView) findViewById(R.id.my_grid_view);
+        GridView gridView = (GridView) findViewById(R.id.listOfPokemons);
+
         gridView.setAdapter(new ImageAdapter(this, pokemonsList));
-
-
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,6 +81,8 @@ public class activity_SelectPokemon extends AppCompatActivity {
             imageView.setImageResource(getResources().getIdentifier(pokemonsList.get(position).getName().toLowerCase(), "drawable", getPackageName()));
             return imageView;
         }
+
+
     }
 }
 

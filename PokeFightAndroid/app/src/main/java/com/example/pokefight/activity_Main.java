@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.View;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 
@@ -19,6 +22,23 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
     private String currentFragment = "fragment1";
 
 
+    private MediaPlayer mediaPlayer;
+    private void playMusic() {
+        // Comienza la reproducción
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Libera recursos cuando la actividad se destruye
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
     @Override
     public void onDataPass(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
         // Aquí puedes manejar los datos recibidos del Fragment
@@ -29,6 +49,14 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Inicializa el MediaPlayer con el archivo de música
+        mediaPlayer = MediaPlayer.create(this, R.raw.pokemon_intro_music);
+
+        // Configura el bucle
+        mediaPlayer.setLooping(true);
+        playMusic();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -56,6 +84,9 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
                 // Iniciar la Activity
                 startActivity(intent);
+
+                // Pauso la musica
+                mediaPlayer.pause();
             }
         });
 
@@ -65,6 +96,9 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
             public void onClick(View v) {
                 Intent intent = new Intent(activity_Main.this, activity_Medals.class);
                 startActivity(intent);
+
+                // Pauso la musica
+                mediaPlayer.pause();
             }
         });
 
@@ -75,6 +109,9 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
             public void onClick(View v) {
                 Intent intent = new Intent(activity_Main.this, activity_Info.class);
                 startActivity(intent);
+
+                // Pauso la musica
+                mediaPlayer.pause();
             }
         });
 

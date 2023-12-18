@@ -22,6 +22,15 @@ public class activity_Info extends AppCompatActivity {
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(activity_Info.this, activity_Main.class);
+
+                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                // Inicia la actividad
+                startActivity(intent);
+
+                // Cierra la actividad actual
                 finish();
             }
         });

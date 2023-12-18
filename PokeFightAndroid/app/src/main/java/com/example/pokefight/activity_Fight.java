@@ -1,19 +1,17 @@
 package com.example.pokefight;
 
-import androidx.annotation.ColorInt;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.media.MediaPlayer;
 
 import java.util.*;
 
@@ -21,20 +19,27 @@ public class activity_Fight extends AppCompatActivity {
 
     static int MAX = 1000;
     static int MIN = -1000;
-
-    static int playerMarks = 0;
-    static int agentMarks = 0;
+    static int fullHealthPlayerPokemon, fullHealthAgentPokemon, agentMarks, playerMarks;
 
     //static int playerAction = -1;
-    TextView playerHpTextView, agentHpTextView;
-    ImageView pokemonPlayerImg, pokemonAgentImg;
+    TextView playerHpTextView, agentHpTextView, textPokemonPlayerName, textPokemonAgentName;
+    ImageView pokemonPlayerImg, pokemonAgentImg, typePokemonPlayerIMG, typePokemonAgentIMG;
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
 
+    private MediaPlayer mediaPlayer;
+
     @SuppressLint("ResourceAsColor")
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        // Inicializa el MediaPlayer con el archivo de música
+        mediaPlayer = MediaPlayer.create(this, R.raw.pokemon_music);
+
+        // Configura el bucle
+        mediaPlayer.setLooping(true);
+        playMusic();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
@@ -44,8 +49,8 @@ public class activity_Fight extends AppCompatActivity {
         agentMarks = 0;
 
         // Recojo los argumentos que han llegado aqui
-        agentPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("agentPokemonsKey");
         playerPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("playerPokemonsKey");
+        agentPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("agentPokemonsKey");
 
         System.out.println(agentPokemonsPased + "\n");
         System.out.println(playerPokemonsPased + "\n");
@@ -54,6 +59,17 @@ public class activity_Fight extends AppCompatActivity {
         Button changePokemonButton = findViewById(R.id.changePokemonButton);
         Button exitGameButton = findViewById(R.id.surrenderButton);
         Button tackleButton = findViewById(R.id.tackleButton);
+
+        // Actualizo el nombre de los Pokemons
+        textPokemonPlayerName = findViewById(R.id.textPokemonPlayerName);
+        textPokemonAgentName = findViewById(R.id.textPokemonAgentName);
+        this.textPokemonPlayerName.setText(playerPokemonsPased.get(0).getName());
+        this.textPokemonAgentName.setText(agentPokemonsPased.get(0).getName());
+
+
+        // Vida total de ambos pokemons
+        fullHealthPlayerPokemon = playerPokemonsPased.get(0).getHealth();
+        fullHealthAgentPokemon = agentPokemonsPased.get(0).getHealth();
 
         // Texto de vida
         playerHpTextView = findViewById(R.id.textPlayerHealth);
@@ -67,17 +83,33 @@ public class activity_Fight extends AppCompatActivity {
         String pokeSpecialAttack = (String) playerPokemonsPased.get(0).getMovements().get(1);
         specialAttackButton.setText(pokeSpecialAttack.toUpperCase());
         specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Black));
+        // Tipo del pokemon del jugador
+        typePokemonPlayerIMG = findViewById(R.id.typePokemonPlayerIMG);
+        typePokemonAgentIMG = findViewById(R.id.typePokemonAgentIMG);
 
         // Cambia el color del boton de ataque especial dependiendo del tipo de ataque
         if (pokeType.equals("fire")) {
             //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Red));
             specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightRed));
+            typePokemonPlayerIMG.setImageResource(getResources().getIdentifier("type_fire", "drawable", getPackageName()));
         } else if (pokeType.equals("water")) {
             //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Blue));
             specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightBlue));
+            typePokemonPlayerIMG.setImageResource(getResources().getIdentifier("type_water", "drawable", getPackageName()));
         } else if (pokeType.equals("plant")) {
             //specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Green));
             specialAttackButton.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGreen));
+            typePokemonPlayerIMG.setImageResource(getResources().getIdentifier("type_plant", "drawable", getPackageName()));
+        }
+
+        // Cambiamos el tipo del pokemon que se ve en pantalla
+        String pokeTypeAgent = agentPokemonsPased.get(0).getType();
+        if (pokeTypeAgent.equals("fire")) {
+            typePokemonAgentIMG.setImageResource(getResources().getIdentifier("type_fire", "drawable", getPackageName()));
+        } else if (pokeTypeAgent.equals("water")) {
+            typePokemonAgentIMG.setImageResource(getResources().getIdentifier("type_water", "drawable", getPackageName()));
+        } else if (pokeTypeAgent.equals("plant")) {
+            typePokemonAgentIMG.setImageResource(getResources().getIdentifier("type_plant", "drawable", getPackageName()));
         }
 
         // TODO - Esto es valido solo para 1 VS 1, si se cambia el pokemon habria que actualizarlo
@@ -113,7 +145,7 @@ public class activity_Fight extends AppCompatActivity {
             }
         });
 
-        if (findViewById(R.id.fragment_container_IATEAM) != null || findViewById(R.id.fragment_container_YOURTEAM) != null) {
+        if (findViewById(R.id.fragment_container_IATEAM) != null || findViewById(R.id.fragment_container_Player) != null) {
             if (savedInstanceState != null) {
                 return;
             }
@@ -123,12 +155,28 @@ public class activity_Fight extends AppCompatActivity {
                     .add(R.id.fragment_container_IATEAM, fragmentoIATEAM).commit();
             TEAM1VS1 fragmentoYOURTEAM = new TEAM1VS1();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container_YOURTEAM, fragmentoYOURTEAM).commit();
+                    .add(R.id.fragment_container_Player, fragmentoYOURTEAM).commit();
         }
 
         // TODO: llamar a fightNvsN
         //fightNvsN(playerPokemonsPased, agentPokemonsPased, 1);
+    }
 
+    private void playMusic() {
+        // Comienza la reproducción
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Libera recursos cuando la actividad se destruye
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     public int nextTurn(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons, int playerDecision) {
@@ -159,7 +207,15 @@ public class activity_Fight extends AppCompatActivity {
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
                         Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
+
+                        // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        // Inicia la actividad
                         startActivity(intent);
+
+                        // Cierra la actividad actual
+                        finish();
 
                         return 2;
                     }
@@ -331,7 +387,15 @@ public class activity_Fight extends AppCompatActivity {
                         System.out.println("\n[REWARD] - Better luck next time :).");
 
                         Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
+
+                        // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        // Inicia la actividad
                         startActivity(intent);
+
+                        // Cierra la actividad actual
+                        finish();
 
                         return 2;
                     }
@@ -497,6 +561,7 @@ public class activity_Fight extends AppCompatActivity {
     }
 
     // Function for reduce the HP points
+    @SuppressLint("ResourceAsColor")
     private int updateHP(pokemon p1, int atack, int player) {
 
         // 30% of defense reduction atack
@@ -505,23 +570,55 @@ public class activity_Fight extends AppCompatActivity {
         int newLife = p1.getHealth() - atack + defense;
         p1.setHealth(newLife);
 
+        int health = p1.getHealth();
         if (player == 1) {
-            int health = p1.getHealth();
             if (health > 0) {
-                this.playerHpTextView.setText("HP: " + p1.getHealth());
+                if (health < (fullHealthPlayerPokemon * 0.3)) {
+
+                    // Menos del 30% cambiamos el color del texto a LightRed
+                    this.playerHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightRed));
+
+                } else if (health < (fullHealthPlayerPokemon * 0.5)) {
+
+                    // Menos del 50% cambiamos el color del texto a LightYellow
+                    this.playerHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightYellow));
+                }
+
+                // Si no es menos de la mitad se queda en verde
+                this.playerHpTextView.setText("HP: " + health);
+
                 return (atack - defense);
+
             } else {
-                this.playerHpTextView.setText("HP: " + 0);
+
+                this.playerHpTextView.setText("HP: 0");
+                this.playerHpTextView.setTextColor(ContextCompat.getColor(this, R.color.Red));
                 return 0;
+
             }
         } else if (player == 2) {
-            int health = p1.getHealth();
             if (health > 0) {
-                this.agentHpTextView.setText("HP: " + p1.getHealth());
+
+                if (health < (fullHealthAgentPokemon * 0.3)) {
+
+                    // Menos del 30% cambiamos el color del texto a LightRed
+                    this.agentHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightRed));
+                } else if (health < (fullHealthAgentPokemon * 0.5)) {
+
+                    // Menos del 50% cambiamos el color del texto a LightYellow
+                    this.agentHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightYellow));
+                }
+                // Si no es menos de la mitad se queda en verde
+                this.agentHpTextView.setText("HP: " + health);
+
                 return (atack - defense);
+
             } else {
-                this.agentHpTextView.setText("HP: " + 0);
+
+                this.agentHpTextView.setText("HP: 0");
+                this.agentHpTextView.setTextColor(ContextCompat.getColor(this, R.color.Red));
                 return 0;
+
             }
         }
 

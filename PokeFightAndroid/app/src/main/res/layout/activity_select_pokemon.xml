@@ -7,13 +7,15 @@
     tools:context=".activity_SelectPokemon">
 
     <GridView
-        android:id="@+id/my_grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"
+        android:id="@+id/listOfPokemons"
+        android:layout_width="412dp"
+        android:layout_height="731dp"
+        android:numColumns="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />   <!--Establece el número de columnas a 2-->
+        app:layout_constraintTop_toTopOf="parent">
+    </GridView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

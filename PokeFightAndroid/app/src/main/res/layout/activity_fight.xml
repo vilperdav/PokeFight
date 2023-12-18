@@ -14,7 +14,7 @@
         android:layout_height="90dp"
         android:backgroundTint="@color/LightGray"
         android:gravity="center"
-        android:text="TACKLE"
+        android:text="TACKLE \n(x1)"
         android:textColor="@color/Black"
         app:layout_constraintBottom_toTopOf="@+id/changePokemonButton"
         app:layout_constraintEnd_toStartOf="@+id/specialAttackButton"
@@ -28,7 +28,7 @@
         android:layout_height="90dp"
         android:backgroundTint="@color/LightYellow"
         android:gravity="center"
-        android:text="SPECIAL ATTACK"
+        android:text="SPECIAL ATTACK (x0.5-x2)"
         android:textColor="@color/Black"
         app:layout_constraintBottom_toTopOf="@+id/surrenderButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,90 +59,61 @@
         android:text="SURRENDER :("
         android:textColor="@color/Red"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/changePokemonButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/changePokemonButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 
     <TextView
-        android:id="@+id/textYourTeam"
-        android:layout_width="205dp"
-        android:layout_height="44dp"
-        android:fontFamily="casual"
-        android:text="YOUR TEAM"
-        android:textAlignment="center"
-        android:textColor="@color/Black"
-        android:textSize="15pt"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.726" />
-
-    <TextView
-        android:id="@+id/textPlayerHealth"
-        android:layout_width="209dp"
-        android:layout_height="44dp"
-        android:fontFamily="casual"
-        android:text="HP: 100/100"
-        android:textAlignment="center"
-        android:textColor="@color/Black"
-        android:textSize="15pt"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.995"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.558" />
-
-    <ImageView
-        android:id="@+id/imagePlayerPokemon"
-        android:layout_width="185dp"
-        android:layout_height="185dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.575"
-        app:srcCompat="@drawable/pikachu" />
-
-    <TextView
         android:id="@+id/textIATEAM"
-        android:layout_width="170dp"
-        android:layout_height="44dp"
+        android:layout_width="138dp"
+        android:layout_height="42dp"
         android:fontFamily="casual"
-        android:text="IA TEAM"
+        android:text="IA"
         android:textAlignment="center"
-        android:textColor="@color/Black"
+        android:textColor="@color/White"
         android:textSize="15pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintHorizontal_bias="0.996"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+
+    <TextView
+        android:id="@+id/textPokemonAgentName"
+        android:layout_width="138dp"
+        android:layout_height="42dp"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="Pikachu"
+        android:textColor="@color/White"
+        android:textSize="12pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39" />
 
     <TextView
         android:id="@+id/textAgentHealth"
         android:layout_width="193dp"
         android:layout_height="44dp"
         android:fontFamily="casual"
-        android:text="HP: 50/100"
+        android:text="HP: 100"
         android:textAlignment="center"
-        android:textColor="@color/Black"
-        android:textSize="15pt"
+        android:textColor="@color/LightGreen"
+        android:textSize="12pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintVertical_bias="0.101" />
 
     <ImageView
         android:id="@+id/imageAgentPokemon"
@@ -150,44 +121,137 @@
         android:layout_height="185dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintHorizontal_bias="0.995"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13"
+        app:layout_constraintVertical_bias="0.111"
+        app:srcCompat="@drawable/pikachu" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container_IATEAM"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textPokemonPlayerName"
+        android:layout_width="122dp"
+        android:layout_height="40dp"
+        android:fontFamily="casual"
+        android:gravity="left"
+        android:text="Pikachu"
+        android:textColor="@color/White"
+        android:textSize="12pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.383" />
+
+    <TextView
+        android:id="@+id/textPlayerTeam"
+        android:layout_width="138dp"
+        android:layout_height="42dp"
+        android:fontFamily="casual"
+        android:text="YOU"
+        android:textAlignment="center"
+        android:textColor="@color/White"
+        android:textSize="15pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.01"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.746" />
+
+    <TextView
+        android:id="@+id/textPlayerHealth"
+        android:layout_width="193dp"
+        android:layout_height="44dp"
+        android:fontFamily="casual"
+        android:text="HP: 100"
+        android:textAlignment="center"
+        android:textColor="@color/LightGreen"
+        android:textSize="15pt"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.669" />
+
+    <ImageView
+        android:id="@+id/imagePlayerPokemon"
+        android:layout_width="185dp"
+        android:layout_height="185dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.602"
         app:srcCompat="@drawable/pikachu" />
 
     <ImageView
         android:id="@+id/imageVS"
-        android:layout_width="115dp"
-        android:layout_height="110dp"
+        android:layout_width="83dp"
+        android:layout_height="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.367"
+        app:layout_constraintVertical_bias="0.38"
         app:srcCompat="@drawable/_758673_0112870914_daqrp" />
 
     <FrameLayout
-        android:id="@+id/fragment_container_IATEAM"
-        android:layout_width="150dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_container_YOURTEAM"
-        android:layout_width="159dp"
-        android:layout_height="90dp"
+        android:id="@+id/fragment_container_Player"
+        android:layout_width="270dp"
+        android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.896"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.684" />
+        app:layout_constraintVertical_bias="0.749">
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/typePokemonPlayerIMG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.431"
+        app:srcCompat="@drawable/type_electric"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/typePokemonAgentIMG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.347"
+        app:srcCompat="@drawable/type_electric"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
