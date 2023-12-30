@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 
-public class activity_Main extends AppCompatActivity implements fragment_1vs1.OnDataPass {
+public class activity_Main extends AppCompatActivity implements fragment_1vs1.OnDataPass,  fragment_3vs3.OnDataPass, fragment_6vs6.OnDataPass {
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();

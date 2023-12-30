@@ -106,21 +106,26 @@ public class fragment_1vs1 extends Fragment {
         // Charge the pokemons in the Array
         numberOfPokemonCharged = pokemonCharger();
 
-        // El agente escoge un pokemon de 0 a 9
         Random azar = new Random();
-        pokemon poke = listOfPokemons.get(azar.nextInt(9));
-        try {
-            agentPokemons.add(poke.clone());
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        int pokeBattle = 1;
+        for (int i = 0; i < pokeBattle; i++) {
 
-        // TODO - HACER QUE ESTO NO SE A ALEATORIO
-        poke = listOfPokemons.get(azar.nextInt(9));
-        try {
-            playerPokemons.add(poke.clone());
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
+            // El agente escoge un pokemon de 0 a 9 aleatoriamente
+            pokemon poke = listOfPokemons.get(azar.nextInt(9));
+            try {
+                agentPokemons.add(poke.clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
+
+            // TODO - HACER QUE ESTO NO SE A ALEATORIO
+            // El jugador escoge un pokemon de 0 a 9 aleatoriamente
+            poke = listOfPokemons.get(azar.nextInt(9));
+            try {
+                playerPokemons.add(poke.clone());
+            } catch (CloneNotSupportedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         // Envio los arrays al mainActivity
@@ -232,9 +237,9 @@ public class fragment_1vs1 extends Fragment {
         botonCambiarFragmento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ThreeVsThree fragmento = new ThreeVsThree();
+                fragment_3vs3 fragment = new fragment_3vs3();
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, fragmento)
+                        .replace(R.id.fragment_container, fragment)
                         .commit();
             }
         });
@@ -273,7 +278,7 @@ public class fragment_1vs1 extends Fragment {
             }
         };
 
-        ImageButton imageButton1 = (ImageButton) view.findViewById(R.id.YourTeamImButton);// ... más ImageButtons ...
+        ImageButton imageButton1 = (ImageButton) view.findViewById(R.id.YourTeamButton);// ... más ImageButtons ...
 
         imageButton1.setOnClickListener(clickListener);
 

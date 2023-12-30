@@ -24,7 +24,37 @@
         tools:layout_editor_absoluteX="1dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/IATeamText"
+            android:layout_width="99dp"
+            android:layout_height="35dp"
+            android:fontFamily="casual"
+            android:text="IA TEAM"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.034" />
+
+        <ImageButton
+            android:id="@+id/IATeamButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:backgroundTint="#00000000"
+            android:scaleType="fitXY"
+            android:src="@drawable/questionmarkpokemon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.147" />
+
+        <TextView
+            android:id="@+id/yourTeamText"
             android:layout_width="134dp"
             android:layout_height="37dp"
             android:fontFamily="casual"
@@ -38,8 +68,22 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-
             app:layout_constraintVertical_bias="0.479" />
+
+        <ImageButton
+            android:id="@+id/YourTeamButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/questionmarkpokemon"
+            app:layout_constraintBottom_toTopOf="@+id/ChangeModeButton3VS3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/ChangeModeButton3VS3"
@@ -51,52 +95,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.992" />
-
-        <TextView
-            android:id="@+id/textView1.1"
-            android:layout_width="99dp"
-            android:layout_height="35dp"
-            android:fontFamily="casual"
-            android:text="IA TEAM"
-            android:textAlignment="center"
-            android:textColor="@color/White"
-            android:textSize="10pt"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.034"
-
-            />
-
-        <ImageButton
-            android:id="@+id/IATeam"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="#00000000"
-            android:scaleType="fitXY"
-            android:src="@drawable/interrogantebueno"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1.1"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageButton
-            android:id="@+id/YourTeamImButton"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:backgroundTint="#00FFFFFF"
-            android:scaleType="fitXY"
-            android:src="@drawable/interrogantebueno"
-            app:layout_constraintBottom_toTopOf="@+id/ChangeModeButton3VS3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="496dp"
     android:id="@+id/ModeFragment"
-    tools:context=".ThreeVsThree">
+    tools:context=".fragment_3vs3">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -13,11 +13,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#313435"
-        tools:context=".ThreeVsThree"
-        tools:ignore="ExtraText">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:context=".fragment_3vs3"
+        tools:ignore="ExtraText"
+        tools:layout_editor_absoluteX="1dp">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/IATeamText"
+            android:layout_width="99dp"
+            android:layout_height="35dp"
+            android:fontFamily="casual"
+            android:text="IA TEAM"
+            android:textAlignment="center"
+            android:textColor="@color/White"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.034" />
+
+        <TableRow
+            android:layout_width="390dp"
+            android:layout_height="130dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.476"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.163">
+
+            <ImageButton
+                android:id="@+id/IATeamButton1"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
+
+            <ImageButton
+                android:id="@+id/IATeamButton2"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
+
+            <ImageButton
+                android:id="@+id/IATeamButton3"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/yourTeamText"
             android:layout_width="134dp"
             android:layout_height="37dp"
             android:fontFamily="casual"
@@ -31,115 +93,57 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.501" />
 
-            app:layout_constraintVertical_bias="0.459" />
-
-        <TableLayout
-            android:id="@+id/tableLayout3vs3_2"
-            android:layout_width="330dp"
-            android:layout_height="120dp"
-            app:layout_constraintBottom_toTopOf="@+id/ChangeModeButton"
+        <TableRow
+            android:layout_width="390dp"
+            android:layout_height="130dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintHorizontal_bias="0.476"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3"
-            app:layout_constraintVertical_bias="0.5"
-            tools:ignore="UnknownId">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.759">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <ImageButton
+                android:id="@+id/yourTeamButton1"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
 
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
+            <ImageButton
+                android:id="@+id/yourTeamButton2"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
 
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
+            <ImageButton
+                android:id="@+id/yourTeamButton3"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/questionmarkpokemon" />
 
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
-            </TableRow>
-
-        </TableLayout>
+        </TableRow>
 
         <Button
-            android:id="@+id/ChangeModeButton6vs6"
+            android:id="@+id/ChangeModeButton6VS6"
             android:layout_width="207dp"
             android:layout_height="69dp"
-            android:text="6 vs 6"
+            android:text="6 VS 6"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.992" />
-
-        <TextView
-            android:id="@+id/textView1.1"
-            android:layout_width="99dp"
-            android:layout_height="35dp"
-            android:fontFamily="casual"
-            android:text="IA TEAM"
-            android:textAlignment="center"
-            android:textColor="@color/White"
-            android:textSize="10pt"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.015"
-
-            />
-
-        <TableLayout
-            android:id="@+id/tableLayout3vs3_1"
-            android:layout_width="330dp"
-            android:layout_height="120dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1.1"
-            app:layout_constraintVertical_bias="0.5">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
-
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
-
-                <Button
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:layout_weight="1"
-                    android:onClick="onButtonClick"
-                    android:text="Botón 1" />
-            </TableRow>
-
-        </TableLayout>
+            app:layout_constraintVertical_bias="0.988" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
