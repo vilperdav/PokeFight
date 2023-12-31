@@ -1,0 +1,58 @@
+{
+    "Medals": [
+        {
+            "1Gen": {
+                "Stone": {
+                    "visibility": "False"
+                },
+                "Waterfall": {
+                    "visibility": "False"
+                },
+                "Thunder": {
+                    "visibility": "False"
+                },
+                "Rainbow": {
+                    "visibility": "False"
+                },
+                "Soul": {
+                    "visibility": "False"
+                },
+                "Swamp": {
+                    "visibility": "False"
+                },
+                "Volcano": {
+                    "visibility": "False"
+                },
+                "Land": {
+                    "visibility": "False"
+                }
+            },
+            "4Gen": {
+                "Lignite": {
+                    "visibility": "False"
+                },
+                "Forest": {
+                    "visibility": "False"
+                },
+                "Cobble": {
+                    "visibility": "False"
+                },
+                "Swamp": {
+                    "visibility": "False"
+                },
+                "Relic": {
+                    "visibility": "False"
+                },
+                "Mine": {
+                    "visibility": "False"
+                },
+                "Icicle": {
+                    "visibility": "False"
+                },
+                "Lighthouse": {
+                    "visibility": "False"
+                }
+            }
+        }
+    ]
+}
