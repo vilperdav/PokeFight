@@ -224,6 +224,9 @@ public class fragment_3vs3 extends Fragment {
             e.printStackTrace();
         }
 
+        // Invertimos el array para que salgan en el orden adecuado
+        Collections.reverse(listOfPokemons);
+
         return pokemonCarged;
     }
 

@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity_SelectPokemon">
 
-    <GridView
-        android:id="@+id/listOfPokemons"
+    <ListView
+        android:id="@+id/listOfPokemon"
         android:layout_width="412dp"
         android:layout_height="731dp"
         android:numColumns="1"
@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </GridView>
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

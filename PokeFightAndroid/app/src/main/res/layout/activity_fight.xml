@@ -14,7 +14,7 @@
         android:layout_height="90dp"
         android:backgroundTint="@color/LightGray"
         android:gravity="center"
-        android:text="TACKLE \n(x1)"
+        android:text="TACKLE \n x 1.0"
         android:textColor="@color/Black"
         app:layout_constraintBottom_toTopOf="@+id/changePokemonButton"
         app:layout_constraintEnd_toStartOf="@+id/specialAttackButton"
@@ -28,13 +28,14 @@
         android:layout_height="90dp"
         android:backgroundTint="@color/LightYellow"
         android:gravity="center"
-        android:text="SPECIAL ATTACK (x0.5-x2)"
+        android:text="SPECIAL ATTACK \n x 0.5-2.0"
         android:textColor="@color/Black"
         app:layout_constraintBottom_toTopOf="@+id/surrenderButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tackleButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:visibility="visible"/>
 
     <Button
         android:id="@+id/changePokemonButton"
@@ -83,20 +84,20 @@
 
     <TextView
         android:id="@+id/textPokemonAgentName"
-        android:layout_width="138dp"
-        android:layout_height="42dp"
+        android:layout_width="161dp"
+        android:layout_height="40dp"
         android:fontFamily="casual"
-        android:gravity="left"
+        android:gravity="right"
         android:text="Pikachu"
         android:textColor="@color/White"
         android:textSize="12pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.988"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.389" />
 
     <TextView
         android:id="@+id/textAgentHealth"
@@ -142,7 +143,7 @@
 
     <TextView
         android:id="@+id/textPokemonPlayerName"
-        android:layout_width="122dp"
+        android:layout_width="161dp"
         android:layout_height="40dp"
         android:fontFamily="casual"
         android:gravity="left"

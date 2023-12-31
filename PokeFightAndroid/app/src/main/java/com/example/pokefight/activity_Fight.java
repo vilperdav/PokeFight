@@ -27,7 +27,6 @@ public class activity_Fight extends AppCompatActivity {
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
-
     private MediaPlayer mediaPlayer;
 
     @SuppressLint("ResourceAsColor")
@@ -53,16 +52,20 @@ public class activity_Fight extends AppCompatActivity {
         agentPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("agentPokemonsKey");
 
         // Invierto el array del jugador para que esten los pokemons en el orden correcto.
-        Collections.reverse(playerPokemonsPased);
+        // Collections.reverse(playerPokemonsPased);
 
         Button specialAttackButton = findViewById(R.id.specialAttackButton);
         Button changePokemonButton = findViewById(R.id.changePokemonButton);
         Button exitGameButton = findViewById(R.id.surrenderButton);
         Button tackleButton = findViewById(R.id.tackleButton);
 
+        pokemon p1 = playerPokemonsPased.get(0);
+        pokemon p2 = agentPokemonsPased.get(0);
+
         // Actualizamos la GUI con el primer pokemon pasado de cada jugador
-        updateFightGuiPlayer(playerPokemonsPased.get(0));
-        updateFightGuiAgent(agentPokemonsPased.get(0));
+        updateFightGuiPlayer(p1);
+        updateFightGuiAgent(p2);
+        updateSpecialAttackButton(p1, p2);
 
         tackleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,11 +246,14 @@ public class activity_Fight extends AppCompatActivity {
                             System.out.println(
                                     "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
                                             + " as the new pokemon.");
+
+                            // Actualizamos el pokemon actual en pantalla
+                            updateFightGuiAgent(p2);
+
+                        } else {
+                            // Entramos aqui cuando uno de los arrays esta vacio de pokemons
+                            chooseWinner();
                         }
-
-                        // Actualizamos el pokemon actual en pantalla
-                        updateFightGuiAgent(p2);
-
                     }
 
                     // The player pokemon has 0 hp
@@ -269,10 +275,15 @@ public class activity_Fight extends AppCompatActivity {
                             System.out.println(
                                     "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
                                             + " as the new pokemon.");
+
+                            // Actualizamos el pokemon actual en pantalla
+                            updateFightGuiPlayer(p1);
+
+                        } else {
+                            // Entramos aqui cuando uno de los arrays esta vacio de pokemons
+                            chooseWinner();
                         }
 
-                        // Actualizamos el pokemon actual en pantalla
-                        updateFightGuiPlayer(p1);
                     }
 
                     // Print the current pokemons in the game
@@ -388,10 +399,14 @@ public class activity_Fight extends AppCompatActivity {
                             System.out.println(
                                     "\n[GO-INT] - Agent Pokemon chooses " + p2.getName()
                                             + " as the new pokemon.");
-                        }
 
-                        // Actualizamos el pokemon actual en pantalla
-                        updateFightGuiAgent(p2);
+                            // Actualizamos el pokemon actual en pantalla
+                            updateFightGuiAgent(p2);
+
+                        } else {
+                            // Entramos aqui cuando uno de los arrays esta vacio de pokemons
+                            chooseWinner();
+                        }
 
                     }
 
@@ -414,10 +429,15 @@ public class activity_Fight extends AppCompatActivity {
                             System.out.println(
                                     "\n[GO-INT] - Player Pokemon chooses " + p1.getName()
                                             + " as the new pokemon.");
+
+                            // Actualizamos el pokemon actual en pantalla
+                            updateFightGuiPlayer(p1);
+
+                        } else {
+                            // Entramos aqui cuando uno de los arrays esta vacio de pokemons
+                            chooseWinner();
                         }
 
-                        // Actualizamos el pokemon actual en pantalla
-                        updateFightGuiPlayer(p1);
                     }
 
                     // Print the current pokemons in the game
@@ -429,48 +449,51 @@ public class activity_Fight extends AppCompatActivity {
             }
 
         } else {
+
             // Entramos aqui cuando uno de los arrays esta vacio de pokemons
+            chooseWinner();
+        }
 
-            // Choose the winner based on the marks of the pokemon defeated
-            if (playerMarks > agentMarks) {
+        return 0;
+    }
 
-                System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the activity_Fight.");
-                System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
 
-                Intent intent = new Intent(activity_Fight.this, activity_Win.class);
+    private void chooseWinner() {
 
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // Choose the winner based on the marks of the pokemon defeated
+        if (playerMarks > agentMarks) {
 
-                // Inicia la actividad
-                startActivity(intent);
+            System.out.println("\n[GO-OUT] - AGENT Pokemon go out of the activity_Fight.");
+            System.out.println("\n[REWARD] - Congrats you recibe a GYM medal!.");
 
-                // Cierra la actividad actual
-                finish();
+            Intent intent = new Intent(activity_Fight.this, activity_Win.class);
 
-                return 1;
+            // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            } else {
+            // Inicia la actividad
+            startActivity(intent);
 
-                System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the activity_Fight.");
-                System.out.println("\n[REWARD] - Better luck next time :).");
+            // Cierra la actividad actual
+            finish();
 
-                Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
+        } else {
 
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            System.out.println("\n[GO-OUT] - PLAYER Pokemon go out of the activity_Fight.");
+            System.out.println("\n[REWARD] - Better luck next time :).");
 
-                // Inicia la actividad
-                startActivity(intent);
+            Intent intent = new Intent(activity_Fight.this, activity_Lose.class);
 
-                // Cierra la actividad actual
-                finish();
+            // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                return 2;
-            }
+            // Inicia la actividad
+            startActivity(intent);
+
+            // Cierra la actividad actual
+            finish();
 
         }
-        return 0;
     }
 
     private static void printPokemonsInGame(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
@@ -526,6 +549,10 @@ public class activity_Fight extends AppCompatActivity {
         int health = p1.getHealth();
         if (player == 1) {
             if (health > 0) {
+
+                // Si no es menos de la mitad se queda en verde
+                this.playerHpTextView.setText("HP: " + health);
+
                 if (health < (fullHealthPlayerPokemon * 0.3)) {
 
                     // Menos del 30% cambiamos el color del texto a LightRed
@@ -536,9 +563,6 @@ public class activity_Fight extends AppCompatActivity {
                     // Menos del 50% cambiamos el color del texto a LightYellow
                     this.playerHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightYellow));
                 }
-
-                // Si no es menos de la mitad se queda en verde
-                this.playerHpTextView.setText("HP: " + health);
 
                 return (atack - defense);
 
@@ -552,6 +576,9 @@ public class activity_Fight extends AppCompatActivity {
         } else if (player == 2) {
             if (health > 0) {
 
+                // Si no es menos de la mitad se queda en verde
+                this.agentHpTextView.setText("HP: " + health);
+
                 if (health < (fullHealthAgentPokemon * 0.3)) {
 
                     // Menos del 30% cambiamos el color del texto a LightRed
@@ -561,8 +588,6 @@ public class activity_Fight extends AppCompatActivity {
                     // Menos del 50% cambiamos el color del texto a LightYellow
                     this.agentHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightYellow));
                 }
-                // Si no es menos de la mitad se queda en verde
-                this.agentHpTextView.setText("HP: " + health);
 
                 return (atack - defense);
 
@@ -615,13 +640,18 @@ public class activity_Fight extends AppCompatActivity {
         }
     }
 
-    private void updateFightGuiPlayer(pokemon playerPokemon){
+    private void updateSpecialAttackButton(pokemon p1, pokemon p2) {
+        Button specialAttackButton = findViewById(R.id.specialAttackButton);
+        double efect = atackEfective(p1.getType(), p2.getType(), "null");
+        specialAttackButton.setText(p1.getMovements().get(1).toString().toUpperCase() + "\n x " + efect * 10);
+    }
+
+    private void updateFightGuiPlayer(pokemon playerPokemon) {
 
         // Valores obtenidos de cada pokemon para actualizar
         String pokemonPlayerName = playerPokemon.getName();
         int pokemonPlayerHealth = playerPokemon.getHealth();
         String pokemonPlayerType = playerPokemon.getType();
-        String pokemonPlayerSpecialAtack = (String) playerPokemon.getMovements().get(1);
 
         // Botones a los que vamos a acceder desde la funcion
         Button specialAttackButton = findViewById(R.id.specialAttackButton);
@@ -634,10 +664,6 @@ public class activity_Fight extends AppCompatActivity {
         playerHpTextView = findViewById(R.id.textPlayerHealth);
         this.playerHpTextView.setText("HP: " + pokemonPlayerHealth);
         this.playerHpTextView.setTextColor(ContextCompat.getColor(this, R.color.LightGreen));
-
-        // Actualizo las letras del ataque especial del pokemon
-        specialAttackButton.setText(pokemonPlayerSpecialAtack.toUpperCase());
-        specialAttackButton.setTextColor(ContextCompat.getColor(this, R.color.Black));
 
         // Actualizo los tipos de Pokemon en la foto y en el ataque especial
         typePokemonPlayerIMG = findViewById(R.id.typePokemonPlayerIMG);
@@ -663,7 +689,7 @@ public class activity_Fight extends AppCompatActivity {
     }
 
 
-    private void updateFightGuiAgent(pokemon agentPokemon){
+    private void updateFightGuiAgent(pokemon agentPokemon) {
 
         String pokemonAgentName = agentPokemon.getName();
         int pokemonAgentHealth = agentPokemon.getHealth();
@@ -706,14 +732,6 @@ public class activity_Fight extends AppCompatActivity {
             arr[longitud - 1 - i] = temp;
         }
     }
-
-
-
-
-
-
-
-
 
 
 }
