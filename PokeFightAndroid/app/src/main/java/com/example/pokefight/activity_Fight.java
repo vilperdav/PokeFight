@@ -1,6 +1,8 @@
 package com.example.pokefight;
 
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -12,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.media.MediaPlayer;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.*;
 
@@ -126,6 +130,10 @@ public class activity_Fight extends AppCompatActivity {
 
     public int nextTurn(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons, int playerDecision) {
 
+        // Para poder sacar mensajes por pantalla
+        Snackbar msgPlayer;
+        Snackbar msgAgent;
+
         // Comprobamos que los arrays tienen pokemons
         if (!(playerPokemons.isEmpty()) && (!agentPokemons.isEmpty())) {
 
@@ -183,6 +191,12 @@ public class activity_Fight extends AppCompatActivity {
                         // Say the damage done in the pokemon
                         System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage to "
                                 + p2.getName() + ".");
+
+                        // To say a notification of the damage done
+                        String text = "Player made " + realDamagePlayer + " points of damage to " + p2.getName() + ".";
+                        Snackbar.make(findViewById(R.id.msgPlayer), text,
+                                        Snackbar.LENGTH_SHORT)
+                                .show();
                     }
 
                     // If the p2 has more than 0 points of life it chooses its atack
@@ -222,6 +236,12 @@ public class activity_Fight extends AppCompatActivity {
                         // Says what it the damage made in the pokemons
                         System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage to "
                                 + p1.getName() + ".");
+
+                        // To say a notification of the damage done
+                        String text = "Agent made " + realDamageAgent + " points of damage to " + p1.getName() + ".";
+                        Snackbar.make(findViewById(R.id.msgAgent), text,
+                                        Snackbar.LENGTH_SHORT)
+                                .show();
 
                     }
 
@@ -337,6 +357,12 @@ public class activity_Fight extends AppCompatActivity {
                         System.out.println("[ATACK] - Agent made " + realDamageAgent + " points of damage to "
                                 + p1.getName() + ".");
 
+                        // To say a notification of the damage done
+                        String text = "Agent made " + realDamageAgent + " points of damage to " + p1.getName() + ".";
+                        Snackbar.make(findViewById(R.id.msgAgent), text,
+                                        Snackbar.LENGTH_SHORT)
+                                .show();
+
                     }
 
                     if (p1.getHealth() > 0) {
@@ -376,6 +402,12 @@ public class activity_Fight extends AppCompatActivity {
                         // Say the damage done in the pokemon
                         System.out.println("[ATACK] - Player made " + realDamagePlayer + " points of damage to "
                                 + p2.getName() + ".");
+
+                        // To say a notification of the damage done
+                        String text = "Player made " + realDamagePlayer + " points of damage to " + p2.getName() + ".";
+                        Snackbar.make(findViewById(R.id.msgPlayer), text,
+                                        Snackbar.LENGTH_SHORT)
+                                .show();
                     }
 
                     // One of the pokemons has 0 hp soo we delete if from the array
@@ -723,14 +755,58 @@ public class activity_Fight extends AppCompatActivity {
 
     }
 
-    private static void invertirArray(int[] arr) {
-        int longitud = arr.length;
-        for (int i = 0; i < longitud / 2; i++) {
-            // Intercambiar elementos desde los extremos
-            int temp = arr[i];
-            arr[i] = arr[longitud - 1 - i];
-            arr[longitud - 1 - i] = temp;
+    // Funcion que permite cambiar el pokemon durante una batalla
+    private static pokemon selectAPokemonToChange(ArrayList<pokemon> pokemonList) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // If we only have one pokemon we dont change
+
+        boolean pokemonChanged = false;
+        int pokemonToChange = 0;
+
+        // While the pokemon is not changed, we stay in this loop
+        while (!pokemonChanged) {
+
+            // See all pokemons the currently alive in the game
+            System.out.print("\n[POKEMONS-2-CHANGE] - Pokemons => [ ");
+            int i = 0;
+            for (pokemon pokemonInList : pokemonList) {
+                i++;
+                System.out.print(i + ".- " + pokemonInList.getName() + " [HP]: " + pokemonInList.getHealth() + ", ");
+            }
+            System.out.print("]: ");
+
+            // Scan the pokemon to change
+            if (scanner.hasNextInt()) {
+
+                // Read the integer
+                pokemonToChange = scanner.nextInt();
+                pokemonToChange = pokemonToChange - 1;
+
+                // Check if the player chooses a pokemon or not
+                if (pokemonToChange >= 0 && pokemonToChange < pokemonList.size()) {
+
+                    pokemonChanged = true;
+
+                } else {
+                    System.out.println(
+                            "\n[ERROR] - Select a pokemon between the bounds [1-"
+                                    + pokemonList.size()
+                                    + "] \n");
+                    scanner.nextLine();
+                }
+
+            } else {
+                System.out.println(
+                        "\n[ERROR] - That Pokemon don't exists in the database. Try Again \n");
+                scanner.nextLine();
+            }
+
         }
+
+        // Now we have the id of the pokemon to change it
+        return pokemonList.get(pokemonToChange);
     }
 
 

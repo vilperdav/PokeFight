@@ -3,56 +3,72 @@
     {
       "1Gen": {
         "Stone": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 0
         },
         "Waterfall": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 1
         },
         "Thunder": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 2
         },
         "Rainbow": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 3
         },
         "Soul": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 4
         },
         "Swamp": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 5
         },
         "Volcano": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 6
         },
         "Land": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 7
         }
       },
       "2Gen": {},
       "3Gen": {},
       "4Gen": {
         "Lignite": {
-          "visibility": "True"
+          "visibility": "False",
+          "id": 8
         },
         "Forest": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 9
         },
         "Cobble": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 10
         },
         "Swamp2": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 11
         },
         "Relic": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 12
         },
         "Mine": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 13
         },
         "Icicle": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 14
         },
         "Lighthouse": {
-          "visibility": "False"
+          "visibility": "False",
+          "id": 15
         }
       }
     }
