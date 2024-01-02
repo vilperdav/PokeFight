@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#313435"
+    android:background="@color/androidStudio"
     tools:context=".activity_Medals">
 
     <requestFocus
@@ -162,7 +162,7 @@
         android:layout_width="193dp"
         android:layout_height="73dp"
         android:fontFamily="casual"
-        android:text="4st Gen"
+        android:text="4th Gen"
         android:textColor="@color/White"
         android:textSize="50dp"
         android:textStyle="bold"

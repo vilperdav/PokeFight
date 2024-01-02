@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/androidStudio"
     tools:context=".activity_SelectPokemon">
 
     <LinearLayout
@@ -47,7 +48,7 @@
                 android:fontFamily="casual"
                 android:gravity="center"
                 android:text="Type: Electric"
-                android:textColor="@color/Black"
+                android:textColor="@color/White"
                 android:textSize="6pt"
                 android:textStyle="bold" />
 
@@ -57,8 +58,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="casual"
                 android:gravity="center"
-                android:text="Health: 64"
-                android:textColor="@color/Black"
+                android:text="Health: 64 / 100"
+                android:textColor="@color/White"
                 android:textSize="6pt"
                 android:textStyle="bold" />
 
@@ -69,7 +70,7 @@
                 android:fontFamily="casual"
                 android:gravity="center"
                 android:text="Atack: 50"
-                android:textColor="@color/Black"
+                android:textColor="@color/White"
                 android:textSize="6pt"
                 android:textStyle="bold" />
 
@@ -80,7 +81,7 @@
                 android:fontFamily="casual"
                 android:gravity="center"
                 android:text="Defense: 100"
-                android:textColor="@color/Black"
+                android:textColor="@color/White"
                 android:textSize="6pt"
                 android:textStyle="bold" />
 
@@ -91,7 +92,7 @@
                 android:fontFamily="casual"
                 android:gravity="center"
                 android:text="Speed: 100"
-                android:textColor="@color/Black"
+                android:textColor="@color/White"
                 android:textSize="6pt"
                 android:textStyle="bold" />
 

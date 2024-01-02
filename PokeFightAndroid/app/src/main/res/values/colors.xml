@@ -20,4 +20,6 @@
     <color name="LightCyan">#FFB2EBF2</color> <!-- Cian claro -->
     <color name="LightMagenta">#FFF8BBD0</color> <!-- Magenta claro -->
     <color name="LightDarkGray">#FFB0B0B0</color> <!-- Gris oscuro claro -->
+    <color name="androidStudio">#313435</color> <!-- Android Studio BackGround -->
+
 </resources>

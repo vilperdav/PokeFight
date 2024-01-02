@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,15 +75,25 @@ public class activity_Info extends AppCompatActivity {
         btnResetGameData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Copiamos el JSON con las medallas apagadas a la memoria SD
-                int error = CopyRawToSDCard(R.raw.medals, Environment.getExternalStorageDirectory() + "/medals.json");
+                // El nombre de tu archivo JSON
+                String jsonFileName = "medals.json";
+
+                // Comprueba si el archivo existe en el almacenamiento interno
+                File internalJsonFile = new File(getFilesDir(), jsonFileName);
+                if (internalJsonFile.exists()) {
+                    // Si existe, borra el archivo del almacenamiento interno
+                    internalJsonFile.delete();
+                    System.out.println("File deleted from internal storage");
+                }
+
+                // Copia el archivo JSON con las medallas apagadas al almacenamiento interno
+                int error = CopyRawToSDCard(R.raw.medals, getFilesDir() + "/" + jsonFileName);
                 Snackbar mySnackbar;
                 if (error == 0) {
                     // Preparamos el mensaje de reseteo
                     mySnackbar = Snackbar.make(view, "Game Medals Reset!", LENGTH_SHORT);
-
                 } else {
-                    // Preparamos el mensaje de reseteo
+                    // Preparamos el mensaje de error
                     mySnackbar = Snackbar.make(view, "!Error! Enable Storage Permissions", LENGTH_SHORT);
                 }
                 mySnackbar.show();
@@ -90,7 +101,7 @@ public class activity_Info extends AppCompatActivity {
         });
 
 
-        // TODO - Faltan añadir eventos para el Switch Shiny
+        // TODO - Faltan añadir eventos para el Switch Shiny y la seleccion de IA
 
     }
 

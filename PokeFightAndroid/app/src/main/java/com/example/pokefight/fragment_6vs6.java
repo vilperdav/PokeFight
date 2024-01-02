@@ -118,7 +118,6 @@ public class fragment_6vs6 extends Fragment {
                 throw new RuntimeException(e);
             }
 
-            // TODO - HACER QUE ESTO NO SE A ALEATORIO
             // El jugador escoge un pokemon de 0 a 9 aleatoriamente
             poke = listOfPokemons.get(azar.nextInt(9));
             try {
@@ -254,7 +253,6 @@ public class fragment_6vs6 extends Fragment {
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
-
                             // Maneja tus datos aquí
                             pokemon pokemonSelected = (pokemon) data.getSerializableExtra("selectedPokemon");
                             int buttonId = data.getIntExtra("buttonId", -1);
@@ -265,8 +263,21 @@ public class fragment_6vs6 extends Fragment {
 
                             // Establece la imagen del ImageButton
                             imageButton.setImageResource(resID);
-                            playerPokemons.set(0, pokemonSelected);
+                            if (buttonId == R.id.yourTeamButton1) {
+                                playerPokemons.set(0, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton2) {
+                                playerPokemons.set(1, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton3) {
+                                playerPokemons.set(2, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton4) {
+                                playerPokemons.set(3, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton5) {
+                                playerPokemons.set(4, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton6) {
+                                playerPokemons.set(5, pokemonSelected);
+                            }
                         }
+
                     }
 
                 });

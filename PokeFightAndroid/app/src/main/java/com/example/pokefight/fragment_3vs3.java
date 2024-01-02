@@ -264,7 +264,13 @@ public class fragment_3vs3 extends Fragment {
 
                             // Establece la imagen del ImageButton
                             imageButton.setImageResource(resID);
-                            playerPokemons.set(0, pokemonSelected);
+                            if (buttonId == R.id.yourTeamButton1) {
+                                playerPokemons.set(0, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton2) {
+                                playerPokemons.set(1, pokemonSelected);
+                            } else if (buttonId == R.id.yourTeamButton3) {
+                                playerPokemons.set(2, pokemonSelected);
+                            }
                         }
                     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="496dp"
     android:id="@+id/ModeFragment"
+    android:background="@color/androidStudio"
     tools:context=".fragment_1vs1">
 
     <!-- TODO: Update blank fragment layout -->
@@ -89,12 +90,19 @@
             android:id="@+id/ChangeModeButton3VS3"
             android:layout_width="207dp"
             android:layout_height="69dp"
-            android:text="3 VS 3"
+            android:text="Go to 3 VS 3 Battle"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textColor="@color/Black"
+            android:backgroundTint="@color/LightYellow"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="8pt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.992" />
+            app:layout_constraintVertical_bias="0.995" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -281,11 +281,8 @@ public class fragment_1vs1 extends Fragment {
             }
         };
 
-        ImageButton imageButton1 = (ImageButton) view.findViewById(R.id.YourTeamButton);// ... más ImageButtons ...
-
+        ImageButton imageButton1 = (ImageButton) view.findViewById(R.id.YourTeamButton);
         imageButton1.setOnClickListener(clickListener);
-
-        // ... establecer el listener en más ImageButtons ...
 
         return view;
 

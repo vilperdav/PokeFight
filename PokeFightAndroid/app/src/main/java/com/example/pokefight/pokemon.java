@@ -15,17 +15,17 @@ public class pokemon implements Cloneable, Serializable {
     // Private atribute for pokemone class
     private String name, type, img, imgS;
     private JSONArray movements;
-    private int health, atack, defense, speed;
+    private int health, atack, defense, speed, maxHealth;
 
     // General constructor of Pokemon
     public pokemon(String pokeName, String pokeImg, String pokeImgS, String pokeType, int pokeHealt, int pokeAtack,
-                   int pokeDefense,
-                   int pokeSpeed, JSONArray pokeMovements) {
+                   int pokeDefense, int pokeSpeed, JSONArray pokeMovements) {
         name = pokeName;
         img = pokeImg;
         imgS = pokeImgS;
         type = pokeType;
         health = pokeHealt;
+        maxHealth = pokeHealt;
         atack = pokeAtack;
         defense = pokeDefense;
         speed = pokeSpeed;
@@ -43,6 +43,7 @@ public class pokemon implements Cloneable, Serializable {
         clonedPokemon.imgS = this.imgS;
         clonedPokemon.type = this.type;
         clonedPokemon.health = this.health;
+        clonedPokemon.maxHealth = this.maxHealth;
         clonedPokemon.atack = this.atack;
         clonedPokemon.defense = this.defense;
         clonedPokemon.speed = this.speed;
@@ -55,7 +56,7 @@ public class pokemon implements Cloneable, Serializable {
     @Override
     public String toString() {
         return "pokemon [name=" + name + ", type=" + type + ", img=" + img + ", imgS=" + imgS + ", movements="
-                + movements + ", health=" + health + ", atack=" + atack + ", defense=" + defense + ", speed=" + speed
+                + movements + ", health=" + health + ", maxHealth=" + maxHealth + ", atack=" + atack + ", defense=" + defense + ", speed=" + speed
                 + "]";
     }
 
@@ -104,6 +105,11 @@ public class pokemon implements Cloneable, Serializable {
         return movements;
     }
 
+    // GETTER FOR MAX HEALTH
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
     // SETTER FOR NAME
     public void setName(String name) {
         this.name = name;
@@ -149,4 +155,8 @@ public class pokemon implements Cloneable, Serializable {
         this.movements = movements;
     }
 
+    // SETTER FOR MAX HEALTH
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
 }

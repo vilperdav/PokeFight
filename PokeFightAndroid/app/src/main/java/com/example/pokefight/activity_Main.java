@@ -11,11 +11,13 @@ import android.widget.ImageButton;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 
-public class activity_Main extends AppCompatActivity implements fragment_1vs1.OnDataPass,  fragment_3vs3.OnDataPass, fragment_6vs6.OnDataPass {
+public class activity_Main extends AppCompatActivity implements fragment_1vs1.OnDataPass, fragment_3vs3.OnDataPass, fragment_6vs6.OnDataPass {
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
@@ -23,9 +25,27 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
 
     private MediaPlayer mediaPlayer;
+
     private void playMusic() {
         // Comienza la reproducción
         if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Libera recursos cuando la actividad se destruye
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mediaPlayer != null) {
             mediaPlayer.start();
         }
     }
@@ -39,6 +59,7 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
             mediaPlayer = null;
         }
     }
+
     @Override
     public void onDataPass(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
         // Aquí puedes manejar los datos recibidos del Fragment
@@ -50,6 +71,9 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         // Inicializa el MediaPlayer con el archivo de música
         mediaPlayer = MediaPlayer.create(this, R.raw.pokemon_intro_music);
 
@@ -57,8 +81,6 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
         mediaPlayer.setLooping(true);
         playMusic();
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {

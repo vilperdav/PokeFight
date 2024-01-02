@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/androidStudio"
     tools:context=".activity_Main"
     tools:ignore="ExtraText">
 
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.958"
-            app:srcCompat="@drawable/ionic_ionicons_medal_1024"
+            app:srcCompat="@drawable/iconmedals"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.958"
-            app:srcCompat="@drawable/infobutton_87516" />
+            app:srcCompat="@drawable/infobutton" />
 
         <FrameLayout
             android:id="@+id/fragment_container"

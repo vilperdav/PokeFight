@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#313435"
+    android:background="@color/androidStudio"
     tools:context=".activity_Info">
 
     <requestFocus
@@ -127,18 +127,52 @@
         android:id="@+id/shinyModeSwitch"
         android:layout_width="239dp"
         android:layout_height="50dp"
+        android:fontFamily="casual"
         android:text="Shiny Mode"
         android:textColor="@color/LightYellow"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:fontFamily="casual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.525"
+        app:layout_constraintVertical_bias="0.478"
         tools:ignore="MissingConstraints" />
+
+    <Switch
+        android:id="@+id/IASwitch"
+        android:layout_width="239dp"
+        android:layout_height="50dp"
+        android:fontFamily="casual"
+        android:text="MAX-MIN IA"
+        android:textColor="@color/LightYellow"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="153dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:fontFamily="casual"
+        android:text="RANDOM"
+        android:textColor="@color/LightYellow"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565" />
 
     <Button
         android:id="@+id/howToPlayButton"
@@ -193,10 +227,14 @@
 
     <LinearLayout
         android:id="@+id/resetMSG"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_width="414dp"
+        android:layout_height="46dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"></LinearLayout>
 
     <TextView
         android:id="@+id/gameVersion"

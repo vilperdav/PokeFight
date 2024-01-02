@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -87,19 +88,20 @@ public class activity_Win extends AppCompatActivity {
 
             boolean medalObtained = false;
 
-            // Intento leer el fichero
-            File jsonFile = new File(Environment.getExternalStorageDirectory(), "/medals.json");
+            // El nombre de tu archivo JSON
+            String jsonFileName = "medals.json";
 
-            // Si no lo encontramos lo copiamos y volvemos a cargarlo
-            if (!jsonFile.exists()) {
-                // Copiamos el fichero
-                CopyRawToSDCard(R.raw.medals, Environment.getExternalStorageDirectory() + "/medals.json");
-                jsonFile = new File(Environment.getExternalStorageDirectory(), "/medals.json");
-                System.out.println("File copy to SD Card - No exists");
+            // Comprueba si el archivo existe en el almacenamiento interno
+            File internalJsonFile = new File(getFilesDir(), jsonFileName);
+            if (!internalJsonFile.exists()) {
+                // Si no existe, copia el archivo del almacenamiento externo al interno
+                CopyRawToSDCard(R.raw.medals, getFilesDir() + "/" + jsonFileName);
+                internalJsonFile = new File(getFilesDir(), jsonFileName);
+                System.out.println("File copied to internal storage - did not exist");
             }
 
-            // InputStream inputStream = getResources().openRawResource(R.raw.medals);
-            InputStream inputStream = new FileInputStream(jsonFile);
+            // Lee el archivo JSON del almacenamiento interno
+            InputStream inputStream = new FileInputStream(internalJsonFile);
             Reader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             JSONParser parser = new JSONParser();
@@ -134,7 +136,8 @@ public class activity_Win extends AppCompatActivity {
                                         if (visibility.equals("False") && !medalObtained) {
                                             medalDetails.put("visibility", "True");
                                             visibility = (String) medalDetails.get("visibility");
-                                            System.out.println("Medal " + medalName + " changed to visibility: " + visibility);
+                                            System.out.println(
+                                                    "Medal " + medalName + " changed to visibility: " + visibility);
                                             medalObtained = true;
                                         }
                                     }
@@ -145,15 +148,22 @@ public class activity_Win extends AppCompatActivity {
                 }
             }
 
-            // Ahora escribimos los cambios de vuelta al archivo JSON
-            FileWriter fileWriter = new FileWriter(jsonFile);
+            // Ahora escribimos los cambios de vuelta al archivo JSON en el almacenamiento
+            // interno
+            FileWriter fileWriter = new FileWriter(internalJsonFile);
             fileWriter.write(jsonObj.toJSONString());
             fileWriter.close();
+
+            // Muestra un Toast indicando que la escritura fue exitosa
+            Toast.makeText(this, "Medal awarded successfully!", Toast.LENGTH_SHORT).show();
 
             return 0;
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+
+            // Muestra un Toast indicando que hubo un error
+            Toast.makeText(this, "Error awarding medal!", Toast.LENGTH_SHORT).show();
         }
 
         return -1;
