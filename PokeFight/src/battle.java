@@ -54,6 +54,11 @@ public class battle {
                         // If the p1 has more than 0 points of life it chooses its atack
                         if (p1.getHealth() > 0) {
 
+                            //La ia tiene que evaluar la decisión antes de cualquier tip ode acción del jugador
+                            move.setScore(ia.evaluate(ia));
+                            
+                            move=ia.minimax(3, ia, true);
+
                             // We ask the player for its action
                             int playerAction = askPlayerForAction(p1, playerPokemons, battleType);
 
@@ -68,6 +73,7 @@ public class battle {
 
                             // It selected to change the pokemon
                             if (playerAction == 3) {
+                                
 
                                 // Try to change the pokemon
                                 nextPokemonPlayer = selectAPokemonToChange(ia.getOpponentPokemons());
@@ -131,22 +137,19 @@ public class battle {
                             // *****************************************
                             // RANDOM AGENT CODE
                             // *****************************************
-                            move.setScore(ia.evaluate(ia));
+                           
                             
-                            move=ia.minimax(1, ia, true, MIN, MAX);
                             // Agent Select its action
-
                             // Agent wants to change the pokemon
-                            if (move.isSwitch() || ia.evaluate(ia)<0) {
-
-                                int nextPokemon = ia.getCurrentPlayerPokemonIndex()+1;
+                            if (move.isSwitch()) {
+                                System.out.println("Next Pokemon: "+ia.getChangePlayerPokemonIndex()+ " "+ia.getPlayerPokemons().get(ia.getChangePlayerPokemonIndex()).getName());
+                                int nextPokemon = ia.getChangePlayerPokemonIndex();
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
                                 // *****************************************
 
                                 // Agent wants to change its pokemon
-                               
 
                                  pokemon pokecampo=ia.getPlayerPokemons().get(0);
 
@@ -282,13 +285,15 @@ public class battle {
 
                              move.setScore(ia.evaluate(ia));
                           
-                            move=ia.minimax(1, ia, true, MIN, MAX);
-                           
+                            move=ia.minimax(3, ia, true);
+                            System.out.println("El estado es: "+move.isSwitch()+" "+move.getPokemon().getName());
+                          
                             // Agent wants to change the pokemon
-                            if (move.isSwitch() || ia.evaluate(ia)<-35) {
-                                
+                            if (move.isSwitch())  {
                                 int nextPokemon = 0;
-                                nextPokemon=ia.getCurrentPlayerPokemonIndex() +1;
+                                nextPokemon=ia.getChangePlayerPokemonIndex();
+                                System.out.println(nextPokemon);
+                                
                                 // Depending on the pokemons alive the agent selects a random number
 
                                 // *****************************************
@@ -298,12 +303,12 @@ public class battle {
                                 // Agent wants to change its pokemon
                                 pokemon pokecampo=ia.getPlayerPokemons().get(0);
 
-                                pokemon newpoke=ia.getOpponentPokemons().get(nextPokemon);
+                                pokemon newpoke=ia.getPlayerPokemons().get(nextPokemon);
 
                                     ia.getPlayerPokemons().set(0, newpoke);
                                     ia.getPlayerPokemons().set(nextPokemon, pokecampo);
                                 nextPokemonAgent = ia.getPlayerPokemons().get(0);
-                                System.out.println(nextPokemon);
+                                
                                 System.out.println("\n[CHANGE] - Agent wants to change the pokemon -> "
                                         + p2.getName() + " -> " + nextPokemonAgent.getName() + ".");
 
