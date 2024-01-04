@@ -1,0 +1,14 @@
+<!-- res/anim/shake_animation.xml -->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <translate
+        android:fromXDelta="-5%"
+        android:toXDelta="5%"
+        android:duration="50"
+        android:interpolator="@anim/cycle_interpolator"/>
+    <translate
+        android:fromXDelta="5%"
+        android:toXDelta="-5%"
+        android:duration="50"
+        android:startOffset="50"
+        android:interpolator="@anim/cycle_interpolator"/>
+</set>
