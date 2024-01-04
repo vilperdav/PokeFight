@@ -1,76 +1,102 @@
 {
   "Medals": [
     {
-      "1Gen": {
-        "Stone": {
+      "generation": "1Gen",
+      "medals": [
+        {
+          "name": "Stone",
           "visibility": "False",
           "id": 0
         },
-        "Waterfall": {
+        {
+          "name": "Waterfall",
           "visibility": "False",
           "id": 1
         },
-        "Thunder": {
+        {
+          "name": "Thunder",
           "visibility": "False",
           "id": 2
         },
-        "Rainbow": {
+        {
+          "name": "Rainbow",
           "visibility": "False",
           "id": 3
         },
-        "Soul": {
+        {
+          "name": "Soul",
           "visibility": "False",
           "id": 4
         },
-        "Swamp": {
+        {
+          "name": "Swamp",
           "visibility": "False",
           "id": 5
         },
-        "Volcano": {
+        {
+          "name": "Volcano",
           "visibility": "False",
           "id": 6
         },
-        "Land": {
+        {
+          "name": "Land",
           "visibility": "False",
           "id": 7
         }
-      },
-      "2Gen": {},
-      "3Gen": {},
-      "4Gen": {
-        "Lignite": {
+      ]
+    },
+    {
+      "generation": "2Gen",
+      "medals": []
+    },
+    {
+      "generation": "3Gen",
+      "medals": []
+    },
+    {
+      "generation": "4Gen",
+      "medals": [
+        {
+          "name": "Lignite",
           "visibility": "False",
           "id": 8
         },
-        "Forest": {
+        {
+          "name": "Forest",
           "visibility": "False",
           "id": 9
         },
-        "Cobble": {
+        {
+          "name": "Cobble",
           "visibility": "False",
           "id": 10
         },
-        "Swamp2": {
+        {
+          "name": "Swamp2",
           "visibility": "False",
           "id": 11
         },
-        "Relic": {
+        {
+          "name": "Relic",
           "visibility": "False",
           "id": 12
         },
-        "Mine": {
+        {
+          "name": "Mine",
           "visibility": "False",
           "id": 13
         },
-        "Icicle": {
+        {
+          "name": "Icicle",
           "visibility": "False",
           "id": 14
         },
-        "Lighthouse": {
+        {
+          "name": "Lighthouse",
           "visibility": "False",
           "id": 15
         }
-      }
+      ]
     }
   ]
 }

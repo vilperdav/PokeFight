@@ -3,6 +3,7 @@ package com.example.pokefight;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -11,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,16 +113,15 @@ public class fragment_1vs1 extends Fragment {
         for (int i = 0; i < pokeBattle; i++) {
 
             // El agente escoge un pokemon de 0 a 9 aleatoriamente
-            pokemon poke = listOfPokemons.get(azar.nextInt(9));
+            pokemon poke = listOfPokemons.get(azar.nextInt(numberOfPokemonCharged));
             try {
                 agentPokemons.add(poke.clone());
             } catch (CloneNotSupportedException e) {
                 throw new RuntimeException(e);
             }
 
-            // TODO - HACER QUE ESTO NO SE A ALEATORIO
             // El jugador escoge un pokemon de 0 a 9 aleatoriamente
-            poke = listOfPokemons.get(azar.nextInt(9));
+            poke = listOfPokemons.get(azar.nextInt(numberOfPokemonCharged));
             try {
                 playerPokemons.add(poke.clone());
             } catch (CloneNotSupportedException e) {
@@ -136,8 +137,11 @@ public class fragment_1vs1 extends Fragment {
     // FUNCTION FOR CHARGE THE JSON INTO JAVA OBJECTS TO PLAY WITH THEM
     private int pokemonCharger() {
 
+        // Variable compartida para los switches
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+
         // VARIABLE FOR KNOW WHAT POKEMONS ARE CHARGED IN THE GAME
-        int pokemonCarged = 0;
+        int pokemonCharged = 0;
 
         try {
             InputStream inputStream = getResources().openRawResource(R.raw.pokemondb);
@@ -147,44 +151,39 @@ public class fragment_1vs1 extends Fragment {
             Object obj = parser.parse(reader);
 
             JSONObject pJsonObj = (JSONObject) obj;
-            JSONArray arrayAllPokemons = (JSONArray) pJsonObj.get("Pokemon");
+            JSONArray arrayAllGenerations = (JSONArray) pJsonObj.get("Pokemon");
 
-            for (Object genObj : arrayAllPokemons) {
+            for (Object genObj : arrayAllGenerations) {
                 if (genObj instanceof JSONObject) {
                     JSONObject gen = (JSONObject) genObj;
 
-                    for (Object genKey : gen.keySet()) {
-                        if (genKey instanceof String) {
-                            String genName = (String) genKey;
+                    // Accede al nombre de la generación
+                    String genName = (String) gen.get("generation");
 
-                            // Generation Of The Pokemon
-                            System.out.println("**************************");
-                            System.out.println("****** Generation: " + genName + "******");
-                            System.out.println("**************************");
+                    System.out.println("**************************");
+                    System.out.println("****** Generation: " + genName + "******");
+                    System.out.println("**************************");
 
-                            JSONObject genDetails = (JSONObject) gen.get(genName);
+                    JSONArray pokemons = (JSONArray) gen.get("pokemons");
 
-                            // Check if the Generation is Empty or not
-                            if (!genDetails.isEmpty()) {
-                                for (Object pokemonKey : genDetails.keySet()) {
-                                    if (pokemonKey instanceof String) {
-                                        String pokemonName = (String) pokemonKey;
+                    for (Object pokemonObj : pokemons) {
+                        if (pokemonObj instanceof JSONObject) {
+                            JSONObject pokemonDetails = (JSONObject) pokemonObj;
 
-                                        System.out.println("------------------------");
-                                        JSONObject pokemonDetails = (JSONObject) genDetails.get(pokemonName);
+                            // Acess to the information of the pokemon
+                            System.out.println("------------------------");
+                            String pokemonName = (String) pokemonDetails.get("name");
+                            String type = (String) pokemonDetails.get("type");
+                            String img = "img/" + genName + "/" + pokemonName + ".png";
+                            String imgS = "img/" + genName + "/" + pokemonName + "_s" + ".png";
+                            int hp = ((Long) pokemonDetails.get("hp")).intValue();
+                            int attack = ((Long) pokemonDetails.get("attack")).intValue();
+                            int defense = ((Long) pokemonDetails.get("defense")).intValue();
+                            int speed = ((Long) pokemonDetails.get("speed")).intValue();
+                            JSONArray movements = (JSONArray) pokemonDetails.get("movements");
 
-                                        // Acess to the information of the pokemon
-                                        String type = (String) pokemonDetails.get("type");
-                                        String img = "img/" + genName + "/" + pokemonName + ".png";
-                                        String imgS = "img/" + genName + "/" + pokemonName + "_s" + ".png";
-                                        int hp = ((Long) pokemonDetails.get("hp")).intValue();
-                                        int attack = ((Long) pokemonDetails.get("attack")).intValue();
-                                        int defense = ((Long) pokemonDetails.get("defense")).intValue();
-                                        int speed = ((Long) pokemonDetails.get("speed")).intValue();
-                                        JSONArray movements = (JSONArray) pokemonDetails.get("movements");
-
-                                        // Puedes hacer más cosas con la información del Pokémon según tus necesidades
-                                        System.out.println("Pokemon: " + pokemonName);
+                            // Puedes hacer más cosas con la información del Pokémon según tus necesidades
+                            System.out.println("Pokemon: " + pokemonName);
 
                                         /*
                                         System.out.println("IMG: " + img);
@@ -199,21 +198,15 @@ public class fragment_1vs1 extends Fragment {
                                         System.out.println("Pokemon: " + pokemonName);
                                         */
 
-                                        listOfPokemons.add(pokemonCarged, new pokemon(pokemonName, img, imgS, type, hp,
-                                                attack, defense, speed, movements));
+                            listOfPokemons.add(pokemonCharged, new pokemon(pokemonName, img, imgS, type, hp,
+                                    attack, defense, speed, movements));
 
-                                        // Incrementar la cantidad de Pokémon cargados
-                                        pokemonCarged++;
-                                    }
-                                }
-
-                            } else {
-
-                                System.out.println("------------------------");
-                                System.out.println("-------- EMPTY ---------");
-                                System.out.println("------------------------");
-
-                            }
+                            // Incrementar la cantidad de Pokémon cargados
+                            pokemonCharged++;
+                        } else {
+                            System.out.println("------------------------");
+                            System.out.println("-------- EMPTY ---------");
+                            System.out.println("------------------------");
 
                         }
                     }
@@ -225,9 +218,11 @@ public class fragment_1vs1 extends Fragment {
         }
 
         // Invertimos el array para que salgan en el orden adecuado
-        Collections.reverse(listOfPokemons);
+        //Collections.reverse(listOfPokemons);
 
-        return pokemonCarged;
+        preferences.edit().putInt("pokemonCharged", pokemonCharged).apply();
+
+        return pokemonCharged;
     }
 
     @Override
@@ -275,7 +270,7 @@ public class fragment_1vs1 extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), activity_SelectPokemon.class);
                 intent.putExtra("buttonId", v.getId());
-                intent.putExtra("pokemonList",listOfPokemons);
+                intent.putExtra("pokemonList", listOfPokemons);
 
                 mStartForResult.launch(intent);
             }
