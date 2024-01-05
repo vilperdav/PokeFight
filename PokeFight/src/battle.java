@@ -138,7 +138,6 @@ public class battle {
                             // RANDOM AGENT CODE
                             // *****************************************
                             
-                            System.out.println("El estado es: "+move.isSwitch()+" "+move.getPokemon().getName());
                             // Agent Select its action
                             // Agent wants to change the pokemon
                             if (move.isSwitch()) {
@@ -166,12 +165,12 @@ public class battle {
 
                                 // Say what atack chooses the agent
                                 System.out.println(
-                                        "\n[ATACK] - Agent Select '" + move.getagentMove()
+                                        "\n[ATACK] - Agent Select '" + p2.getMovements().get(move.getAtaque()).toString()
                                                 + "'");
 
                                 // Obtains the attackEfectivity of the Atack
                                 double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
-                                        move.getagentMove());
+                                        p2.getMovements().get(move.getAtaque()).toString());
 
                                 // Updates the current life of the pokemons
                                 int realDamageAgent = updateHP(p1,
@@ -288,9 +287,6 @@ public class battle {
                              move.setScore(ia.evaluate(ia));
                           
                             move=ia.minimax(3, ia, true);
-
-
-                            System.out.println("El estado es: "+move.isSwitch()+" "+move.getPokemon().getName());
                           
                             // Agent wants to change the pokemon
                             if (move.isSwitch())  {
@@ -298,7 +294,7 @@ public class battle {
                                 ia.setPermitChange(false);
                                 int nextPokemon = 0;
                                 nextPokemon=ia.getChangePlayerPokemonIndex();
-                                System.out.println(nextPokemon);
+                                
                                 
                                 // Depending on the pokemons alive the agent selects a random number
 
@@ -323,12 +319,12 @@ public class battle {
                                
                                 // Say what atack chooses the agent
                                 System.out.println(
-                                        "\n[ATACK] - Agent Select '" + move.getagentMove()
+                                        "\n[ATACK] - Agent Select '" + p2.getMovements().get(move.getAtaque()).toString()
                                                 + "'");
 
                                 // Obtains the attackEfectivity of the Atack
                                 double agentAtackEfective = atackEfective(p2.getType(), p1.getType(),
-                                        move.getagentMove());
+                                        p2.getMovements().get(move.getAtaque()).toString());
 
                                 // Updates the current life of the pokemons
                                 int realDamageAgent = updateHP(p1,

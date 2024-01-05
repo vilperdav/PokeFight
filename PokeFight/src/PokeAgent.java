@@ -16,6 +16,7 @@ public class PokeAgent implements Cloneable {
     static int MAX = 500;
     static int MIN = -500;
     Action currentAction=new Action();
+   
 	
 
     public GameState(ArrayList<pokemon> agentPokemons, ArrayList<pokemon> playerPokemons) {
@@ -256,11 +257,10 @@ public class PokeAgent implements Cloneable {
        if (battle.atackEfective(playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(0).toString())
         >battle.atackEfective(playerPokemons.get(getCurrentPlayerPokemonIndex()).getType(),opponentPokemons.get(getCurrentOpponentPokemonIndex()).getType(),playerPokemons.get(getCurrentPlayerPokemonIndex()).getMovements().get(1).toString())){ 
             
-            accion.setagentMove(accion.pokemon.getMovements().get(0).toString().trim());
+            accion.setAtaque(0);
         }else {
 
-            accion.setagentMove(accion.pokemon.getMovements().get(1).toString().trim());
-           
+            accion.setAtaque(1);
         }
     }
 
@@ -329,7 +329,7 @@ public class Action {
     private pokemon pokemon;
     private boolean isSwitch;
     private int score;
-    private String agentMove;
+    private int ataque=0;
     public Action(){}
 
     
@@ -353,7 +353,9 @@ public class Action {
         return this.isSwitch;
     }
 
-   
+   public int getAtaque(){
+        return ataque;
+    }
 
     // Setters
     public void setPokemon(pokemon pokemon) {
@@ -368,12 +370,8 @@ public class Action {
         this.score=score;
     }
     
-    public String getagentMove(){
-        return agentMove;
-    }
-
-    public void setagentMove(String agentMove){
-        this.agentMove=agentMove;
+    public void setAtaque(int ataque){
+        this.ataque=ataque;
     }
 }
 
