@@ -74,7 +74,7 @@ public class battle {
                             // It selected to change the pokemon
                             if (playerAction == 3) {
                                 
-
+                                ia.setPermitChange(true);
                                 // Try to change the pokemon
                                 nextPokemonPlayer = selectAPokemonToChange(ia.getOpponentPokemons());
                                 
@@ -137,12 +137,12 @@ public class battle {
                             // *****************************************
                             // RANDOM AGENT CODE
                             // *****************************************
-                           
                             
+                            System.out.println("El estado es: "+move.isSwitch()+" "+move.getPokemon().getName());
                             // Agent Select its action
                             // Agent wants to change the pokemon
                             if (move.isSwitch()) {
-                                System.out.println("Next Pokemon: "+ia.getChangePlayerPokemonIndex()+ " "+ia.getPlayerPokemons().get(ia.getChangePlayerPokemonIndex()).getName());
+                                ia.setPermitChange(false);
                                 int nextPokemon = ia.getChangePlayerPokemonIndex();
 
                                 // *****************************************
@@ -201,7 +201,7 @@ public class battle {
 
                     // The agent pokemon has 0 hp or less
                     if (p2.getHealth() < 0) {
-
+                        ia.setPermitChange(true);
                         int pokePos = ia.getPlayerPokemons().indexOf(p2);
                         playerMarks++;
 
@@ -226,6 +226,8 @@ public class battle {
 
                     // The player pokemon has 0 hp
                     if (p1.getHealth() < 0) {
+
+                        ia.setPermitChange(true);
 
                         int pokePos = ia.getOpponentPokemons().indexOf(p1);
                         agentMarks++;
@@ -286,10 +288,14 @@ public class battle {
                              move.setScore(ia.evaluate(ia));
                           
                             move=ia.minimax(3, ia, true);
+
+
                             System.out.println("El estado es: "+move.isSwitch()+" "+move.getPokemon().getName());
                           
                             // Agent wants to change the pokemon
                             if (move.isSwitch())  {
+
+                                ia.setPermitChange(false);
                                 int nextPokemon = 0;
                                 nextPokemon=ia.getChangePlayerPokemonIndex();
                                 System.out.println(nextPokemon);
@@ -366,6 +372,7 @@ public class battle {
                             // It selected to change the pokemon
                             if (playerAction == 3) {
 
+                                ia.setPermitChange(true);
                                 // Try to change the pokemon
                                 nextPokemonPlayer = selectAPokemonToChange(ia.getOpponentPokemons());
 
@@ -428,6 +435,7 @@ public class battle {
                     // The agent pokemon has 0 hp or less
                     if (p2.getHealth() < 0) {
 
+                        ia.setPermitChange(true);
                         int pokePos = ia.getPlayerPokemons().indexOf(p2);
                         playerMarks++;
 
@@ -451,6 +459,7 @@ public class battle {
                     // The player pokemon has 0 hp
                     if (p1.getHealth() < 0) {
 
+                        ia.setPermitChange(true);
                         int pokePos = ia.getOpponentPokemons().indexOf(p1);
                         agentMarks++;
 
