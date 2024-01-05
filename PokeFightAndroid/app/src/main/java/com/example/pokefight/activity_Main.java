@@ -5,7 +5,9 @@ import static android.app.PendingIntent.getActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.media.MediaPlayer;
@@ -21,15 +23,25 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
     public static ArrayList<pokemon> agentPokemonsPased = new ArrayList<pokemon>();
     public static ArrayList<pokemon> playerPokemonsPased = new ArrayList<pokemon>();
-    private String currentFragment = "fragment1";
-
 
     private MediaPlayer mediaPlayer;
 
     private void playMusic() {
-        // Comienza la reproducción
-        if (!mediaPlayer.isPlaying()) {
-            mediaPlayer.start();
+
+        // Comprobamos el estado del boton antes de reproducir la musica
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        ImageButton musicButton = findViewById(R.id.musicButton);
+        boolean musicState = preferences.getBoolean("music_state", true);
+
+        // Si se quiere escuchar musica
+        if (musicState) {
+            // Comienza la reproducción
+            if (!mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+                musicButton.setImageResource(R.drawable.music_play);
+            }
+        } else {
+            musicButton.setImageResource(R.drawable.music_stop);
         }
     }
 
@@ -45,8 +57,21 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
     @Override
     public void onResume() {
         super.onResume();
-        if (mediaPlayer != null) {
-            mediaPlayer.start();
+
+        // Comprobamos el estado del boton antes de reproducir la musica
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        ImageButton musicButton = findViewById(R.id.musicButton);
+        boolean musicState = preferences.getBoolean("music_state", false);
+
+        // Si se quiere escuchar musica
+        if (musicState) {
+            // Comienza la reproducción
+            if (!mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+                musicButton.setImageResource(R.drawable.music_play);
+            }
+        } else {
+            musicButton.setImageResource(R.drawable.music_stop);
         }
     }
 
@@ -81,7 +106,9 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
         mediaPlayer.setLooping(true);
         playMusic();
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        // Ver el fragmento de inicio
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -91,7 +118,6 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragmentoDeInicio).commit();
         }
-
 
         ImageButton imageButton = findViewById(R.id.PlayButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +160,24 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
                 // Pauso la musica
                 mediaPlayer.pause();
+            }
+        });
+
+        // Boton para pausar y continuar la musica
+        ImageButton musicButton = findViewById(R.id.musicButton);
+        musicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Pauso la musica si esta en reproduccion
+                if (!mediaPlayer.isPlaying()) {
+                    preferences.edit().putBoolean("music_state", true).apply();
+                    musicButton.setImageResource(R.drawable.music_play);
+                    mediaPlayer.start();
+                } else {
+                    preferences.edit().putBoolean("music_state", false).apply();
+                    musicButton.setImageResource(R.drawable.music_stop);
+                    mediaPlayer.pause();
+                }
             }
         });
 

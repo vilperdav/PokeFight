@@ -3,11 +3,17 @@ package com.example.pokefight;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,8 +47,8 @@ public class activity_Win extends AppCompatActivity {
         // Damos una medalla en orden
         if (!medalObtained) {
             giveNewMedal();
-            medalObtained = true;
         }
+        playLevelUp();
 
         // Boton para volver a la pestana anterior, osea al menu
         Button returnButton = findViewById(R.id.mainMenu);
@@ -81,12 +87,43 @@ public class activity_Win extends AppCompatActivity {
 
         });
 
+
     }
 
-    private int giveNewMedal() {
-        try {
+    private MediaPlayer mediaPlayer;
 
-            boolean medalObtained = false;
+    private void playLevelUp() {
+
+        // Inicializa el MediaPlayer con el archivo de música
+        mediaPlayer = MediaPlayer.create(this, R.raw.levelup);
+
+        // Comienza la reproducción
+        if (!mediaPlayer.isPlaying()) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Libera recursos cuando la actividad se destruye
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Libera recursos cuando la actividad se destruye
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+
+    private void giveNewMedal() {
+        try {
 
             // El nombre de tu archivo JSON
             String jsonFileName = "medals.json";
@@ -107,57 +144,54 @@ public class activity_Win extends AppCompatActivity {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(reader);
 
-            JSONObject jsonObj = (JSONObject) obj;
-            JSONArray arrayOfMedals = (JSONArray) jsonObj.get("Medals");
+            JSONObject pJsonObj = (JSONObject) obj;
+            JSONArray arrayAllGenerations = (JSONArray) pJsonObj.get("Medals");
 
-            for (Object genMedal : arrayOfMedals) {
-                if (genMedal instanceof JSONObject) {
-                    JSONObject gen = (JSONObject) genMedal;
+            for (Object genObj : arrayAllGenerations) {
+                if (genObj instanceof JSONObject) {
+                    JSONObject gen = (JSONObject) genObj;
 
-                    for (Object genKey : gen.keySet()) {
-                        if (genKey instanceof String) {
-                            String genName = (String) genKey;
+                    // Accede al nombre de la generación
+                    String genName = (String) gen.get("generation");
 
-                            JSONObject genDetails = (JSONObject) gen.get(genName);
+                    System.out.println("**************************");
+                    System.out.println("****** Generation: " + genName + "******");
+                    System.out.println("**************************");
 
-                            // Check if the Generation is Empty or not
-                            if (!genDetails.isEmpty()) {
-                                for (Object medalKey : genDetails.keySet()) {
-                                    if (medalKey instanceof String) {
-                                        String medalName = (String) medalKey;
+                    JSONArray medalsArray = (JSONArray) gen.get("medals");
 
-                                        JSONObject medalDetails = (JSONObject) genDetails.get(medalName);
+                    // Verificar si hay medallas para esta generación
+                    if (medalsArray != null && !medalsArray.isEmpty()) {
+                        for (Object medalObj : medalsArray) {
+                            if (medalObj instanceof JSONObject) {
+                                JSONObject medalDetails = (JSONObject) medalObj;
 
-                                        // Acceso a la información de las medallas
-                                        String visibility = (String) medalDetails.get("visibility");
-                                        long id = (long) medalDetails.get("id");
+                                // Acceso a la información de las medallas
+                                String medalName = (String) medalDetails.get("name");
+                                String visibility = (String) medalDetails.get("visibility");
 
-                                        // Si está desactivada, la activamos
-                                        if (visibility.equals("False") && !medalObtained) {
-                                            medalDetails.put("visibility", "True");
-                                            visibility = (String) medalDetails.get("visibility");
-                                            System.out.println(
-                                                    "Medal " + medalName + " changed to visibility: " + visibility);
-                                            medalObtained = true;
-                                        }
-                                    }
+                                // Si está desactivada, la activamos
+                                if (visibility.equals("False") && !medalObtained) {
+                                    medalDetails.put("visibility", "True");
+                                    visibility = (String) medalDetails.get("visibility");
+                                    System.out.println("Medal " + medalName + " changed to visibility: " + visibility);
+                                    medalObtained = true;
                                 }
+                                // Si no hay mas medallas simplemente no se dan mas
                             }
                         }
                     }
                 }
+
             }
 
-            // Ahora escribimos los cambios de vuelta al archivo JSON en el almacenamiento
-            // interno
+            // Ahora escribimos los cambios de vuelta al archivo JSON en el almacenamiento interno
             FileWriter fileWriter = new FileWriter(internalJsonFile);
-            fileWriter.write(jsonObj.toJSONString());
+            fileWriter.write(pJsonObj.toJSONString());
             fileWriter.close();
 
             // Muestra un Toast indicando que la escritura fue exitosa
             Toast.makeText(this, "Medal awarded successfully!", Toast.LENGTH_SHORT).show();
-
-            return 0;
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -166,8 +200,8 @@ public class activity_Win extends AppCompatActivity {
             Toast.makeText(this, "Error awarding medal!", Toast.LENGTH_SHORT).show();
         }
 
-        return -1;
     }
+
 
     private int CopyRawToSDCard(int id, String path) {
         InputStream in = getResources().openRawResource(id);

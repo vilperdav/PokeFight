@@ -3,14 +3,18 @@ package com.example.pokefight;
 import static android.widget.Toast.LENGTH_SHORT;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,8 +33,25 @@ public class activity_Info extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        ImageButton returnButton = findViewById(R.id.ReturnButton);
+        // Variable compartida para los switches
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Switch shinyModeSwitch = findViewById(R.id.shinyModeSwitch);
+        Switch IASwitch = findViewById(R.id.IASwitch);
+        // Intenta obtener el estado actual del los switches sino los deja como desabilidatos.
+        boolean shinyState = preferences.getBoolean("shinySwitch_state", false);
+        boolean IAState = preferences.getBoolean("IASwitch_state", false);
 
+        // Cambia a 'true' si los habiamos dejado activado previamente
+        if (shinyState) {
+            shinyModeSwitch.setChecked(true);
+        }
+
+        if (IAState) {
+            IASwitch.setChecked(true);
+        }
+
+
+        ImageButton returnButton = findViewById(R.id.ReturnButton);
         // Boton para volver a la pestana anterior
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +122,39 @@ public class activity_Info extends AppCompatActivity {
         });
 
 
-        // TODO - Faltan añadir eventos para el Switch Shiny y la seleccion de IA
+        shinyModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Checks the status of the button
+                if (isChecked) {
+                    // El Switch está activado
+                    Log.d("Switch", "Shiny True");
+                    preferences.edit().putBoolean("shinySwitch_state", true).apply();
+                } else {
+                    // El Switch está desactivado
+                    Log.d("Switch", "Shiny False");
+                    preferences.edit().putBoolean("shinySwitch_state", false).apply();
+                }
+            }
+        });
+
+
+        IASwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Checks the status of the button
+                if (isChecked) {
+                    // El Switch está activado
+                    Log.d("Switch", "IA Switch True");
+                    preferences.edit().putBoolean("IASwitch_state", true).apply();
+                } else {
+                    // El Switch está desactivado
+                    Log.d("Switch", "IA Switch False");
+                    preferences.edit().putBoolean("IASwitch_state", false).apply();
+                }
+            }
+        });
     }
 
     public void openBrowser(String url) {

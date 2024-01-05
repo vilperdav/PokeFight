@@ -64,8 +64,8 @@ public class activity_Medals extends AppCompatActivity {
 
     // FUNCTION FOR CHARGE THE JSON OF THE MEDALS
     private void checkMedals() {
-
         try {
+            int medalsUnlock = 0;
 
             // El nombre de tu archivo JSON
             String jsonFileName = "medals.json";
@@ -86,69 +86,64 @@ public class activity_Medals extends AppCompatActivity {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(reader);
 
-            JSONObject jsonObj = (JSONObject) obj;
-            JSONArray arrayOfMedals = (JSONArray) jsonObj.get("Medals");
+            JSONObject pJsonObj = (JSONObject) obj;
+            JSONArray arrayAllGenerations = (JSONArray) pJsonObj.get("Medals");
 
-            for (Object genMedal : arrayOfMedals) {
-                if (genMedal instanceof JSONObject) {
-                    JSONObject gen = (JSONObject) genMedal;
+            for (Object genObj : arrayAllGenerations) {
+                if (genObj instanceof JSONObject) {
+                    JSONObject gen = (JSONObject) genObj;
 
-                    for (Object genKey : gen.keySet()) {
-                        if (genKey instanceof String) {
-                            String genName = (String) genKey;
+                    // Accede al nombre de la generación
+                    String genName = (String) gen.get("generation");
 
-                            // Generation Of The Pokemon
-                            System.out.println("**************************");
-                            System.out.println("****** Generation Medal: " + genName + "******");
-                            System.out.println("**************************");
+                    System.out.println("**************************");
+                    System.out.println("****** Generation: " + genName + "******");
+                    System.out.println("**************************");
 
-                            JSONObject genDetails = (JSONObject) gen.get(genName);
+                    JSONArray medalsArray = (JSONArray) gen.get("medals");
 
-                            // Check if the Generation is Empty or not
-                            if (!genDetails.isEmpty()) {
-                                for (Object medalKey : genDetails.keySet()) {
-                                    if (medalKey instanceof String) {
-                                        String medalName = (String) medalKey;
+                    // Verificar si hay medallas para esta generación
+                    if (medalsArray != null && !medalsArray.isEmpty()) {
+                        for (Object medalObj : medalsArray) {
+                            if (medalObj instanceof JSONObject) {
+                                JSONObject medalDetails = (JSONObject) medalObj;
 
-                                        System.out.println("------------------------");
-                                        JSONObject medalDetails = (JSONObject) genDetails.get(medalName);
+                                // Acess to the information of the medal
+                                System.out.println("------------------------");
+                                // Acceso a la información de la medalla
+                                String medalName = (String) medalDetails.get("name");
+                                String visibility = (String) medalDetails.get("visibility");
+                                long id = (long) medalDetails.get("id");
 
-                                        // Acess to the information of the pokemon
-                                        String visibility = (String) medalDetails.get("visibility");
-                                        long id = (long) medalDetails.get("id");
+                                // Puedes hacer más cosas con la información de la medalla según tus necesidades
+                                System.out.println("Medal: " + medalName);
+                                System.out.println("Visibility: " + visibility);
+                                System.out.println("ID: " + id);
 
-                                        // Puedes hacer más cosas con la información del Pokémon según tus necesidades
-                                        System.out.println("Medal: " + medalName);
-                                        System.out.println("Visibilty: " + visibility);
-                                        System.out.println("ID: " + id);
+                                // Ajustamos la visibilidad de las medallas ganadas
+                                String medalResourceName = "medalBlack" + id;
+                                int medalId = getResources().getIdentifier(medalResourceName, "id", getPackageName());
+                                ImageView medalBlack = findViewById(medalId);
 
-                                        // Ajustamos la visibilidad de las medallas ganadas
-                                        String medalResourceName = "medalBlack" + id;
-                                        int medalId = getResources().getIdentifier(medalResourceName, "id",
-                                                getPackageName());
-                                        ImageView medalBlack = findViewById(medalId);
-
-                                        // Si alguna esta desactivada
-                                        if (visibility.equals("True")) {
-                                            medalBlack.setVisibility(View.GONE);
-                                            System.out.println("Estado: Visible");
-                                        } else {
-                                            medalBlack.setVisibility(View.VISIBLE);
-                                            System.out.println("Estado: No Visible");
-                                        }
-
-                                    }
+                                // Si alguna está desactivada
+                                if (visibility.equals("True")) {
+                                    medalBlack.setVisibility(View.GONE);
+                                    System.out.println("Estado: Visible");
+                                    medalsUnlock++;
+                                } else {
+                                    medalBlack.setVisibility(View.VISIBLE);
+                                    System.out.println("Estado: No Visible");
                                 }
 
-                            } else {
-
-                                System.out.println("------------------------");
-                                System.out.println("-------- EMPTY ---------");
-                                System.out.println("------------------------");
-
+                                // Recompensa si ganas 16 veces al IA
+                                if (medalsUnlock == 16) {
+                                    ImageView pikachu = findViewById(R.id.pikachuExtraBlack);
+                                    pikachu.setVisibility(View.GONE);
+                                }
                             }
-
                         }
+                    } else {
+                        System.out.println("No medals for generation: " + genName);
                     }
                 }
             }
@@ -156,8 +151,8 @@ public class activity_Medals extends AppCompatActivity {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
     }
+
     private int CopyRawToSDCard(int id, String path) {
         InputStream in = getResources().openRawResource(id);
         FileOutputStream out = null;
