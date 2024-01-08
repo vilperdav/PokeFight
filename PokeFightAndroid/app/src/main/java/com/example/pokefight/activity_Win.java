@@ -3,20 +3,13 @@ package com.example.pokefight;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
-
+import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.simple.JSONArray;
@@ -39,6 +32,9 @@ public class activity_Win extends AppCompatActivity {
 
     private boolean medalObtained = false;
 
+    private int animDelay = 500; //ms
+    Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +44,17 @@ public class activity_Win extends AppCompatActivity {
         if (!medalObtained) {
             giveNewMedal();
         }
-        playLevelUp();
+
+        // Retraso la musica ms para que no se solape con la batalla
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                playLevelUp();
+
+            }
+        }, animDelay);
+
 
         // Boton para volver a la pestana anterior, osea al menu
         Button returnButton = findViewById(R.id.mainMenu);

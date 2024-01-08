@@ -24,37 +24,45 @@
         <activity
             android:name=".activity_ChangePokemon"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_SelectPokemon"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_Medals"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_Info"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_Win"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_Lose"
             android:exported="false"
-            android:requestLegacyExternalStorage="true" />
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity_Fight"
             android:exported="false"
             android:label="@string/title_activity_fight"
             android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.PokeFight" />
         <activity
             android:name=".activity_Main"
             android:exported="true"
-            android:requestLegacyExternalStorage="true">
+            android:requestLegacyExternalStorage="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

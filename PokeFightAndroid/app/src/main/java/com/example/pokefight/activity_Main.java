@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -106,7 +107,15 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
         mediaPlayer.setLooping(true);
         playMusic();
 
+        // Controla el Shiny mode view
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean shinyState = preferences.getBoolean("shinySwitch_state", false);
+        ImageView shinyIMG1 = findViewById(R.id.shinyMode);
+        ImageView shinyIMG2 = findViewById(R.id.shinyMode2);
+        if (shinyState) {
+            shinyIMG1.setVisibility(View.VISIBLE);
+            shinyIMG2.setVisibility(View.VISIBLE);
+        }
 
         // Ver el fragmento de inicio
         if (findViewById(R.id.fragment_container) != null) {

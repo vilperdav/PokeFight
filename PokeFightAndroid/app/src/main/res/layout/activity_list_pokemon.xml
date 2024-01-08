@@ -11,12 +11,21 @@
         android:id="@+id/listOfPokemon"
         android:layout_width="412dp"
         android:layout_height="731dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:divider="@android:color/white"
+        android:dividerHeight="0.5dp"
+        android:fadeScrollbars="false"
+        android:fadingEdgeLength="16dp"
         android:numColumns="1"
+        android:overScrollMode="always"
+        android:requiresFadingEdge="vertical"
+        android:scrollbarThumbVertical="@android:color/white"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

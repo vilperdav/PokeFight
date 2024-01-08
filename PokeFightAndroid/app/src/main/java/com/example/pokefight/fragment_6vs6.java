@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.io.*;
 import java.util.*;
@@ -230,6 +231,19 @@ public class fragment_6vs6 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_six_vs_six, container, false);
+
+        // Variable compartida para los switches
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        boolean IAState = preferences.getBoolean("IASwitch_state", false);
+        // Avisamos del tipo de IA que estamos usando
+
+        // Obtener la referencia al TextView desde el diseño del fragmento
+        TextView iaTeamTextView = view.findViewById(R.id.IATeamText);
+
+        if (IAState) {
+            // Se usa la IA RANDOM y se cambia el texto
+            iaTeamTextView.setText("IA TEAM - RANDOM");
+        }
 
         Button botonCambiarFragmento = view.findViewById(R.id.ChangeModeButton1VS1);
         botonCambiarFragmento.setOnClickListener(new View.OnClickListener() {

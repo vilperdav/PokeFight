@@ -241,7 +241,7 @@
         android:layout_width="401dp"
         android:layout_height="29dp"
         android:ems="10"
-        android:text="Version 0.0.1 - Pre - Alpha"
+        android:text="Version 1.0 - Beta"
         android:textAlignment="center"
         android:textStyle="italic"
         android:textColor="#FFFFFF"

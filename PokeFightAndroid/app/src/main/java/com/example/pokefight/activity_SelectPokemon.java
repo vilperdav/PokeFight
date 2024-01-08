@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -46,6 +47,9 @@ public class activity_SelectPokemon extends AppCompatActivity {
                 finish();
             }
         });
+
+        String text = "¡Choose a pokemon!";
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 
     }
     public class ImageAdapter extends BaseAdapter {
