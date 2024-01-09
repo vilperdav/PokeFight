@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@drawable/masterball_round" />
-    <foreground android:drawable="@drawable/masterball_round" />
-    <monochrome android:drawable="@drawable/masterball_round" />
+    <background android:drawable="@drawable/pokeballvsandroid" />
+    <foreground android:drawable="@drawable/pokeballvsandroid" />
+    <monochrome android:drawable="@drawable/pokeballvsandroid" />
 </adaptive-icon>

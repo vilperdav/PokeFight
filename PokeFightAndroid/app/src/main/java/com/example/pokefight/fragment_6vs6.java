@@ -287,7 +287,6 @@ public class fragment_6vs6 extends Fragment {
                                 playerPokemons.set(5, pokemonSelected);
                             }
                         }
-
                     }
 
                 });

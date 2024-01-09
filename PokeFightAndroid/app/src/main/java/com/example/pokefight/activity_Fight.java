@@ -57,6 +57,8 @@ public class activity_Fight extends AppCompatActivity {
 
     private static int fightSize = 0;
 
+    private boolean IAState;
+
     private static int animDelay = 500; //ms
 
     @SuppressLint("ResourceAsColor")
@@ -78,7 +80,7 @@ public class activity_Fight extends AppCompatActivity {
 
         // Recupero el estado de los botones de activity_Info
         boolean shinyState = preferences.getBoolean("shinySwitch_state", false);
-        boolean IAState = preferences.getBoolean("IASwitch_state", false);
+        IAState = preferences.getBoolean("IASwitch_state", false);
 
         // Inicializo las variables de puntos a 0
         playerMarks = 0;
@@ -87,15 +89,6 @@ public class activity_Fight extends AppCompatActivity {
         // Recojo los argumentos que han llegado aqui
         playerPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("playerPokemonsKey");
         agentPokemonsPased = (ArrayList<pokemon>) getIntent().getSerializableExtra("agentPokemonsKey");
-
-        if (!IAState) {
-            // We set all the pokemons to the min-max agent
-            ia.setPlayerPokemons(agentPokemonsPased);
-            ia.setOpponentPokemons(playerPokemonsPased);
-            System.out.println("\n[IA] - Using Min-MAX IA");
-        } else {
-            System.out.println("\n[IA] - Using Random Agent");
-        }
 
         // Comprobamos si se esta jugando con pokemon shinys o no
         if (shinyState) {
@@ -113,6 +106,22 @@ public class activity_Fight extends AppCompatActivity {
                     pokemon.setName(pokemon.getName() + "_s");
                 }
             }
+
+            // Cambiamos el fondo de pantalla del combate
+            ImageView backGroundImageView = findViewById(R.id.backGroundIMG);
+
+            // Cambia la imagen de fondo programáticamente
+            backGroundImageView.setImageResource(R.drawable.background_s);
+
+        }
+
+        if (!IAState) {
+            // We set all the pokemons to the min-max agent
+            ia.setAgentPokemons(agentPokemonsPased);
+            ia.setPlayerPokemons(playerPokemonsPased);
+            System.out.println("\n[IA] - Using Min-MAX IA");
+        } else {
+            System.out.println("\n[IA] - Using Random Agent");
         }
 
         // Type of battle 1vs1, 3vs3, 6vs6
@@ -148,7 +157,7 @@ public class activity_Fight extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //playerAction = 0;
-                nextTurn(playerPokemonsPased, agentPokemonsPased, 0, IAState);
+                nextTurn(playerPokemonsPased, agentPokemonsPased, 0);
                 // Animation of attack
                 startAnimation();
                 // Reproduce el sonido del ataque
@@ -161,7 +170,7 @@ public class activity_Fight extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //playerAction = 1;
-                nextTurn(playerPokemonsPased, agentPokemonsPased, 1, IAState);
+                nextTurn(playerPokemonsPased, agentPokemonsPased, 1);
                 // Animation of attack
                 startAnimation();
                 // Reproduce el sonido del ataque
@@ -175,7 +184,7 @@ public class activity_Fight extends AppCompatActivity {
         changePokemonButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //playerAction = 1;
-                nextTurn(playerPokemonsPased, agentPokemonsPased, 3, IAState);
+                nextTurn(playerPokemonsPased, agentPokemonsPased, 3);
             }
         });
 
@@ -183,7 +192,7 @@ public class activity_Fight extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //playerAction = 4;
-                nextTurn(playerPokemonsPased, agentPokemonsPased, 4, IAState);
+                nextTurn(playerPokemonsPased, agentPokemonsPased, 4);
                 vibrate();
             }
         });
@@ -262,7 +271,7 @@ public class activity_Fight extends AppCompatActivity {
         }
     }
 
-    public void nextTurn(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons, int playerDecision, boolean IAState) {
+    public void nextTurn(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons, int playerDecision) {
 
         // Comprobamos que los arrays tienen pokemons
         if (!(playerPokemons.isEmpty()) && (!agentPokemons.isEmpty())) {
@@ -305,12 +314,18 @@ public class activity_Fight extends AppCompatActivity {
                             return;
                         }
 
-                        //La ia tiene que evaluar la decisión antes de cualquier tip ode acción del jugador
-                        move.setScore(ia.evaluate(ia));
-                        move = ia.minimax(3, ia, true);
+                        // See if we are using the min-max ai
+                        if (!IAState) {
+                            //La ia tiene que evaluar la decisión antes de cualquier tipo de acción del jugador
+                            move.setScore(ia.evaluate(ia));
+
+                            move = ia.minimax(fightSize, ia, true);
+                        }
 
                         // It chooses change pokemon
                         if (playerDecision == 3) {
+
+                            ia.setPermitChange(true);
 
                             String text = "Choose one pokemon!";
 
@@ -330,19 +345,9 @@ public class activity_Fight extends AppCompatActivity {
 
                                 // Iniciar la Activity
                                 selectAPokemonToChange.launch(intent);
-
                             }
 
                             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-
-                            for (int i = 0; i < ia.getOpponentPokemons().size(); i++) {
-                                if (p1.getName() == ia.getOpponentPokemons().get(i).getName()) {
-                                    pokemon pokecampo = ia.getOpponentPokemons().get(0);
-                                    pokemon newpoke = ia.getOpponentPokemons().get(i);
-                                    ia.getOpponentPokemons().set(0, newpoke);
-                                    ia.getOpponentPokemons().set(i, pokecampo);
-                                }
-                            }
 
                         } else {
                             // Choose Attack
@@ -398,7 +403,9 @@ public class activity_Fight extends AppCompatActivity {
                         public void run() {
 
                             // If the p2 has more than 0 points of life it chooses its atack
-                            if (p2.getHealth() > 0 && playerDecision != 3 && playerDecision != 4) {
+                            // if (p2.getHealth() > 0 && playerDecision != 3 && playerDecision != 4) {
+
+                            if (p2.getHealth() > 0 && playerDecision != 4) {
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
@@ -489,19 +496,21 @@ public class activity_Fight extends AppCompatActivity {
 
                                     // TODO - MIN MAX IA
 
-                                    if (move.isSwitch()) {
+                                    if (move.getIsSwitch() && agentPokemons.size() > 1) {
 
                                         // Choose Change
                                         String oldPokemonName = p2.getName();
+
                                         // Agent wants to change its pokemon
                                         ia.setPermitChange(false);
-                                        int nextPokemonIndex = ia.getChangePlayerPokemonIndex();
-                                        pokemon pokecampo = ia.getPlayerPokemons().get(0);
-                                        pokemon nextPokemonAgent = ia.getPlayerPokemons().get(nextPokemonIndex);
+                                        int nextPokemonToChangeIndex = ia.getAgentPokemonChangeIndex();
+                                        //pokemon actualPokemon = ia.getAgentPokemons().get(0);
+                                        pokemon nextPokemonAgent = ia.getAgentPokemons().get(nextPokemonToChangeIndex);
                                         System.out.println("Next Pokemon: " + nextPokemonAgent);
-                                        ia.getPlayerPokemons().set(0, nextPokemonAgent);
-                                        ia.getPlayerPokemons().set(nextPokemonIndex, pokecampo);
-                                        p2 = agentPokemons.get(nextPokemonIndex);
+                                        ia.setAgentPokemonIndex(nextPokemonToChangeIndex);
+                                        //ia.getPlayerPokemons().set(0, nextPokemonAgent);
+                                        //ia.getAgentPokemons().set(nextPokemonToChangeIndex, actualPokemon);
+                                        p2 = agentPokemons.get(nextPokemonToChangeIndex);
 
                                         // To say a notification of the damage done
                                         String text = "[CHANGE] - Agent wants to change the pokemon " + oldPokemonName + " -> " + p2.getName() + ".";
@@ -521,7 +530,7 @@ public class activity_Fight extends AppCompatActivity {
                                     } else {
 
                                         // Escoge atacar con su funcion de ataque
-                                        String attackName = p2.getMovements().get(move.getAtaque()).toString();
+                                        String attackName = p2.getMovements().get(move.getAttack()).toString();
 
                                         // Reemplazar espacios por guiones bajos
                                         String attackToPlay = attackName.replace(" ", "_").toLowerCase();
@@ -594,7 +603,8 @@ public class activity_Fight extends AppCompatActivity {
                         public void run() {
 
                             // If the p2 has more than 0 points of life it chooses its atack
-                            if (p2.getHealth() > 0 && playerDecision != 3 && playerDecision != 4) {
+                            // if (p2.getHealth() > 0 && playerDecision != 3 && playerDecision != 4) {
+                            if (p2.getHealth() > 0 && playerDecision != 4) {
 
                                 // *****************************************
                                 // RANDOM AGENT CODE
@@ -685,19 +695,20 @@ public class activity_Fight extends AppCompatActivity {
 
                                     // TODO - MIN MAX IA
 
-                                    if (move.isSwitch()) {
+                                    if (move.getIsSwitch() && agentPokemons.size() > 1) {
 
                                         // Choose Change
                                         String oldPokemonName = p2.getName();
                                         // Agent wants to change its pokemon
                                         ia.setPermitChange(false);
-                                        int nextPokemonIndex = ia.getChangePlayerPokemonIndex();
-                                        pokemon pokecampo = ia.getPlayerPokemons().get(0);
-                                        pokemon nextPokemonAgent = ia.getPlayerPokemons().get(nextPokemonIndex);
+                                        int nextPokemonToChangeIndex = ia.getAgentPokemonChangeIndex();
+                                        //pokemon actualPokemon = ia.getAgentPokemons().get(0);
+                                        pokemon nextPokemonAgent = ia.getAgentPokemons().get(nextPokemonToChangeIndex);
                                         System.out.println("Next Pokemon: " + nextPokemonAgent);
-                                        ia.getPlayerPokemons().set(0, nextPokemonAgent);
-                                        ia.getPlayerPokemons().set(nextPokemonIndex, pokecampo);
-                                        p2 = agentPokemons.get(nextPokemonIndex);
+                                        ia.setAgentPokemonIndex(nextPokemonToChangeIndex);
+                                        //ia.getPlayerPokemons().set(0, nextPokemonAgent);
+                                        //ia.getAgentPokemons().set(nextPokemonToChangeIndex, actualPokemon);
+                                        p2 = agentPokemons.get(nextPokemonToChangeIndex);
 
                                         // To say a notification of the damage done
                                         String text = "[CHANGE] - Agent wants to change the pokemon " + oldPokemonName + " -> " + p2.getName() + ".";
@@ -717,7 +728,7 @@ public class activity_Fight extends AppCompatActivity {
                                     } else {
 
                                         // Escoge atacar con su funcion de ataque
-                                        String attackName = p2.getMovements().get(move.getAtaque()).toString();
+                                        String attackName = p2.getMovements().get(move.getAttack()).toString();
 
                                         // Reemplazar espacios por guiones bajos
                                         String attackToPlay = attackName.replace(" ", "_").toLowerCase();
@@ -800,12 +811,17 @@ public class activity_Fight extends AppCompatActivity {
                             return;
                         }
 
-                        //La ia tiene que evaluar la decisión antes de cualquier tipo de acción del jugador
-                        move.setScore(ia.evaluate(ia));
-                        move = ia.minimax(3, ia, true);
+                        // See if we are using the min-max ai
+                        if (!IAState) {
+                            //La ia tiene que evaluar la decisión antes de cualquier tipo de acción del jugador
+                            move.setScore(ia.evaluate(ia));
+                            move = ia.minimax(fightSize, ia, true);
+                        }
 
                         // It chooses change pokemon
                         if (playerDecision == 3) {
+
+                            ia.setPermitChange(true);
 
                             String text = "Choose one pokemon!";
 
@@ -829,15 +845,6 @@ public class activity_Fight extends AppCompatActivity {
                             }
 
                             Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-
-                            for (int i = 0; i < ia.getOpponentPokemons().size(); i++) {
-                                if (p1.getName() == ia.getOpponentPokemons().get(i).getName()) {
-                                    pokemon pokecampo = ia.getOpponentPokemons().get(0);
-                                    pokemon newpoke = ia.getOpponentPokemons().get(i);
-                                    ia.getOpponentPokemons().set(0, newpoke);
-                                    ia.getOpponentPokemons().set(i, pokecampo);
-                                }
-                            }
 
                         } else {
                             // Choose Attack
@@ -927,6 +934,13 @@ public class activity_Fight extends AppCompatActivity {
                     updateFightGuiAgent(p2);
                     updateSpecialAttackButton(p1, p2);
 
+                    // Update the pokemons to the min-max agent
+                    if (!IAState) {
+                        // We set all the pokemons to the min-max agent
+                        ia.setPermitChange(true);
+                        ia.setAgentPokemons(agentPokemonsPased);
+                    }
+
                 } else {
                     // Entramos aqui cuando uno de los arrays esta vacio de pokemons
                     chooseWinner();
@@ -961,6 +975,13 @@ public class activity_Fight extends AppCompatActivity {
                     // Actualizamos el pokemon actual en pantalla
                     updateFightGuiPlayer(p1);
                     updateSpecialAttackButton(p1, p2);
+
+                    // Update the pokemons to the min-max agent
+                    if (!IAState) {
+                        // We set all the pokemons to the min-max agent
+                        ia.setPermitChange(true);
+                        ia.setAgentPokemons(playerPokemonsPased);
+                    }
 
                 } else {
                     // Entramos aqui cuando uno de los arrays esta vacio de pokemons
@@ -1391,6 +1412,12 @@ public class activity_Fight extends AppCompatActivity {
                         // Obtenemos la posicion del pokemon y la cambiamos al pokemon actual
                         int pokemonPosition = (int) data.getSerializableExtra("selectedPokemonPosition");
                         p1 = playerPokemonsPased.get(pokemonPosition);
+
+                        // Para que la IA sepa que pokemon esta usando el jugador
+                        if (!IAState) {
+                            // We set all the pokemons to the min-max agent
+                            ia.setPlayerPokemonIndex(pokemonPosition);
+                        }
                     }
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -1400,7 +1427,6 @@ public class activity_Fight extends AppCompatActivity {
                             updateSpecialAttackButton(p1, p2);
                         }
                     }, animDelay);
-
                 }
             }
     );

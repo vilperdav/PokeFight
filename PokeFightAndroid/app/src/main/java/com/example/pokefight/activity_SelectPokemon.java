@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,8 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class activity_SelectPokemon extends AppCompatActivity {
     ArrayList<pokemon> pokemonsList;
@@ -97,6 +94,8 @@ public class activity_SelectPokemon extends AppCompatActivity {
 
             // Actualizo los valores de los objetos del frontEnd
             img.setImageResource(getResources().getIdentifier(poke.getName().toLowerCase(), "drawable", getPackageName()));
+            System.out.println();
+
             name.setText(poke.getName());
             // Cambia el color del nombre del pokemon al color de su tipo
             String pokeType = poke.getType();
