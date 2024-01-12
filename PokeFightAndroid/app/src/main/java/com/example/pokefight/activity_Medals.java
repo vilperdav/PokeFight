@@ -138,7 +138,7 @@ public class activity_Medals extends AppCompatActivity {
                                 // Recompensa si ganas 16 veces al IA
                                 if (medalsUnlock == 16) {
                                     ImageView pikachu = findViewById(R.id.pikachuExtraBlack);
-                                    pikachu.setVisibility(View.VISIBLE);
+                                    pikachu.setVisibility(View.GONE);
                                 }
                             }
                         }

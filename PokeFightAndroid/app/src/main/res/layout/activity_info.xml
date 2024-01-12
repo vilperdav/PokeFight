@@ -274,7 +274,7 @@
         android:layout_width="401dp"
         android:layout_height="29dp"
         android:ems="10"
-        android:text="Version 1.0 - Beta"
+        android:text="Version 1.0 - Final"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textStyle="italic"
