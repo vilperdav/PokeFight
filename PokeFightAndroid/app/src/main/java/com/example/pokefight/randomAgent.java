@@ -3,19 +3,27 @@ package com.example.pokefight;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class randomAgent {
-    // Function for choose the action of the agen
+
+    /*
+     * ********************************************************************************************
+     * * chooseAction                                                                               *
+     * ********************************************************************************************
+     * */
     public static int chooseAction(int fightSize, ArrayList<pokemon> agentPokemons) {
 
-        // Agent Select its action, takle for defect
+        // Agent Select its action, tackle for defect
         Random azar = new Random();
         int agentAction = 0;
 
         if (fightSize == 1 || agentPokemons.size() == 1) {
+
             // 0 - Tackle, 1 - Attack of the Pokemon
             agentAction = azar.nextInt(2);
 
         } else {
+
             // 0 - Tackle, 1 - Attack of the Pokemon, 2 changes pokemon
             agentAction = azar.nextInt(3);
 
@@ -25,10 +33,14 @@ public class randomAgent {
 
     }
 
-    // Function for choose the pokemon for changing
+    /*
+     * ********************************************************************************************
+     * * choosePokemonToChange                                                                               *
+     * ********************************************************************************************
+     * */
     public static int choosePokemonToChange(ArrayList<pokemon> agentPokemons) {
 
-        // Escoge cambiar de pokemon
+        // It want to change the pokemon
         int nextPokemon = -1;
         Random azar = new Random();
 

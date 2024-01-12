@@ -13,48 +13,56 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class activity_Lose extends AppCompatActivity {
 
+    /*
+     * ********************************************************************************************
+     * * vibrate                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lose);
 
-        // Indica que has perdido
-        vibrate();
+        // Vibrate when you loose
+        vibrate(500);
 
-        // Boton para volver a la pestana anterior, osea al menu
-        Button returnButton = findViewById(R.id.mainMenu);
-        returnButton.setOnClickListener(new View.OnClickListener() {
+        // mainMenuButton
+        Button mainMenuButton = findViewById(R.id.mainMenu);
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Go to next activity in the correct way
                 Intent intent = new Intent(activity_Lose.this, activity_Main.class);
-
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Inicia la actividad
                 startActivity(intent);
-
-                // Cierra la actividad actual
                 finish();
             }
         });
 
     }
 
-    private void vibrate() {
+    /*
+     * ********************************************************************************************
+     * * vibrate                                                                                  *
+     * ********************************************************************************************
+     * */
+    private void vibrate(int vibrateTime) {
+
+        // Access to the vibrator engine of the phone
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        // Comprobar si el dispositivo admite la vibración y si no, salir
+        // Check if the device is compatible or has vibrator
         if (vibrator == null || !vibrator.hasVibrator()) {
             return;
         }
 
-        // API 26 y versiones posteriores
+        // Check if the device is compatible for API 26 and later
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(vibrateTime, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-            // Versiones anteriores a la API 26
-            vibrator.vibrate(500);
+            // Previous API 26 versions
+            vibrator.vibrate(vibrateTime);
         }
     }
 }

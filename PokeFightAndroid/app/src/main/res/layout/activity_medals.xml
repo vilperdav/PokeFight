@@ -5,7 +5,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/androidStudio"
-    tools:context=".activity_Medals">
+    android:visibility="visible"
+    tools:context=".activity_Medals"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/medals4GenBack"
+        android:layout_width="0dp"
+        android:layout_height="259dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medals1GenText"
+        app:srcCompat="@drawable/medallero" />
+    <TableLayout
+        android:id="@+id/MedalsTable4th"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="@id/medals4GenBack"
+        app:layout_constraintEnd_toEndOf="@id/medals4GenBack"
+        app:layout_constraintStart_toStartOf="@id/medals4GenBack"
+        app:layout_constraintTop_toTopOf="@id/medals4GenBack">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/medalBlack8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla1_4thgen"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/medalBlack9"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla2_4thgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla3_4thgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack11"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla4_4thgen" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/medalBlack12"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla5_4thgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack13"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla6_4thgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack14"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla7_4thgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack15"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla8_4thgen" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/medals1GenText8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:text="1st Gen"
+        android:textColor="@color/White"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/medals1GenBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.838" />
 
     <requestFocus
         android:layout_width="wrap_content"
@@ -13,290 +129,35 @@
         tools:layout_editor_absoluteX="195dp"
         tools:layout_editor_absoluteY="340dp" />
 
-    <TextView
-        android:id="@+id/medals1GenText"
-        android:layout_width="173dp"
-        android:layout_height="70dp"
-        android:fontFamily="casual"
-        android:text="1st Gen"
-        android:textColor="@color/White"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.065" />
-
     <ImageView
         android:id="@+id/medals1GenBack"
-        android:layout_width="377dp"
+        android:layout_width="0dp"
         android:layout_height="259dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.259"
+        app:layout_constraintVertical_bias="0.306"
         app:srcCompat="@drawable/medallero" />
 
-    <ImageView
-        android:id="@+id/medals1Gen"
-        android:layout_width="358dp"
-        android:layout_height="219dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.528"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271"
-        app:srcCompat="@drawable/medals1gen" />
-
-    <ImageView
-        android:id="@+id/medalBlack0"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.249" />
-
-    <ImageView
-        android:id="@+id/medalBlack1"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.374"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.249" />
-
-    <ImageView
-        android:id="@+id/medalBlack2"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.638"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <ImageView
-        android:id="@+id/medalBlack3"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <ImageView
-        android:id="@+id/medalBlack4"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.11"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
-
-    <ImageView
-        android:id="@+id/medalBlack5"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.374"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
-
-    <ImageView
-        android:id="@+id/medalBlack6"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.638"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
-
-    <ImageView
-        android:id="@+id/medalBlack7"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.907"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
-
     <TextView
-        android:id="@+id/medals4GenText"
-        android:layout_width="193dp"
-        android:layout_height="73dp"
+        android:id="@+id/medals1GenText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="casual"
         android:text="4th Gen"
         android:textColor="@color/White"
         android:textSize="50dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.579" />
-
-    <ImageView
-        android:id="@+id/medals4GenBack"
-        android:layout_width="377dp"
-        android:layout_height="259dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/medals4GenBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.985"
-        app:srcCompat="@drawable/medallero" />
-
-    <ImageView
-        android:id="@+id/medals4Gen"
-        android:layout_width="339dp"
-        android:layout_height="203dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.943"
-        app:srcCompat="@drawable/medals4gen" />
-
-    <ImageView
-        android:id="@+id/medalBlack8"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <ImageView
-        android:id="@+id/medalBlack9"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <ImageView
-        android:id="@+id/medalBlack10"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.638"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <ImageView
-        android:id="@+id/medalBlack11"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.923"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
-
-    <ImageView
-        android:id="@+id/medalBlack12"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
-
-    <ImageView
-        android:id="@+id/medalBlack13"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.365"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
-
-    <ImageView
-        android:id="@+id/medalBlack14"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.647"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
-
-    <ImageView
-        android:id="@+id/medalBlack15"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.923"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925" />
+        app:layout_constraintTop_toBottomOf="@id/medals1GenBack"
+        app:layout_constraintVertical_bias="0.165" />
 
     <ImageButton
         android:id="@+id/ReturnButton"
@@ -317,26 +178,114 @@
         android:id="@+id/pikachuExtra"
         android:layout_width="90dp"
         android:layout_height="98dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toTopOf="@id/medals1GenBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.984"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.011"
-        app:srcCompat="@drawable/pikachu2" />
+        app:srcCompat="@drawable/pikachu" />
 
     <ImageView
         android:id="@+id/pikachuExtraBlack"
-        android:layout_width="94dp"
-        android:layout_height="101dp"
-        android:background="#80000000"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="90dp"
+        android:layout_height="98dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toTopOf="@id/medals1GenBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.984"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.011" />
+        app:layout_constraintVertical_bias="0.011"
+        app:srcCompat="@drawable/pikachu_black" />
+
+    <TableLayout
+        android:id="@+id/MedalsTable1st"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="@id/medals1GenBack"
+        app:layout_constraintEnd_toEndOf="@id/medals1GenBack"
+        app:layout_constraintStart_toStartOf="@id/medals1GenBack"
+        app:layout_constraintTop_toTopOf="@id/medals1GenBack">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/medalBlack0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla1_1stgen"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/medalBlack1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla2_1stgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla3_1stgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla4_1stgen" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/medalBlack4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla5_1stgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla6_1stgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla7_1stgen" />
+
+            <ImageView
+                android:id="@+id/medalBlack7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/medalla8_1stgen" />
+        </TableRow>
+    </TableLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

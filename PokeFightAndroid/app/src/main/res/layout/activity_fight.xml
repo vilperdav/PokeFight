@@ -11,9 +11,11 @@
         android:id="@+id/backGroundIMG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
         android:alpha="0.5"
-        app:srcCompat="@drawable/background" />
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/background"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <Button
         android:id="@+id/tackleButton"
@@ -26,8 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/changePokemonButton"
         app:layout_constraintEnd_toStartOf="@+id/specialAttackButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/MyPokeballs" />
 
     <Button
         android:id="@+id/specialAttackButton"
@@ -37,12 +38,12 @@
         android:gravity="center"
         android:text="SPECIAL ATTACK \n x 0.5-2.0"
         android:textColor="@color/Black"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/surrenderButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tackleButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toBottomOf="@id/MyPokeballs"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/changePokemonButton"
@@ -55,8 +56,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/surrenderButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        app:layout_constraintTop_toBottomOf="@id/tackleButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/surrenderButton"
@@ -69,206 +70,222 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/changePokemonButton"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
+        app:layout_constraintTop_toBottomOf="@id/specialAttackButton"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textIATEAM"
-        android:layout_width="138dp"
-        android:layout_height="42dp"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
         android:fontFamily="casual"
         android:text="IA"
         android:textAlignment="center"
         android:textColor="@color/White"
         android:textSize="15pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imageAgentPokemon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.996"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rowIa"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.608" />
 
     <TextView
         android:id="@+id/textPokemonAgentName"
-        android:layout_width="161dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:fontFamily="casual"
-        android:gravity="right"
         android:text="Pikachu"
+        android:textAlignment="center"
         android:textColor="@color/White"
         android:textSize="12pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/PlayerTextLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.988"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageVS"
+        app:layout_constraintTop_toBottomOf="@id/typePokemonAgentIMG"
         app:layout_constraintVertical_bias="0.389" />
 
     <TextView
         android:id="@+id/textAgentHealth"
-        android:layout_width="193dp"
-        android:layout_height="44dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="casual"
         android:text="HP: 100 / 100"
         android:textAlignment="center"
         android:textColor="@color/LightGreen"
         android:textSize="12pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintBottom_toTopOf="@id/IAPokemonHealthBar"
+        app:layout_constraintEnd_toStartOf="@id/imageAgentPokemon"
+        app:layout_constraintHorizontal_bias="0.406"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintTop_toBottomOf="@id/rowIa"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/IAPokemonHealthBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="193dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toTopOf="@id/IATextLog"
+        app:layout_constraintEnd_toStartOf="@id/imageAgentPokemon"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAgentHealth"
         app:layout_constraintVertical_bias="0.153" />
 
     <ImageView
         android:id="@+id/imageAgentPokemon"
-        android:layout_width="185dp"
-        android:layout_height="185dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/typePokemonAgentIMG"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.995"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/IATextLog"
+        app:layout_constraintTop_toBottomOf="@id/rowIa"
         app:layout_constraintVertical_bias="0.111"
         app:srcCompat="@drawable/pikachu" />
 
     <TextView
         android:id="@+id/textPokemonPlayerName"
-        android:layout_width="161dp"
-        android:layout_height="40dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="casual"
-        android:gravity="left"
         android:text="Pikachu"
+        android:textAlignment="center"
         android:textColor="@color/White"
         android:textSize="12pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/typePokemonPlayerIMG"
+        app:layout_constraintEnd_toStartOf="@id/imageVS"
         app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/IATextLog"
         app:layout_constraintVertical_bias="0.383" />
 
     <TextView
         android:id="@+id/textPlayerTeam"
-        android:layout_width="138dp"
-        android:layout_height="42dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:fontFamily="casual"
         android:text="YOU"
         android:textAlignment="center"
         android:textColor="@color/White"
         android:textSize="15pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tackleButton"
+        app:layout_constraintEnd_toStartOf="@id/MyPokeballs"
         app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.746" />
+        app:layout_constraintTop_toBottomOf="@id/imagePlayerPokemon"
+        app:layout_constraintVertical_bias="0.571" />
 
     <ImageView
         android:id="@+id/imagePlayerPokemon"
-        android:layout_width="185dp"
-        android:layout_height="185dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/MyPokeballs"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/PlayerTextLog"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602"
+        app:layout_constraintTop_toBottomOf="@id/typePokemonPlayerIMG"
         app:srcCompat="@drawable/pikachu" />
 
     <ImageView
         android:id="@+id/imageVS"
         android:layout_width="83dp"
         android:layout_height="84dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/PlayerTextLog"
+        app:layout_constraintEnd_toStartOf="@id/textPokemonAgentName"
+        app:layout_constraintStart_toEndOf="@id/textPokemonPlayerName"
+        app:layout_constraintTop_toBottomOf="@id/IATextLog"
         app:layout_constraintVertical_bias="0.38"
         app:srcCompat="@drawable/vs" />
 
     <ImageView
         android:id="@+id/typePokemonPlayerIMG"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/imagePlayerPokemon"
+        app:layout_constraintEnd_toStartOf="@id/imageVS"
         app:layout_constraintHorizontal_bias="0.151"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textPokemonPlayerName"
         app:layout_constraintVertical_bias="0.431"
         app:srcCompat="@drawable/type_electric"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/typePokemonAgentIMG"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/textPokemonAgentName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintStart_toEndOf="@id/imageVS"
+        app:layout_constraintTop_toBottomOf="@id/imageAgentPokemon"
         app:layout_constraintVertical_bias="0.347"
         app:srcCompat="@drawable/type_electric"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textPlayerHealth"
-        android:layout_width="193dp"
-        android:layout_height="44dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="casual"
         android:text="HP: 100 / 100"
         android:textAlignment="center"
         android:textColor="@color/LightGreen"
         android:textSize="12pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/MyPokeballs"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.944"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toEndOf="@id/imagePlayerPokemon"
+        app:layout_constraintTop_toBottomOf="@id/YourPokemonHealthBar"
         app:layout_constraintVertical_bias="0.684" />
 
     <ProgressBar
         android:id="@+id/YourPokemonHealthBar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="193dp"
-        android:layout_height="36dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toTopOf="@id/textPlayerHealth"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.944"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toEndOf="@id/imagePlayerPokemon"
+        app:layout_constraintTop_toBottomOf="@id/PlayerTextLog"
         app:layout_constraintVertical_bias="0.624" />
 
     <TableRow
-        android:layout_width="270dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.021"
+        android:id="@+id/rowIa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@id/textAgentHealth"
+        app:layout_constraintEnd_toStartOf="@id/textIATEAM"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023">
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/pokeballIA1"
@@ -321,13 +338,15 @@
     </TableRow>
 
     <TableRow
-        android:layout_width="270dp"
-        android:layout_height="47dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/MyPokeballs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@id/specialAttackButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/textPlayerTeam"
+        app:layout_constraintTop_toBottomOf="@id/textPlayerHealth"
         app:layout_constraintVertical_bias="0.754">
 
         <ImageView
@@ -381,70 +400,48 @@
 
     </TableRow>
 
-    <ImageView
-        android:id="@+id/textBoxPlayer"
-        android:layout_width="226dp"
-        android:layout_height="106dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/pokemontextbox"
-        app:layout_column="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526"
-        app:layout_row="0" />
-
-    <ImageView
-        android:id="@+id/textBoxIA"
-        android:layout_width="226dp"
-        android:layout_height="106dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/pokemontextbox"
-        app:layout_column="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22"
-        app:layout_row="0" />
 
     <TextView
         android:id="@+id/IATextLog"
-        android:layout_width="198dp"
-        android:layout_height="77dp"
+        android:layout_width="0dp"
+        android:layout_height="98dp"
         android:layout_gravity="center"
+        android:background="@drawable/pokemontextbox"
         android:fontFamily="sans-serif"
         android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
         android:text="Agent made 10 points of damege to Piplup using Tackle."
         android:textColor="@color/Black"
         android:textSize="7pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/imageVS"
+        app:layout_constraintEnd_toStartOf="@id/imageAgentPokemon"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23" />
+        app:layout_constraintTop_toBottomOf="@id/IAPokemonHealthBar"
+        app:layout_constraintVertical_bias="0.23"
+        app:layout_wrapBehaviorInParent="skipped" />
 
     <TextView
         android:id="@+id/PlayerTextLog"
-        android:layout_width="196dp"
-        android:layout_height="82dp"
+        android:layout_width="214dp"
+        android:layout_height="98dp"
         android:layout_gravity="center"
+        android:background="@drawable/pokemontextbox"
         android:fontFamily="sans-serif"
         android:gravity="center"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="10dp"
         android:text="Player made 10 points of damege to Piplup using Tackle."
         android:textColor="@color/Black"
         android:textSize="7pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/YourPokemonHealthBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintHorizontal_bias="0.939"
+        app:layout_constraintStart_toEndOf="@id/imagePlayerPokemon"
+        app:layout_constraintTop_toBottomOf="@id/imageVS"
+        app:layout_constraintVertical_bias="0.535" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -21,30 +22,46 @@ import java.util.ArrayList;
 public class activity_ChangePokemon extends AppCompatActivity {
     ArrayList<pokemon> pokemonsList;
 
-    ListView listaComun;
+    ListView commonList;
 
+    /*
+     * ********************************************************************************************
+     * * onCreate                                                                                 *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_pokemon);
-        pokemonsList = (ArrayList<pokemon>) getIntent().getSerializableExtra("playerPokemonsKey");
-        listaComun = (ListView) findViewById(R.id.listOfPokemon);
 
-        listaComun.setAdapter(new ImageAdapter(this, pokemonsList));
-        listaComun.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Get the data from pokemonList and set the new adapter
+        pokemonsList = (ArrayList<pokemon>) getIntent().getSerializableExtra("playerPokemonsKey");
+        commonList = (ListView) findViewById(R.id.listOfPokemon);
+        commonList.setAdapter(new ImageAdapter(this, pokemonsList));
+        commonList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent returnIntent = new Intent();
-                // Guarda el nombre del Pokémon en el Intent.
+
+                // Save the name of the pokemon in the intent and the buttonID
                 pokemon selectedPokemon = pokemonsList.get(position);
                 returnIntent.putExtra("selectedPokemonPosition", position);
+
+                // Send to the calling activity
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
+
         });
 
     }
 
+    /*
+     * ********************************************************************************************
+     * * ImageAdapter                                                                             *
+     * ********************************************************************************************
+     * */
     public class ImageAdapter extends BaseAdapter {
         private Activity activity;
         private ArrayList<pokemon> pokemonList;
@@ -52,21 +69,6 @@ public class activity_ChangePokemon extends AppCompatActivity {
         public ImageAdapter(Activity activity, ArrayList<pokemon> pokemonsList) {
             this.activity = activity;
             this.pokemonList = pokemonsList;
-        }
-
-        @Override
-        public int getCount() {
-            return pokemonsList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return pokemonsList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -77,25 +79,29 @@ public class activity_ChangePokemon extends AppCompatActivity {
                 v = inf.inflate(R.layout.activity_select_pokemon, null);
             }
 
-            // Creamos el objeto pokemon
+            // Pokemon object
             pokemon poke = pokemonsList.get(position);
 
-            // Obtengo los objetos del frontEnd
+            // Objects from the frontEnd
             ImageView img = (ImageView) v.findViewById(R.id.pokeImg);
             TextView name = (TextView) v.findViewById(R.id.pokemonName);
             TextView type = (TextView) v.findViewById(R.id.pokemonType);
             TextView health = (TextView) v.findViewById(R.id.pokemonHealth);
-            TextView atack = (TextView) v.findViewById(R.id.pokemonAttack);
+            TextView attack = (TextView) v.findViewById(R.id.pokemonAttack);
             TextView defense = (TextView) v.findViewById(R.id.pokemonDefense);
             TextView speed = (TextView) v.findViewById(R.id.pokemonSpeed);
 
-            // Actualizo los valores de los objetos del frontEnd
+            // Update the image
             img.setImageResource(getResources().getIdentifier(poke.getName().toLowerCase(), "drawable", getPackageName()));
+
+            // Update the name
             name.setText(poke.getName());
-            // Cambia el color del nombre del pokemon al color de su tipo
+
+            // Update type
             String pokeType = poke.getType();
             type.setText("Type: " + poke.getType().toUpperCase());
 
+            // Update type and name colors based on type
             if (pokeType.equals("fire")) {
                 name.setTextColor(ContextCompat.getColor(this.activity, R.color.LightRed));
                 type.setTextColor(ContextCompat.getColor(this.activity, R.color.Red));
@@ -107,22 +113,23 @@ public class activity_ChangePokemon extends AppCompatActivity {
                 type.setTextColor(ContextCompat.getColor(this.activity, R.color.Green));
             }
 
+            // Update health
             health.setText("Health: " + poke.getHealth() + " / " + poke.getMaxHealth());
 
-            // To see the better the life of the pokemons
+            // Update health color
             if (poke.getHealth() > 0) {
 
-                // Si no es menos de la mitad se queda en verde
+                // More than 50% -> LightGreen
                 health.setTextColor(ContextCompat.getColor(this.activity, R.color.LightGreen));
 
                 if (poke.getHealth() < (poke.getMaxHealth() * 0.3)) {
 
-                    // Menos del 30% cambiamos el color del texto a LightRed
+                    // Less than 30% -> LightRed
                     health.setTextColor(ContextCompat.getColor(this.activity, R.color.LightRed));
 
                 } else if (poke.getHealth() < (poke.getMaxHealth() * 0.5)) {
 
-                    // Menos del 50% cambiamos el color del texto a LightYellow
+                    // Less than 50% -> LightYellow
                     health.setTextColor(ContextCompat.getColor(this.activity, R.color.LightYellow));
                 }
 
@@ -130,11 +137,30 @@ public class activity_ChangePokemon extends AppCompatActivity {
                 health.setTextColor(ContextCompat.getColor(this.activity, R.color.Red));
             }
 
-            atack.setText("Atack: " + poke.getAtack());
+            // Update the rest of attributes
+            attack.setText("Atack: " + poke.getAtack());
             defense.setText("Defense: " + poke.getDefense());
             speed.setText("Speed: " + poke.getSpeed());
 
             return v;
+        }
+
+        @Override
+        public int getCount() {
+
+            return pokemonsList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+
+            return pokemonsList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+
+            return position;
         }
 
     }

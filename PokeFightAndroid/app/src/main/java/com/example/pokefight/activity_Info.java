@@ -28,140 +28,140 @@ import java.io.InputStream;
 
 public class activity_Info extends AppCompatActivity {
 
+    /*
+     * ********************************************************************************************
+     * * onCreate                                                                               *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        // Variable compartida para los switches
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // Slide buttons
         Switch shinyModeSwitch = findViewById(R.id.shinyModeSwitch);
         Switch IASwitch = findViewById(R.id.IASwitch);
-        // Intenta obtener el estado actual del los switches sino los deja como desabilidatos.
-        boolean shinyState = preferences.getBoolean("shinySwitch_state", false);
-        boolean IAState = preferences.getBoolean("IASwitch_state", false);
 
-        // Cambia a 'true' si los habiamos dejado activado previamente
-        if (shinyState) {
+        // Get the state of the Shiny Button and AI, If not -> Disabled
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (preferences.getBoolean("shinySwitch_state", false)) {
             shinyModeSwitch.setChecked(true);
         }
-
-        if (IAState) {
+        if (preferences.getBoolean("IASwitch_state", false)) {
             IASwitch.setChecked(true);
         }
 
-
+        // returnButton
         ImageButton returnButton = findViewById(R.id.ReturnButton);
-        // Boton para volver a la pestana anterior
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Change the activity in the correct way
                 Intent intent = new Intent(activity_Info.this, activity_Main.class);
-
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Inicia la actividad
                 startActivity(intent);
-
-                // Cierra la actividad actual
                 finish();
             }
         });
 
-        // Boton para ver el readme del repositorio
+        // btnHowToPlay
         Button btnHowToPlay = findViewById(R.id.howToPlayButton);
         btnHowToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Sends to the README.md of the repository
                 String url = "https://github.com/vilperdav/PokeFight/blob/main/README.md";
                 openBrowser(url);
             }
         });
 
-        // Boton para ver las versiones del juego
+        // btnGitHubLink
         Button btnGitHubLink = findViewById(R.id.gitHubLink);
         btnGitHubLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Send to the releases page of the repository
                 String url = "https://github.com/vilperdav/PokeFight/releases";
                 openBrowser(url);
             }
         });
 
-        // Boton para reiniciar las medallas del juego
-        // More Info: https://developer.android.com/training/snackbar/showing?hl=es-419#java
-        // More Info: https://es.stackoverflow.com/questions/46179/a%C3%B1adir-elementos-a-un-array-en-un-archivo-json-en-android
+        // btnResetGameData
         Button btnResetGameData = findViewById(R.id.resetGameData);
         btnResetGameData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // El nombre de tu archivo JSON
-                String jsonFileName = "medals.json";
 
-                // Comprueba si el archivo existe en el almacenamiento interno
+                // Check if the file exists in the internal storage
+                String jsonFileName = "medals.json";
                 File internalJsonFile = new File(getFilesDir(), jsonFileName);
                 if (internalJsonFile.exists()) {
-                    // Si existe, borra el archivo del almacenamiento interno
+                    // If exist -> We delete it
                     internalJsonFile.delete();
                     System.out.println("File deleted from internal storage");
                 }
 
-                // Copia el archivo JSON con las medallas apagadas al almacenamiento interno
+                // Copy the new JSON to the internal storage
                 int error = CopyRawToSDCard(R.raw.medals, getFilesDir() + "/" + jsonFileName);
                 Snackbar mySnackbar;
                 if (error == 0) {
-                    // Preparamos el mensaje de reseteo
                     mySnackbar = Snackbar.make(view, "Game Medals Reset!", LENGTH_SHORT);
                 } else {
-                    // Preparamos el mensaje de error
                     mySnackbar = Snackbar.make(view, "!Error! Enable Storage Permissions", LENGTH_SHORT);
                 }
                 mySnackbar.show();
             }
         });
 
-
+        // shinyModeSwitch
         shinyModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Checks the status of the button
                 if (isChecked) {
-                    // El Switch está activado
-                    Log.d("Switch", "Shiny True");
+                    // Log.d("Switch", "Shiny True");
                     preferences.edit().putBoolean("shinySwitch_state", true).apply();
                 } else {
-                    // El Switch está desactivado
-                    Log.d("Switch", "Shiny False");
+                    // Log.d("Switch", "Shiny False");
                     preferences.edit().putBoolean("shinySwitch_state", false).apply();
                 }
             }
         });
 
-
+        // IASwitch
         IASwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Checks the status of the button
                 if (isChecked) {
-                    // El Switch está activado
-                    Log.d("Switch", "IA Switch True");
+                    // Log.d("Switch", "IA Switch True");
                     preferences.edit().putBoolean("IASwitch_state", true).apply();
                 } else {
-                    // El Switch está desactivado
-                    Log.d("Switch", "IA Switch False");
+                    // Log.d("Switch", "IA Switch False");
                     preferences.edit().putBoolean("IASwitch_state", false).apply();
                 }
             }
         });
     }
 
+    /*
+     * ********************************************************************************************
+     * * openBrowser                                                                               *
+     * ********************************************************************************************
+     * */
     public void openBrowser(String url) {
+        // Open the browser in a new activity
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
 
+    /*
+     * ********************************************************************************************
+     * * CopyRawToSDCard                                                                               *
+     * ********************************************************************************************
+     * */
     private int CopyRawToSDCard(int id, String path) {
         InputStream in = getResources().openRawResource(id);
         FileOutputStream out = null;

@@ -11,11 +11,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -27,16 +23,20 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
     private MediaPlayer mediaPlayer;
 
+    /*
+     * ********************************************************************************************
+     * * playMusic                                                                                  *
+     * ********************************************************************************************
+     * */
     private void playMusic() {
 
-        // Comprobamos el estado del boton antes de reproducir la musica
+        // Check if the user wants music or not
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        ImageButton musicButton = findViewById(R.id.musicButton);
         boolean musicState = preferences.getBoolean("music_state", true);
 
-        // Si se quiere escuchar musica
+        // Starts the reproduction and change the button
+        ImageButton musicButton = findViewById(R.id.musicButton);
         if (musicState) {
-            // Comienza la reproducción
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
                 musicButton.setImageResource(R.drawable.music_play);
@@ -46,46 +46,54 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * onPause                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     public void onPause() {
         super.onPause();
-        // Libera recursos cuando la actividad se destruye
+        // Pause the music
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * onResume                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     public void onResume() {
+
         super.onResume();
 
-        // Comprobamos el estado del boton antes de reproducir la musica
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        ImageButton musicButton = findViewById(R.id.musicButton);
-        boolean musicState = preferences.getBoolean("music_state", false);
-
-        // Si se quiere escuchar musica
-        if (musicState) {
-            // Comienza la reproducción
-            if (!mediaPlayer.isPlaying()) {
-                mediaPlayer.start();
-                musicButton.setImageResource(R.drawable.music_play);
-            }
-        } else {
-            musicButton.setImageResource(R.drawable.music_stop);
-        }
+        // Call to the music function
+        playMusic();
     }
 
+    /*
+     * ********************************************************************************************
+     * * onResume                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Libera recursos cuando la actividad se destruye
+        // Free resources
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * onDataPass                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     public void onDataPass(ArrayList<pokemon> playerPokemons, ArrayList<pokemon> agentPokemons) {
         // Aquí puedes manejar los datos recibidos del Fragment
@@ -94,90 +102,91 @@ public class activity_Main extends AppCompatActivity implements fragment_1vs1.On
 
     }
 
+    /*
+     * ********************************************************************************************
+     * * onCreate                                                                                  *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializa el MediaPlayer con el archivo de música
+        // Starts the music player with the background song
         mediaPlayer = MediaPlayer.create(this, R.raw.pokemon_intro_music);
-
-        // Configura el bucle
         mediaPlayer.setLooping(true);
         playMusic();
 
-        // Controla el Shiny mode view
+        // Shared varaible for Shiny mode in case of use it
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean shinyState = preferences.getBoolean("shinySwitch_state", false);
-        ImageView shinyIMG1 = findViewById(R.id.shinyMode);
-        ImageView shinyIMG2 = findViewById(R.id.shinyMode2);
-        if (shinyState) {
+        if (preferences.getBoolean("shinySwitch_state", false)) {
+            ImageView shinyIMG1 = findViewById(R.id.shinyMode);
+            ImageView shinyIMG2 = findViewById(R.id.shinyMode2);
             shinyIMG1.setVisibility(View.VISIBLE);
             shinyIMG2.setVisibility(View.VISIBLE);
         }
 
-        // Ver el fragmento de inicio
+        // Fragment of start
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null) {
                 return;
             }
-
-            fragment_1vs1 fragmentoDeInicio = new fragment_1vs1();
+            fragment_1vs1 firstFragment = new fragment_1vs1();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, fragmentoDeInicio).commit();
+                    .add(R.id.fragment_container, firstFragment).commit();
         }
 
-        ImageButton imageButton = findViewById(R.id.PlayButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        // playGameButton
+        ImageButton playGameButton = findViewById(R.id.PlayButton);
+        playGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(getApplicationContext(), activity_Fight.class);
 
-                // Agregar el array al Intent
+                // Add the two arrays to the intent of the game button
                 intent.putExtra("agentPokemonsKey", agentPokemonsPased);
                 intent.putExtra("playerPokemonsKey", playerPokemonsPased);
 
-                // Iniciar la Activity
-                startActivity(intent);
-
-                // Pauso la musica
+                // Pause the music and starts the next activity
                 mediaPlayer.pause();
+                startActivity(intent);
             }
         });
 
-        ImageButton imageButtonMedals = findViewById(R.id.MedalsButton);
-        imageButtonMedals.setOnClickListener(new View.OnClickListener() {
+        // medalsButton
+        ImageButton medalsButton = findViewById(R.id.MedalsButton);
+        medalsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_Main.this, activity_Medals.class);
-                startActivity(intent);
 
-                // Pauso la musica
+                // Pause the music and starts the next activity
                 mediaPlayer.pause();
+                startActivity(intent);
             }
         });
 
-        // Boton para llevarnos a la ayuda del juego
+        // helpImageButton
         ImageButton helpImageButton = findViewById(R.id.helpInfoButton);
         helpImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity_Main.this, activity_Info.class);
-                startActivity(intent);
 
-                // Pauso la musica
+                // Pause the music and starts the next activity
                 mediaPlayer.pause();
+                startActivity(intent);
             }
         });
 
-        // Boton para pausar y continuar la musica
+        // musicButton
         ImageButton musicButton = findViewById(R.id.musicButton);
         musicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Pauso la musica si esta en reproduccion
+                // Pause the music if it's on
                 if (!mediaPlayer.isPlaying()) {
                     preferences.edit().putBoolean("music_state", true).apply();
                     musicButton.setImageResource(R.drawable.music_play);

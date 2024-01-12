@@ -5,6 +5,12 @@ import java.util.List;
 
 
 public class pokeAgent implements Cloneable {
+
+    /*
+     * ********************************************************************************************
+     * * GameState                                                                                *
+     * ********************************************************************************************
+     * */
     //The game state, which see all the pokemon allive and this stats to the AI
     public class GameState {
 
@@ -12,9 +18,13 @@ public class pokeAgent implements Cloneable {
         private ArrayList<pokemon> playerPokemons, agentPokemons;
         private int currentPlayerPokemonIndex, currentAgentPokemonIndex, changeAgentPokemonIndex;
         private boolean permitChange;
-        int MAX = 500;
         int MIN = -500;
 
+        /*
+         * ********************************************************************************************
+         * * GameState                                                                                *
+         * ********************************************************************************************
+         * */
         // Metod for initilitialize the parameters of the IA
         public GameState(ArrayList<pokemon> agentPokemons, ArrayList<pokemon> playerPokemons) {
             this.playerPokemons = playerPokemons;
@@ -25,18 +35,20 @@ public class pokeAgent implements Cloneable {
             this.permitChange = true;
         }
 
-
-        // Function to evaluate the AI pokemon in compare to the player pokemon 
+        /*
+         * ********************************************************************************************
+         * * evaluate                                                                                 *
+         * ********************************************************************************************
+         * */
+        // Function to evaluate the AI pokemon in compare to the player pokemon
         int evaluate(GameState state) {
 
             double scaleFactor = 100;
             int score = 0;
 
-            // TODO - SETEAR LOS POKEMOSN CUANDO MUEREN PARA QUE NO DE NULL POINTER
-
             // Plus all the stats of the AI pokemon to see his vantages
-            System.out.println("PLAYERPOKEMONS: " + getAgentPokemonIndex());
-            System.out.println("PLAYERPOKEMONS: " + getPlayerPokemonIndex());
+            // System.out.println("Agent Pokemon Index: " + getAgentPokemonIndex());
+            // System.out.println("Player Pokemon Index: " + getPlayerPokemonIndex());
 
             pokemon pokemonAgent = state.getAgentPokemons().get(getAgentPokemonIndex());
             pokemon pokemonPlayer = state.getPlayerPokemons().get(getPlayerPokemonIndex());
@@ -47,7 +59,7 @@ public class pokeAgent implements Cloneable {
             score += pokemonAgent.getSpeed();
             score += activity_Fight.atackEfective(pokemonAgent.getType(), pokemonPlayer.getType(), pokemonAgent.getMovements().get(1).toString()) * scaleFactor;
 
-            System.out.println("1º Score " + pokemonAgent.getName() + ": " + score);
+            System.out.println("1º Score - Agent: " + pokemonAgent.getName() + ": " + score);
 
             // Minus all the disadvantages of the player pokemon
 
@@ -57,15 +69,20 @@ public class pokeAgent implements Cloneable {
             score -= pokemonPlayer.getSpeed();
             score -= activity_Fight.atackEfective(pokemonPlayer.getType(), pokemonAgent.getType(), pokemonPlayer.getMovements().get(1).toString()) * scaleFactor;
 
-            System.out.println("2º Score " + pokemonPlayer.getName() + ": " + score);
+            System.out.println("2º Score - Player: " + pokemonPlayer.getName() + ": " + score);
 
             return score;
         }
 
-        // Function Minmax who creates a decision tree to see the best decision
-        public Action minimax(int depth, GameState state, boolean isMax) {
+        /*
+         * ********************************************************************************************
+         * * minMax                                                                                  *
+         * ********************************************************************************************
+         * */
+        // Function minMax who creates a decision tree to see the best decision
+        public Action minMax(int depth, GameState state, boolean isMax) {
 
-            //Final  of the tree and the actions, now return to compare all the scores
+            // Final  of the tree and the actions, now return to compare all the scores
             if (depth == 0) {
                 Action finalAction = new Action();
                 return finalAction;
@@ -73,9 +90,9 @@ public class pokeAgent implements Cloneable {
 
             Action bestAction = null;
             List<Action> actions = state.getActions(state);
-            System.out.println("\nPor aqui ando DESPUES DE GET ACTION\n");
+            // System.out.println("Later than getAction()");
 
-            //We see if it is the max or min of the function
+            // We see if it is the max or min of the function
             if (isMax) {
                 int bestScore = Integer.MIN_VALUE;
                 for (Action action : actions) {
@@ -87,17 +104,20 @@ public class pokeAgent implements Cloneable {
                         e.printStackTrace();
                         return null;
                     }
-                    //recursive call of minmax to decide the bestAction
-                    Action currentAction = minimax(depth - 1, newState, false);
+
+                    // Recursive call of minmax to decide the bestAction
+                    Action currentAction = minMax(depth - 1, newState, false);
                     int val = currentAction.getScore();
                     bestScore = Math.max(bestScore, val);
-                    //Compare to earlier scores
+
+                    // Compare to earlier scores
                     if (val >= bestScore) {
                         bestAction = action;
                     }
                 }
+
                 bestAction.setScore(bestScore);
-                System.out.println("\nPor aqui RETURNEO DE MINMAX"+bestAction);
+                // System.out.println("MinMax return: "+bestAction);
 
                 return bestAction;
 
@@ -111,11 +131,13 @@ public class pokeAgent implements Cloneable {
                         e.printStackTrace();
                         return null;
                     }
-                    //recursive call of minmax to decide the bestAction
-                    Action currentAction = minimax(depth - 1, newState, true);
+
+                    // Recursive call of minmax to decide the bestAction
+                    Action currentAction = minMax(depth - 1, newState, true);
                     int val = currentAction.getScore();
                     bestScore = Math.min(bestScore, val);
-                     //Compare to earlier scores
+
+                    // Compare to earlier scores
                     if (val <= bestScore) {
                         bestAction = action;
                     }
@@ -125,6 +147,11 @@ public class pokeAgent implements Cloneable {
             }
         }
 
+        /*
+         * ********************************************************************************************
+         * * getActions                                                                               *
+         * ********************************************************************************************
+         * */
         // This method generates all of posible actions of the AI
         public List<Action> getActions(GameState state) {
             List<Action> actions = new ArrayList<Action>();
@@ -138,17 +165,20 @@ public class pokeAgent implements Cloneable {
             for (pokemon pokemon : agentPokemons) {
                 // We cannot change to the same pokemon
                 if (pokemon != agentPokemons.get(currentAgentPokemonIndex)) {
-                    Action cambio = new Action(pokemon, true);
-                    cambio.setScore(state.evaluate(state));
-                    System.out.println("\nPor aqui ando\n");
-                    actions.add(cambio);
+                    Action changePokemon = new Action(pokemon, true);
+                    changePokemon.setScore(state.evaluate(state));
+                    actions.add(changePokemon);
                 }
             }
-            System.out.println("\nPor aqui RETURNEO\n");
 
             return actions;
         }
 
+        /*
+         * ********************************************************************************************
+         * * doAction                                                                                 *
+         * ********************************************************************************************
+         * */
         // In this method we decide what to do, attack or change
         public GameState doAction(Action action) throws CloneNotSupportedException {
             GameState newState = clone();
@@ -176,7 +206,8 @@ public class pokeAgent implements Cloneable {
                     }
 
                     typeEffectiveness = evaluate + typeEffectiveness;
-                    //Compare to see the best type to change
+
+                    // Compare to see the best type to change
                     if (typeEffectiveness > bestTypeEffectiveness) {
                         bestTypeEffectiveness = typeEffectiveness;
                         bestPokemonIndex = i;
@@ -186,30 +217,35 @@ public class pokeAgent implements Cloneable {
                 // Change to the most efficiently pokemon
                 if (bestPokemonIndex != -1 && bestPokemonIndex != newState.getAgentPokemonIndex()) {
                     setChangeAgentPokemonIndex(bestPokemonIndex);
-                    
+
                 } else if (bestPokemonIndex == newState.getAgentPokemonIndex()) {
-                    action.setSwitch(false);
                     // If results the best pokemon is already in battle decide to attack
+                    action.setSwitch(false);
                     getBestMove(action);
                 }
 
             } else {
-                action.setSwitch(false);
                 // If results the best pokemon is already in battle decide to attack
+                action.setSwitch(false);
                 getBestMove(action);
             }
 
             return newState;
         }
 
-        //Function who return the best move for pokemon
+        /*
+         * ********************************************************************************************
+         * * getBestMove                                                                              *
+         * ********************************************************************************************
+         * */
+        // Function who return the best move for pokemon
         private void getBestMove(Action action) {
 
             double firstAttack = activity_Fight.atackEfective(agentPokemons.get(getAgentPokemonIndex()).getType(), playerPokemons.get(getPlayerPokemonIndex()).getType(), agentPokemons.get(getAgentPokemonIndex()).getMovements().get(0).toString());
             double secondAttack = activity_Fight.atackEfective(agentPokemons.get(getAgentPokemonIndex()).getType(), playerPokemons.get(getPlayerPokemonIndex()).getType(), agentPokemons.get(getAgentPokemonIndex()).getMovements().get(1).toString());
 
-            System.out.println("FirstAttack: " + firstAttack);
-            System.out.println("secondAttack: " + secondAttack);
+            // System.out.println("FirstAttack: " + firstAttack);
+            // System.out.println("secondAttack: " + secondAttack);
 
             if (firstAttack > secondAttack) {
                 action.setAttack(0);
@@ -219,6 +255,11 @@ public class pokeAgent implements Cloneable {
             }
         }
 
+        /*
+         * ********************************************************************************************
+         * * clone                                                                                    *
+         * ********************************************************************************************
+         * */
         @Override
         public GameState clone() {
 
@@ -240,13 +281,17 @@ public class pokeAgent implements Cloneable {
 
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
-                return null; 
+                return null;
             }
 
             return clonedState;
         }
 
-        // Getters
+        /*
+         * ********************************************************************************************
+         * * Getter and Setter                                                                        *
+         * ********************************************************************************************
+         * */
         public ArrayList<pokemon> getPlayerPokemons() {
 
             return this.playerPokemons;
@@ -271,8 +316,6 @@ public class pokeAgent implements Cloneable {
             return this.changeAgentPokemonIndex;
         }
 
-
-        // Setters
         public void setPlayerPokemons(ArrayList<pokemon> playerPokemons) {
             this.playerPokemons = playerPokemons;
         }
@@ -294,10 +337,17 @@ public class pokeAgent implements Cloneable {
         }
 
         public void setPermitChange(boolean permitChange) {
+
             this.permitChange = permitChange;
         }
 
     }
+
+    /*
+     * ********************************************************************************************
+     * * Action                                                                                   *
+     * ********************************************************************************************
+     * */
     //Class who contains the action of the pokemon who is in the battle
     public class Action {
 
@@ -314,6 +364,12 @@ public class pokeAgent implements Cloneable {
             this.pokemon = pokemon;
             this.isSwitch = isSwitch;
         }
+
+        /*
+         * ********************************************************************************************
+         * * Getter and Setter                                                                        *
+         * ********************************************************************************************
+         * */
 
         // Getters
         public pokemon getPokemon() {
@@ -332,6 +388,7 @@ public class pokeAgent implements Cloneable {
         }
 
         public int getAttack() {
+
             return attack;
         }
 
@@ -347,6 +404,7 @@ public class pokeAgent implements Cloneable {
         }
 
         public void setScore(int score) {
+
             this.score = score;
         }
 

@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -32,118 +33,127 @@ public class activity_Win extends AppCompatActivity {
 
     private boolean medalObtained = false;
 
-    private int animDelay = 500; //ms
+    private MediaPlayer mediaPlayer;
+    private int musicDelay = 1000; //ms
     Handler handler = new Handler();
 
+    /*
+     * ********************************************************************************************
+     * * onCreate                                                                             *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
-        // Damos una medalla en orden
+        // Give a new medal if we don't get it now
         if (!medalObtained) {
             giveNewMedal();
         }
 
-        // Retraso la musica ms para que no se solape con la batalla
+        // Retard the music 1 second from the battle ends
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 playLevelUp();
-
             }
-        }, animDelay);
+        }, musicDelay);
 
-
-        // Boton para volver a la pestana anterior, osea al menu
-        Button returnButton = findViewById(R.id.mainMenu);
-        returnButton.setOnClickListener(new View.OnClickListener() {
+        // mainMenuButton
+        Button mainMenuButton = findViewById(R.id.mainMenu);
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Go to the next activity in correct way
                 Intent intent = new Intent(activity_Win.this, activity_Main.class);
-
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Inicia la actividad
                 startActivity(intent);
-
-                // Cierra la actividad actual
                 finish();
             }
         });
 
-        // Boton para ir a ver las medallas
+        // btnGoToCheck for see the medals
         Button btnGoToCheck = findViewById(R.id.goToCheckButton);
         btnGoToCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Go to the next activity in correct way
                 Intent intent = new Intent(activity_Win.this, activity_Medals.class);
-
-                // Establece la bandera FLAG_ACTIVITY_CLEAR_TOP para limpiar la pila
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Inicia la actividad
                 startActivity(intent);
-
-                // Cierra la actividad actual
                 finish();
             }
-
         });
-
 
     }
 
-    private MediaPlayer mediaPlayer;
 
+    /*
+     * ********************************************************************************************
+     * * playLevelUp                                                                             *
+     * ********************************************************************************************
+     * */
     private void playLevelUp() {
-
-        // Inicializa el MediaPlayer con el archivo de música
+        // mediaPlayer with music on it
         mediaPlayer = MediaPlayer.create(this, R.raw.levelup);
 
-        // Comienza la reproducción
+        // Start the song
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * onDestroy                                                                             *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Libera recursos cuando la actividad se destruye
+        // Liberate resources onDestroy
         if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * onPause                                                                             *
+     * ********************************************************************************************
+     * */
     @Override
     protected void onPause() {
         super.onPause();
-        // Libera recursos cuando la actividad se destruye
+        // Pauses the mediaPlayer
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
 
+    /*
+     * ********************************************************************************************
+     * * giveNewMedal                                                                             *
+     * ********************************************************************************************
+     * */
     private void giveNewMedal() {
         try {
 
-            // El nombre de tu archivo JSON
+            // Check if the file exists in the internal storage
             String jsonFileName = "medals.json";
-
-            // Comprueba si el archivo existe en el almacenamiento interno
             File internalJsonFile = new File(getFilesDir(), jsonFileName);
+
             if (!internalJsonFile.exists()) {
-                // Si no existe, copia el archivo del almacenamiento externo al interno
+                // If not exist copy it to the internal storage
                 CopyRawToSDCard(R.raw.medals, getFilesDir() + "/" + jsonFileName);
                 internalJsonFile = new File(getFilesDir(), jsonFileName);
-                System.out.println("File copied to internal storage - did not exist");
+                // System.out.println("File copied to internal storage - did not exist");
+
             }
 
-            // Lee el archivo JSON del almacenamiento interno
+            // Read the JSON from the internal storage
             InputStream inputStream = new FileInputStream(internalJsonFile);
             Reader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -157,33 +167,33 @@ public class activity_Win extends AppCompatActivity {
                 if (genObj instanceof JSONObject) {
                     JSONObject gen = (JSONObject) genObj;
 
-                    // Accede al nombre de la generación
-                    String genName = (String) gen.get("generation");
+                    // generation attribute
+                    // String genName = (String) gen.get("generation");
 
-                    System.out.println("**************************");
-                    System.out.println("****** Generation: " + genName + "******");
-                    System.out.println("**************************");
+                    // System.out.println("**************************");
+                    // System.out.println("****** Generation: " + genName + "******");
+                    // System.out.println("**************************");
 
                     JSONArray medalsArray = (JSONArray) gen.get("medals");
 
-                    // Verificar si hay medallas para esta generación
+                    // Verify if we have medalls for this generation
                     if (medalsArray != null && !medalsArray.isEmpty()) {
                         for (Object medalObj : medalsArray) {
                             if (medalObj instanceof JSONObject) {
                                 JSONObject medalDetails = (JSONObject) medalObj;
 
-                                // Acceso a la información de las medallas
+                                // Access to the info of the medal
                                 String medalName = (String) medalDetails.get("name");
                                 String visibility = (String) medalDetails.get("visibility");
 
-                                // Si está desactivada, la activamos
+                                // If one is disabled -> enable it; Only 1st time you access
                                 if (visibility.equals("False") && !medalObtained) {
+
                                     medalDetails.put("visibility", "True");
-                                    visibility = (String) medalDetails.get("visibility");
-                                    System.out.println("Medal " + medalName + " changed to visibility: " + visibility);
+                                    // visibility = (String) medalDetails.get("visibility");
+                                    // System.out.println("Medal " + medalName + " changed to visibility: " + visibility);
                                     medalObtained = true;
                                 }
-                                // Si no hay mas medallas simplemente no se dan mas
                             }
                         }
                     }
@@ -191,25 +201,29 @@ public class activity_Win extends AppCompatActivity {
 
             }
 
-            // Ahora escribimos los cambios de vuelta al archivo JSON en el almacenamiento interno
+            // Write the changes to the internal storage
             FileWriter fileWriter = new FileWriter(internalJsonFile);
             fileWriter.write(pJsonObj.toJSONString());
             fileWriter.close();
 
-            // Muestra un Toast indicando que la escritura fue exitosa
+            // Tell to the user that he get a new medal
             Toast.makeText(this, "Medal awarded successfully!", Toast.LENGTH_SHORT).show();
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
 
-            // Muestra un Toast indicando que hubo un error
-            Toast.makeText(this, "Error awarding medal!", Toast.LENGTH_SHORT).show();
+            // Tell to the user that he get an error
+            Toast.makeText(this, "Error awarding medal! Please reset the game data from settings!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-
-    private int CopyRawToSDCard(int id, String path) {
+    /*
+     * ********************************************************************************************
+     * * CopyRawToSDCard                                                                             *
+     * ********************************************************************************************
+     * */
+    public int CopyRawToSDCard(int id, String path) {
         InputStream in = getResources().openRawResource(id);
         FileOutputStream out = null;
         try {
@@ -231,4 +245,5 @@ public class activity_Win extends AppCompatActivity {
             return -2;
         }
     }
+
 }

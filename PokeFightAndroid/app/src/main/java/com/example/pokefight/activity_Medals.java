@@ -127,18 +127,18 @@ public class activity_Medals extends AppCompatActivity {
 
                                 // Si alguna está desactivada
                                 if (visibility.equals("True")) {
-                                    medalBlack.setVisibility(View.GONE);
+                                    medalBlack.setVisibility(View.VISIBLE);
                                     System.out.println("Estado: Visible");
                                     medalsUnlock++;
                                 } else {
-                                    medalBlack.setVisibility(View.VISIBLE);
+                                    medalBlack.setVisibility(View.INVISIBLE);
                                     System.out.println("Estado: No Visible");
                                 }
 
                                 // Recompensa si ganas 16 veces al IA
                                 if (medalsUnlock == 16) {
                                     ImageView pikachu = findViewById(R.id.pikachuExtraBlack);
-                                    pikachu.setVisibility(View.GONE);
+                                    pikachu.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
